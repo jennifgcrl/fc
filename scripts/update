@@ -2,10 +2,54 @@
 
 set -eu
 
-REV=$(curl https://api.github.com/repos/jennifgcrl/fc/branches/main | jq -r .commit.sha)
+cd "$(dirname "$0")/.."
 
-if [[ $(uname) == "Linux" ]]; then
-  sudo nixos-rebuild switch --flake "github:jennifgcrl/fc?rev=$REV" -L
-else # Darwin
-  sudo darwin-rebuild switch --flake "github:jennifgcrl/fc?rev=$REV" -L
+echo "🔍 Checking repository state..."
+
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "📦 Stashing unstaged changes..."
+  git stash push -m "Auto-stashed by update script"
+  STASHED=1
+else
+  STASHED=0
 fi
+
+echo "⬇️ Fetching updates..."
+git fetch origin
+
+LOCAL=$(git rev-parse HEAD)
+REMOTE=$(git rev-parse origin/main)
+
+if [[ "$LOCAL" != "$REMOTE" ]]; then
+  echo "🔄 Rebasing onto origin/main..."
+  git rebase origin/main
+  REBASED=1
+else
+  echo "✅ Already up to date with origin/main."
+  REBASED=0
+fi
+
+if [[ "$STASHED" -eq 1 ]]; then
+  echo "📂 Applying stashed changes..."
+  git stash pop
+fi
+
+echo "🔨 Rebuilding system..."
+if [[ $(uname) == "Linux" ]]; then
+  sudo nixos-rebuild switch --flake .
+else # Darwin
+  sudo darwin-rebuild switch --flake .
+fi
+
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "💾 Committing changes..."
+  git add .
+  git commit -m "wip"
+
+  echo "🚀 Pushing changes..."
+  git push
+else
+  echo "📭 No changes to commit."
+fi
+
+echo "✨ Update complete!"
