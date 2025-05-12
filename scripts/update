@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+REV=$(curl https://api.github.com/repos/jennifgcrl/fc/branches/main | jq -r .commit.sha)
+
+if [[ $(uname) == "Linux" ]]; then
+  sudo nixos-rebuild switch --flake "github:jennifgcrl/fc?rev=$REV" -L
+else # Darwin
+  sudo darwin-rebuild switch --flake "github:jennifgcrl/fc?rev=$REV" -L
+fi

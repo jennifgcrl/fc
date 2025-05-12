@@ -1,3 +1,0 @@
-[submodule "ext/gitignore"]
-	path = ext/gitignore
-	url = https://github.com/github/gitignore
