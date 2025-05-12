@@ -31,6 +31,11 @@ jobs:
       - name: Update lock file
         run: nix flake update --commit-lock-file
 
+      - name: Push changes
+        run: |
+          git remote set-url origin https://${{ steps.generate-token.outputs.token }}@github.com/${{ github.repository }}.git
+          git push
+
       # - name: Get commit message
       #   id: commit
       #   run: |
@@ -44,6 +49,18 @@ jobs:
       #     git log -1 --pretty=%B | tail +3 | awk -f ./.github/flake-to-markdown.awk >> "${GITHUB_OUTPUT}"
       #     echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
-      - name: Push to main
-        run: |
-          git push origin main
+      # # Undo the commit as the action will do a new commit with signing using the GH API
+      # - name: Undo the latest commit
+      #   run: git reset --soft "${{ github.sha }}"
+
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v7.0.8
+      #   with:
+      #     token: "${{ steps.generate-token.outputs.token }}"
+      #     title: "Automated Flake update"
+      #     body: "${{ steps.commit.outputs.pr }}"
+      #     commit-message: "${{ steps.commit.outputs.message }}"
+      #     add-paths: |
+      #       flake.lock
+      #     delete-branch: true
+      #     sign-commits: true
