@@ -4,7 +4,7 @@ on:
     - cron: "0 */6 * * *"
   workflow_dispatch:
 jobs:
-  tests:
+  update:
     runs-on: ubuntu-24.04
 
     steps:
@@ -31,31 +31,19 @@ jobs:
       - name: Update lock file
         run: nix flake update --commit-lock-file
 
-      - name: Get commit message
-        id: commit
+      # - name: Get commit message
+      #   id: commit
+      #   run: |
+      #     delimiter="$(openssl rand -hex 16)"
+      #     echo "message<<${delimiter}" >> "${GITHUB_OUTPUT}"
+      #     git log -1 --pretty=%B >> "${GITHUB_OUTPUT}"
+      #     echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+
+      #     delimiter="$(openssl rand -hex 16)"
+      #     echo "pr<<${delimiter}" >> "${GITHUB_OUTPUT}"
+      #     git log -1 --pretty=%B | tail +3 | awk -f ./.github/flake-to-markdown.awk >> "${GITHUB_OUTPUT}"
+      #     echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+
+      - name: Push to main
         run: |
-          delimiter="$(openssl rand -hex 16)"
-          echo "message<<${delimiter}" >> "${GITHUB_OUTPUT}"
-          git log -1 --pretty=%B >> "${GITHUB_OUTPUT}"
-          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
-
-          delimiter="$(openssl rand -hex 16)"
-          echo "pr<<${delimiter}" >> "${GITHUB_OUTPUT}"
-          git log -1 --pretty=%B | tail +3 | awk -f ./.github/flake-to-markdown.awk >> "${GITHUB_OUTPUT}"
-          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
-
-      # Undo the commit as the action will do a new commit with signing using the GH API
-      - name: Undo the latest commit
-        run: git reset --soft "${{ github.sha }}"
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.8
-        with:
-          token: "${{ steps.generate-token.outputs.token }}"
-          title: "Automated Flake update"
-          body: "${{ steps.commit.outputs.pr }}"
-          commit-message: "${{ steps.commit.outputs.message }}"
-          add-paths: |
-            flake.lock
-          delete-branch: true
-          sign-commits: true
+          git push origin main
