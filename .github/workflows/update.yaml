@@ -31,36 +31,38 @@ jobs:
       - name: Update lock file
         run: nix flake update --commit-lock-file
 
-      - name: Push changes
+      - name: Get commit message
+        id: commit
         run: |
-          git remote set-url origin https://${{ steps.generate-token.outputs.token }}@github.com/${{ github.repository }}.git
-          git push
+          delimiter="$(openssl rand -hex 16)"
+          echo "message<<${delimiter}" >> "${GITHUB_OUTPUT}"
+          git log -1 --pretty=%B >> "${GITHUB_OUTPUT}"
+          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
-      # - name: Get commit message
-      #   id: commit
-      #   run: |
-      #     delimiter="$(openssl rand -hex 16)"
-      #     echo "message<<${delimiter}" >> "${GITHUB_OUTPUT}"
-      #     git log -1 --pretty=%B >> "${GITHUB_OUTPUT}"
-      #     echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+          delimiter="$(openssl rand -hex 16)"
+          echo "pr<<${delimiter}" >> "${GITHUB_OUTPUT}"
+          git log -1 --pretty=%B | tail +3 | awk -f ./.github/flake-to-markdown.awk >> "${GITHUB_OUTPUT}"
+          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
-      #     delimiter="$(openssl rand -hex 16)"
-      #     echo "pr<<${delimiter}" >> "${GITHUB_OUTPUT}"
-      #     git log -1 --pretty=%B | tail +3 | awk -f ./.github/flake-to-markdown.awk >> "${GITHUB_OUTPUT}"
-      #     echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+      # Undo the commit as the action will do a new commit with signing using the GH API
+      - name: Undo the latest commit
+        run: git reset --soft "${{ github.sha }}"
 
-      # # Undo the commit as the action will do a new commit with signing using the GH API
-      # - name: Undo the latest commit
-      #   run: git reset --soft "${{ github.sha }}"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7.0.8
+        id: create-pr
+        with:
+          token: "${{ steps.generate-token.outputs.token }}"
+          title: "Automated Flake update"
+          body: "${{ steps.commit.outputs.pr }}"
+          commit-message: "${{ steps.commit.outputs.message }}"
+          add-paths: |
+            flake.lock
+          delete-branch: true
+          sign-commits: true
 
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v7.0.8
-      #   with:
-      #     token: "${{ steps.generate-token.outputs.token }}"
-      #     title: "Automated Flake update"
-      #     body: "${{ steps.commit.outputs.pr }}"
-      #     commit-message: "${{ steps.commit.outputs.message }}"
-      #     add-paths: |
-      #       flake.lock
-      #     delete-branch: true
-      #     sign-commits: true
+      - name: Merge
+        run: |
+          gh pr merge --auto --merge ${{ steps.create-pr.outputs.pull-request-number }}
+        env:
+          GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
