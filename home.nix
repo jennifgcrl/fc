@@ -47,6 +47,13 @@
     kubectl
   ];
 
+  home.file = {
+    "bin/update" = {
+      source = ./scripts/update;
+      executable = true;
+    };
+  };
+
   programs = {
     git = {
       enable = true;
