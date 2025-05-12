@@ -41,8 +41,6 @@
   # will be deprecated; currently needed for services.jankyborders
   system.primaryUser = "jennifer";
 
-  services.jankyborders.enable = true;
-
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
