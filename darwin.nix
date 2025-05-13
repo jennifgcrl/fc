@@ -11,6 +11,8 @@
 
   nix.settings.trusted-users = ["jennifer"];
 
+  nix.settings.sandbox = true;
+
   nix.gc.automatic = true;
 
   # possibly doesn't work over tailscale ssh?
