@@ -14,7 +14,7 @@
     gdu
     podman
     doggo
-    uutils-coreutils
+    uutils-coreutils-noprefix
     hyperfine
 
     # fonts
