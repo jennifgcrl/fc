@@ -154,6 +154,7 @@
     jq.enable = true;
     htop.enable = true;
     ranger.enable = true;
+    gh.enable = true;
     neovim = {
       enable = true;
       viAlias = true;
