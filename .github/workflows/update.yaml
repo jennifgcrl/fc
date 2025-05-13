@@ -62,6 +62,7 @@ jobs:
           sign-commits: true
 
       - name: Merge
+        if: steps.create-pr.outputs.pull-request-operation == 'created'
         run: |
           gh pr merge --auto --merge ${{ steps.create-pr.outputs.pull-request-number }}
         env:
