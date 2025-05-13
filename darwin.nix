@@ -38,7 +38,7 @@
     shell = pkgs.zsh;
   };
 
-  # will be deprecated; currently needed for services.jankyborders
+  # will be deprecated; currently needed for system.defaults.*
   system.primaryUser = "jennifer";
 
   # The platform the configuration will be used on.
