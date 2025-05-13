@@ -13,6 +13,9 @@
     hwatch
     gdu
     podman
+    doggo
+    uutils-coreutils
+    hyperfine
 
     # fonts
     departure-mono
