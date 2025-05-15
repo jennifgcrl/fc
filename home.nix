@@ -19,6 +19,7 @@
 
     # fonts
     departure-mono
+    dm-mono
     noto-fonts
     recursive
 
