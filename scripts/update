@@ -23,7 +23,7 @@ REMOTE=$(git rev-parse origin/main)
 
 if [[ "$LOCAL" != "$REMOTE" ]]; then
   echo "🔄 Rebasing onto origin/main..."
-  git rebase origin/main
+  git rebase origin/main -Xours
   REBASED=1
 else
   echo "✅ Already up to date with origin/main."
@@ -52,5 +52,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
 else
   echo "📭 No changes to commit."
 fi
+
+nix flake archive
 
 echo "✨ Update complete!"
