@@ -81,7 +81,6 @@
       "discord"
       "element"
       "figma"
-      "font-dm-sans"
       "ghostty"
       "granola"
       "hammerspoon"
