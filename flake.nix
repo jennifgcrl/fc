@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin/pull/1341/merge";
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -13,10 +13,21 @@
 
   outputs = {
     self,
+    nixpkgs,
     nix-darwin,
     home-manager,
     ...
   }: let
+    forAllSystems = f:
+      nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ] (system: f system);
+
+    forAllSystemsPkgs = f:
+      forAllSystems (system: f nixpkgs.legacyPackages.${system});
+
     darwinSystem = system: extraModules: hostName:
       nix-darwin.lib.darwinSystem {
         inherit system;
@@ -38,5 +49,12 @@
       };
   in {
     darwinConfigurations."laptop3" = darwinSystem "aarch64-darwin" [] "laptop3";
+
+    devShells = forAllSystemsPkgs (pkgs: {
+      default = pkgs.mkShell {
+        packages = [
+        ];
+      };
+    });
   };
 }
