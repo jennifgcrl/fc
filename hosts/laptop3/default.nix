@@ -3,12 +3,9 @@
   pkgs,
   ...
 }: {
-  # nix
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.trusted-users = ["jennifer"];
-  nix.settings.sandbox = true;
-  nixpkgs.config.allowUnfree = true;
-  nix.gc.automatic = true;
+  imports = [
+    ../../profiles/common
+  ];
 
   # possibly doesn't work over tailscale ssh?
   # nix.distributedBuilds = true;
@@ -31,19 +28,11 @@
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  # system
-  networking.hostName = hostName;
-
-  environment.systemPackages = [];
-
   # user
   # unfortunately still need to run chsh manually
   users.users.jennifer = {
     home = "/Users/jennifer";
-    shell = pkgs.zsh;
   };
-  environment.shells = [pkgs.zsh];
-  programs.zsh.enable = true;
 
   # macos
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;

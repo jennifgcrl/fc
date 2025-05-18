@@ -36,7 +36,7 @@
       nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
-          inherit self nix-darwin;
+          inherit self nix-darwin hostName;
         };
         modules =
           [
