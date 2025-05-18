@@ -1,6 +1,7 @@
 {
   self,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
@@ -32,6 +33,23 @@
   # unfortunately still need to run chsh manually
   users.users.jennifer = {
     home = "/Users/jennifer";
+  };
+
+  home-manager.users.jennifer = {
+    programs.zsh = {
+      sessionVariables = {
+        SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+      };
+      initContent = lib.mkMerge [
+        (
+          lib.mkOrder 1001 ''
+            path+=~/Library/Application\ Support/JetBrains/Toolbox/scripts
+            path+=~/.cache/lm-studio/bin
+            path+=/opt/homebrew/bin
+          ''
+        )
+      ];
+    };
   };
 
   # macos
