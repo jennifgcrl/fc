@@ -37,9 +37,9 @@ fi
 
 echo "🔨 Rebuilding system..."
 if [[ $(uname) == "Linux" ]]; then
-  sudo nixos-rebuild switch --flake .
+  sudo nixos-rebuild switch --flake . --upgrade
 else # Darwin
-  sudo darwin-rebuild switch --flake .
+  sudo darwin-rebuild switch --flake . --upgrade
 fi
 
 if [[ -n "$(git status --porcelain)" ]]; then

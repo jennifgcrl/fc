@@ -30,6 +30,7 @@
       tree
       neovim
     ];
+    shell = pkgs.zsh;
   };
 
   environment.systemPackages = with pkgs; [
