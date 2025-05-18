@@ -1,25 +1,16 @@
 {
   config,
   pkgs,
-  hostName,
   lib,
   ...
 }: {
-  # nix
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nixpkgs.config.allowUnfree = true;
-  # see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
+  imports = [
+    ./hardware.nix
+    ../../profiles/common
+  ];
 
   # nixos
   system.stateVersion = "24.11";
-
-  # hardware
-  imports = [
-    ./hardware.nix
-  ];
-
-  # system
-  networking.hostName = hostName;
 
   boot.loader.efi.canTouchEfiVariables = true; # not sure if needed
   boot.initrd.systemd.enable = true;
@@ -54,12 +45,7 @@
   users.users.jennifer = {
     isNormalUser = true;
     extraGroups = ["wheel"];
-    shell = pkgs.zsh;
   };
-  environment.shells = [pkgs.zsh];
-  programs.zsh.enable = true;
-
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
-
 }
