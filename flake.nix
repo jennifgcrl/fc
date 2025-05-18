@@ -28,15 +28,15 @@
     forAllSystemsPkgs = f:
       forAllSystems (system: f nixpkgs.legacyPackages.${system});
 
-    darwinSystem = system: extraModules: hostName:
+    darwinSystem = hostName: extraModules:
       nix-darwin.lib.darwinSystem {
-        inherit system;
+        system = "aarch64-darwin";
         specialArgs = {
           inherit self nix-darwin;
         };
         modules =
           [
-            ./darwin.nix
+            ./hosts/${hostName}
 
             home-manager.darwinModules.home-manager
             {
@@ -47,8 +47,30 @@
           ]
           ++ extraModules;
       };
+
+    nixosSystem = hostName: extraModules:
+      nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit self nixpkgs hostName;
+        };
+        modules =
+          [
+            ./hosts/${hostName}
+
+            # home-manager.nixosModules.home-manager
+            # {
+            #   home-manager.useGlobalPkgs = true;
+            #   home-manager.useUserPackages = true;
+            #   home-manager.users.jennifer = import ./home.nix;
+            # }
+          ]
+          ++ extraModules;
+      };
   in {
-    darwinConfigurations."laptop3" = darwinSystem "aarch64-darwin" [] "laptop3";
+    darwinConfigurations."laptop3" = darwinSystem "laptop3" [];
+
+    nixosConfigurations."server1" = nixosSystem "server1" [];
 
     devShells = forAllSystemsPkgs (pkgs: {
       default = pkgs.mkShell {
