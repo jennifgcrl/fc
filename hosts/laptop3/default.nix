@@ -3,16 +3,11 @@
   pkgs,
   ...
 }: {
-  environment.systemPackages = [];
-
-  environment.shells = [pkgs.zsh];
-
+  # nix
   nix.settings.experimental-features = ["nix-command" "flakes"];
-
   nix.settings.trusted-users = ["jennifer"];
-
   nix.settings.sandbox = true;
-
+  nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = true;
 
   # possibly doesn't work over tailscale ssh?
@@ -25,30 +20,33 @@
   #   }
   # ];
 
-  programs.zsh.enable = true;
-
-  # Set Git commit hash for darwin-version.
-  system.configurationRevision = self.rev or self.dirtyRev or null;
-
+  # nix-darwin
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 6;
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = self.rev or self.dirtyRev or null;
+  # will be deprecated; currently needed for system.defaults.*
+  system.primaryUser = "jennifer";
+  # The platform the configuration will be used on.
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
-  # unfortunately still need to chsh to set this
+  # system
+  networking.hostName = hostName;
+
+  environment.systemPackages = [];
+
+  # user
+  # unfortunately still need to run chsh manually
   users.users.jennifer = {
     home = "/Users/jennifer";
     shell = pkgs.zsh;
   };
+  environment.shells = [pkgs.zsh];
+  programs.zsh.enable = true;
 
-  # will be deprecated; currently needed for system.defaults.*
-  system.primaryUser = "jennifer";
-
-  # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = "aarch64-darwin";
-  nixpkgs.config.allowUnfree = true;
-
+  # macos
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
-
   homebrew = {
     enable = true;
     user = "jennifer";
