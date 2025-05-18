@@ -9,6 +9,9 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -16,6 +19,7 @@
     nixpkgs,
     nix-darwin,
     home-manager,
+    lanzaboote,
     ...
   }: let
     forAllSystems = f:
@@ -56,6 +60,8 @@
         };
         modules =
           [
+            lanzaboote.nixosModules.lanzaboote
+
             ./hosts/${hostName}
 
             home-manager.nixosModules.home-manager
