@@ -3,8 +3,10 @@
   hostName,
   ...
 }: {
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+
   imports = [
-    /etc/nixos/hardware-configuration.nix
+    ./hardware.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
