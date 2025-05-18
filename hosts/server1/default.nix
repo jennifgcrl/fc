@@ -21,6 +21,8 @@
     keyMap = "dvorak";
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   users.users.jennifer = {
     isNormalUser = true;
     extraGroups = ["wheel"];
