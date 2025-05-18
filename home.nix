@@ -90,7 +90,6 @@
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
       sessionVariables = {
-        SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
         WORDCHARS = "";
       };
       shellAliases = {
@@ -107,14 +106,19 @@
             setopt printexitvalue
             setopt dvorak
             setopt interactivecomments
+            setopt completeinword
+            setopt correct
+            setopt extendedglob
+            setopt extendedhistory
+            setopt incappendhistory
+            setopt longlistjobs
+            setopt nohup
+            setopt transientrprompt
 
             path+=~/bin
             path+=~/go/bin
             path+=~/.bun/bin
             path+=~/.npm-packages/bin
-            path+=~/Library/Application\ Support/JetBrains/Toolbox/scripts
-            path+=~/.cache/lm-studio/bin
-            path+=/opt/homebrew/bin
 
             r() {
                 temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
