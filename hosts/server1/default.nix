@@ -8,12 +8,15 @@
   # nix
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
+  # see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
+
+  # nixos
+  system.stateVersion = "24.11";
 
   # hardware
   imports = [
     ./hardware.nix
   ];
-  services.fwupd.enable = true;
 
   # system
   networking.hostName = hostName;
@@ -30,7 +33,7 @@
   console = {
     keyMap = "dvorak";
   };
-
+  services.fwupd.enable = true;
   environment.systemPackages = with pkgs; [
     neovim
     tpm2-tss
@@ -59,6 +62,4 @@
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
 
-  # see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
-  system.stateVersion = "24.11";
 }
