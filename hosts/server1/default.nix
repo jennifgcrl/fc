@@ -38,6 +38,9 @@
     sbctl
   ];
 
+  environment.shells = [pkgs.zsh];
+  programs.zsh.enable = true;
+
   services.tailscale.enable = true;
 
   # see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
