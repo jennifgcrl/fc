@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   hostName,
   ...
 }: {
@@ -10,7 +8,13 @@
   nix.settings.trusted-users = ["jennifer"];
   nix.settings.sandbox = true;
   nixpkgs.config.allowUnfree = true;
-  nix.gc.automatic = true;  # see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
+  nix.gc.automatic = true;
+
+  # system
+  networking.hostName = hostName;
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
 
   # user
   users.users.jennifer = {
@@ -18,6 +22,4 @@
   };
   environment.shells = [pkgs.zsh];
   programs.zsh.enable = true;
-
-  networking.hostName = hostName;
 }
