@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+set -e
+
+git add -A
+pre-commit run || true
+git add -A
+git commit -m "wip"
