@@ -101,13 +101,15 @@
         WORDCHARS = "";
       };
       shellAliases = {
-        # https://github.com/NixOS/nixpkgs/pull/119052
         k = "kubectl";
+        kg = "kubectl get";
+        kd = "kubectl describe";
         gp = "git push";
         zed = "zed-preview";
       };
       initContent = lib.mkMerge [
         (
+          # https://github.com/NixOS/nixpkgs/pull/119052
           lib.mkOrder 1000 ''
             bindkey -e
             bindkey \^U backward-kill-line

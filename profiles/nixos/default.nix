@@ -7,6 +7,20 @@
   users.users.jennifer = {
     isNormalUser = true;
     extraGroups = ["wheel"];
+
+    # for podman
+    subUidRanges = [
+      {
+        startUid = 100000;
+        count = 65536;
+      }
+    ];
+    subGidRanges = [
+      {
+        startGid = 100000;
+        count = 65536;
+      }
+    ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -24,6 +38,8 @@
   services.fstrim.enable = true;
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
+
+  virtualisation.podman.enable = true;
 
   # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
   # see: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
