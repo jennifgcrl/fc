@@ -56,6 +56,10 @@
       source = ./scripts/update;
       executable = true;
     };
+    "bin/wip" = {
+      source = ./scripts/wip;
+      executable = true;
+    };
   };
 
   programs = {
