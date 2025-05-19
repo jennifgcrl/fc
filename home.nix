@@ -82,6 +82,9 @@
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
+      config = {
+        warn_timeout = 0;
+      };
     };
     bash.enable = true;
     home-manager.enable = true;

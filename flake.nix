@@ -32,47 +32,40 @@
     forAllSystemsPkgs = f:
       forAllSystems (system: f nixpkgs.legacyPackages.${system});
 
-    darwinSystem = hostName: extraModules:
+    darwinSystem = hostName:
       nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
           inherit self nix-darwin hostName;
         };
-        modules =
-          [
-            ./hosts/${hostName}
-
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.users.jennifer = import ./home.nix;
-            }
-          ]
-          ++ extraModules;
+        modules = [
+          ./hosts/${hostName}
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.users.jennifer = import ./home.nix;
+          }
+        ];
       };
 
-    nixosSystem = hostName: extraModules:
+    nixosSystem = hostName:
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
           inherit self nixpkgs hostName;
         };
-        modules =
-          [
-            lanzaboote.nixosModules.lanzaboote
-
-            ./hosts/${hostName}
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.users.jennifer = import ./home.nix;
-            }
-          ]
-          ++ extraModules;
+        modules = [
+          lanzaboote.nixosModules.lanzaboote
+          ./hosts/${hostName}
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.users.jennifer = import ./home.nix;
+          }
+        ];
       };
   in {
-    darwinConfigurations."laptop3" = darwinSystem "laptop3" [];
-    nixosConfigurations."server1" = nixosSystem "server1" [];
-    nixosConfigurations."server3" = nixosSystem "server3" [];
+    darwinConfigurations."laptop3" = darwinSystem "laptop3";
+    nixosConfigurations."server1" = nixosSystem "server1";
+    nixosConfigurations."server3" = nixosSystem "server3";
 
     devShells = forAllSystemsPkgs (pkgs: {
       default = pkgs.mkShell {
