@@ -31,6 +31,7 @@
     # python
     uv
     basedpyright
+    ty
     ruff
     python312Packages.python-lsp-server
 
