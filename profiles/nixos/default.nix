@@ -14,6 +14,7 @@
     ghostty.terminfo
   ];
 
+  services.fwupd.enable = true;
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
 }
