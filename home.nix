@@ -151,6 +151,7 @@
           plugin = tmuxPlugins.tokyo-night-tmux;
           extraConfig = ''
             set -g @theme_variation 'storm'
+            set -g @tokyo-night-tmux_show_hostname 1
           '';
         }
         tmuxPlugins.fzf-tmux-url
