@@ -71,8 +71,8 @@
       };
   in {
     darwinConfigurations."laptop3" = darwinSystem "laptop3" [];
-
     nixosConfigurations."server1" = nixosSystem "server1" [];
+    nixosConfigurations."server3" = nixosSystem "server3" [];
 
     devShells = forAllSystemsPkgs (pkgs: {
       default = pkgs.mkShell {
