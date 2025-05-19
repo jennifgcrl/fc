@@ -14,7 +14,17 @@
     ghostty.terminfo
   ];
 
+  boot.kernel.sysctl = {
+    # for tailscale
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
+  };
+
   services.fwupd.enable = true;
+  services.fstrim.enable = true;
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
+
+  # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
+  # see: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
 }
