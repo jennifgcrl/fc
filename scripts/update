@@ -33,6 +33,7 @@ fi
 if [[ "$STASHED" -eq 1 ]]; then
   echo "📂 Applying stashed changes..."
   git stash pop
+  git add -A
 fi
 
 echo "🔨 Rebuilding system..."
