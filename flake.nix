@@ -63,7 +63,8 @@
 
     devShells = forAllSystemsPkgs (pkgs: {
       default = pkgs.mkShell {
-        packages = [
+        packages = with pkgs; [
+          pre-commit
         ];
       };
     });
