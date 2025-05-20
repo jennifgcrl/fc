@@ -27,7 +27,7 @@
           #font-family = "DM Mono";
           #font-family = "Triskweline";
           font-family = "Departure Mono";
-          font-size = 18;
+          font-size = 12;
           background-opacity = 0.80;
           background-blur = true;
           window-step-resize = true;
