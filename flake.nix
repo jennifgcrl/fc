@@ -12,6 +12,8 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
+    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs = {
@@ -19,7 +21,6 @@
     nixpkgs,
     nix-darwin,
     home-manager,
-    lanzaboote,
     ...
   }: let
     forAllSystems = f:
@@ -36,14 +37,10 @@
       nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
-          inherit self nix-darwin hostName;
+          inherit self home-manager hostName;
         };
         modules = [
           ./hosts/${hostName}
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.users.jennifer = import ./home.nix;
-          }
         ];
       };
 
@@ -51,15 +48,10 @@
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          inherit self nixpkgs hostName;
+          inherit self nixpkgs home-manager hostName;
         };
         modules = [
-          lanzaboote.nixosModules.lanzaboote
           ./hosts/${hostName}
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.users.jennifer = import ./home.nix;
-          }
         ];
       };
   in {

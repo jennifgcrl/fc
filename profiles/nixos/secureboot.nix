@@ -1,8 +1,12 @@
 {
   lib,
   pkgs,
+  lanzaboote,
   ...
 }: {
+  imports = [
+    lanzaboote.nixosModules.lanzaboote
+  ];
   boot.loader.efi.canTouchEfiVariables = true; # not sure if needed
   boot.initrd.systemd.enable = true;
   boot.loader.systemd-boot.enable = lib.mkForce false;
