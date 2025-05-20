@@ -14,11 +14,12 @@
     recursive
   ];
 
-  # environment.variables.NIXOS_OZONE_WL = "1";
+  environment.variables.NIXOS_OZONE_WL = "1";
 
   home-manager.users.jennifer = {
     home.packages = with pkgs; [
       google-chrome
+      zed-editor
     ];
 
     programs = {
@@ -32,8 +33,8 @@
           #font-family = "Triskweline";
           font-family = "Departure Mono";
           font-size = 12;
-          background-opacity = 0.80;
-          background-blur = true;
+          #background-opacity = 0.80;
+          #background-blur = true;
           window-step-resize = true;
           window-padding-x = 0;
           window-padding-y = 0;
@@ -41,6 +42,7 @@
           #minimum-contrast = 1.3;
           cursor-style = "block";
           shell-integration-features = "no-cursor";
+	  window-decoration = "none";
         };
       };
     };
