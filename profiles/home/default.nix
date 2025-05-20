@@ -20,6 +20,7 @@
       file
 
       # fonts
+      # TODO: maybe put this in fonts.packages?
       departure-mono
       dm-mono
       noto-fonts
