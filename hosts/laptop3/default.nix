@@ -1,5 +1,6 @@
 {
   self,
+  pkgs,
   lib,
   ...
 }: {
@@ -50,6 +51,10 @@
       ];
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    skimpdf
+  ];
 
   # macos
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
