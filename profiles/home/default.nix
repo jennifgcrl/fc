@@ -17,6 +17,7 @@
       doggo
       uutils-coreutils-noprefix
       hyperfine
+      file
 
       # fonts
       departure-mono
@@ -96,7 +97,6 @@
           warn_timeout = 0;
         };
       };
-      bash.enable = true;
       home-manager.enable = true;
       zsh = {
         enable = true;

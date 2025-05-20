@@ -9,8 +9,11 @@
 
   # environment.variables.NIXOS_OZONE_WL = "1";
 
-  # home-manager.users.jennifer = {
-  #   programs.niri.settings = {
-  #   };
-  # };
+  home-manager.users.jennifer = {
+    programs = {
+      ghostty = {
+        enable = true;
+      };
+    };
+  };
 }
