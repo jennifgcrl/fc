@@ -6,6 +6,7 @@
 }: {
   imports = [
     ../../profiles/darwin
+    ../../profiles/home
   ];
 
   # possibly doesn't work over tailscale ssh?
@@ -36,9 +37,6 @@
   };
 
   home-manager.users.jennifer = {
-    imports = [
-      ../../profiles/home
-    ];
     programs.zsh = {
       sessionVariables = {
         SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
