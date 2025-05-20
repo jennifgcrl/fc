@@ -113,7 +113,6 @@
       "rectangle"
       "secretive"
       "signal"
-      "skim"
       "slack"
       "standard-notes"
       "steam"
