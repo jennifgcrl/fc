@@ -50,11 +50,10 @@
         )
       ];
     };
+    home.packages = with pkgs; [
+      skimpdf
+    ];
   };
-
-  environment.systemPackages = with pkgs; [
-    skimpdf
-  ];
 
   # macos
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
