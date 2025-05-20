@@ -17,6 +17,10 @@
   # environment.variables.NIXOS_OZONE_WL = "1";
 
   home-manager.users.jennifer = {
+    home.packages = with pkgs; [
+      google-chrome
+    ];
+
     programs = {
       ghostty = {
         enable = true;
