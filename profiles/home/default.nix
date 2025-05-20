@@ -54,13 +54,17 @@
 
   home.file = {
     "bin/update" = {
-      source = ./scripts/update;
+      source = ../../scripts/update;
       executable = true;
     };
     "bin/wip" = {
-      source = ./scripts/wip;
+      source = ../../scripts/wip;
       executable = true;
     };
+    # TODO: enable this after setting up secrets
+    # ".npmrc".text = ''
+    #   prefix=~/.npm-packages
+    # '';
   };
 
   programs = {
