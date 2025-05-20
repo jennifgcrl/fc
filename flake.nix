@@ -21,6 +21,8 @@
     nixpkgs,
     nix-darwin,
     home-manager,
+    lanzaboote,
+    niri,
     ...
   }: let
     forAllSystems = f:
@@ -37,7 +39,7 @@
       nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
-          inherit self home-manager hostName;
+          inherit self hostName home-manager;
         };
         modules = [
           ./hosts/${hostName}
@@ -48,7 +50,7 @@
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          inherit self nixpkgs home-manager hostName;
+          inherit self hostName home-manager lanzaboote niri;
         };
         modules = [
           ./hosts/${hostName}
