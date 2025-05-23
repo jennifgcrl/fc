@@ -18,11 +18,45 @@
 
   environment.variables.NIXOS_OZONE_WL = "1";
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # niri defaults require:
+  # * portal-gnome
+  #   * nautilus
+  # * portal-gtk
+  # * gnome-keyring
+  # TODO: maybe look into niri-portals.conf & switch to kde equivs
+
+  xdg.portal = {
+    # xdgOpenUsePortal = true;
+    enable = true;
+    wlr.enable = true;
+    # lxqt.enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    # xdg-desktop-portal-gnome
+    # xdg-desktop-portal-gtk
+    # xdg-desktop-portal-hyprland
+    # pkgs.kdePackages.xdg-desktop-portal-kde
+    # xdg-desktop-portal-wlr
+    nautilus
+    egl-wayland
+    gnome-keyring
+  ];
+
   home-manager.users.jennifer = {
     home.packages = with pkgs; [
-      google-chrome
-      zed-editor
       gnome-software
+      j4-dmenu-desktop
+      bemenu
     ];
 
     programs = {
