@@ -14,6 +14,8 @@
     recursive
   ];
 
+  services.flatpak.enable = true;
+
   environment.variables.NIXOS_OZONE_WL = "1";
 
   home-manager.users.jennifer = {
@@ -42,7 +44,7 @@
           #minimum-contrast = 1.3;
           cursor-style = "block";
           shell-integration-features = "no-cursor";
-	  window-decoration = "none";
+          window-decoration = "none";
         };
       };
     };
