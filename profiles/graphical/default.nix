@@ -22,6 +22,7 @@
     home.packages = with pkgs; [
       google-chrome
       zed-editor
+      gnome-software
     ];
 
     programs = {
