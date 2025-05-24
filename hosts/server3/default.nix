@@ -4,8 +4,8 @@
     ../../profiles/nixos
     ../../profiles/nixos/secureboot.nix
     ../../profiles/nixos/nvidia.nix
+    ../../profiles/nixos/graphical.nix
     ../../profiles/home
-    ../../profiles/graphical
   ];
 
   # nixos

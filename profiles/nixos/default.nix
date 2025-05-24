@@ -13,6 +13,31 @@
   console.keyMap = "dvorak";
   hardware.enableAllFirmware = true;
 
+  environment.systemPackages = with pkgs; [
+    neovim
+    ghostty.terminfo
+
+    # flatpaks don't seem to be able to use user namespaces without this(?)
+    bubblewrap
+  ];
+
+  boot.kernel.sysctl = {
+    # for tailscale
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
+  };
+
+  services.fwupd.enable = true;
+  services.fstrim.enable = true;
+  services.tailscale.enable = true;
+  services.eternal-terminal.enable = true;
+  services.ollama.enable = true;
+
+  virtualisation.podman.enable = true;
+
+  # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
+  # see: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
+
   users.users.jennifer = {
     isNormalUser = true;
     extraGroups = ["wheel"];
@@ -32,25 +57,13 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    neovim
-    ghostty.terminfo
-  ];
-
-  boot.kernel.sysctl = {
-    # for tailscale
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
+  home-manager.users.jennifer = {
+    programs = {
+      zsh = {
+        shellAliases = {
+          zed = "dev.zed.Zed-Preview";
+        };
+      };
+    };
   };
-
-  services.fwupd.enable = true;
-  services.fstrim.enable = true;
-  services.tailscale.enable = true;
-  services.eternal-terminal.enable = true;
-  services.ollama.enable = true;
-
-  virtualisation.podman.enable = true;
-
-  # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
-  # see: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
 }

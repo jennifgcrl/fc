@@ -116,7 +116,6 @@
           kg = "kubectl get";
           kd = "kubectl describe";
           gp = "git push";
-          zed = "zed-preview";
         };
         initContent = lib.mkMerge [
           (
