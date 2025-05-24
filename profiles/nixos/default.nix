@@ -16,9 +16,6 @@
   environment.systemPackages = with pkgs; [
     neovim
     ghostty.terminfo
-
-    # flatpaks don't seem to be able to use user namespaces without this(?)
-    bubblewrap
   ];
 
   boot.kernel.sysctl = {
