@@ -1,4 +1,4 @@
-{pkgs, niri, ...}: {
+{pkgs, niri, ...}: rec {
   imports = [
     niri.nixosModules.niri
   ];
@@ -15,6 +15,29 @@
   ];
 
   services.flatpak.enable = true;
+
+  # allow flatpaks to use system fonts
+  system.fsPackages = [ pkgs.bindfs ];
+  fileSystems = let
+    mkRoSymBind = path: {
+      device = path;
+      fsType = "fuse.bindfs";
+      options = [ "ro" "resolve-symlinks" "x-gvfs-hide" ];
+    };
+    aggregated = pkgs.buildEnv {
+        name = "system-fonts-and-icons";
+        paths = fonts.packages ++ (with pkgs; [
+          # Add your cursor themes and icon packages here
+          # bibata-cursors
+          # gnome.gnome-themes-extra
+          # etc.
+        ]);
+        pathsToLink = [ "/share/fonts" "/share/icons" ];
+    };
+  in {
+    "/usr/share/fonts" = mkRoSymBind "${aggregated}/share/fonts";
+    "/usr/share/icons" = mkRoSymBind "${aggregated}/share/icons";
+  };
 
   environment.variables.NIXOS_OZONE_WL = "1";
 
