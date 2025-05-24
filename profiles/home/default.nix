@@ -101,7 +101,12 @@
       home-manager.enable = true;
       zsh = {
         enable = true;
-        syntaxHighlighting.enable = true;
+        syntaxHighlighting = {
+          enable = true;
+          styles = {
+            comment = "none";
+          };
+        };
         autosuggestion.enable = true;
         sessionVariables = {
           WORDCHARS = "";
