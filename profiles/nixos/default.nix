@@ -16,6 +16,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     ghostty.terminfo
+    pciutils
   ];
 
   boot.kernel.sysctl = {
