@@ -1,10 +1,9 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
-  services.xserver.videoDrivers = ["nvidia"];
-
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
@@ -12,4 +11,13 @@
     nvidiaSettings = false;
     # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
+
+  services.xserver.videoDrivers = ["nvidia"];
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+  };
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.nvidia
+  ];
 }
