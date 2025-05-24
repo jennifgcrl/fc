@@ -73,6 +73,8 @@
     nautilus
     egl-wayland
     gnome-keyring
+
+    xwayland-satellite
   ];
 
   home-manager.users.jennifer = {
