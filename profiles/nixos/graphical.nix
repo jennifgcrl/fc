@@ -26,12 +26,12 @@
     };
     aggregated = pkgs.buildEnv {
         name = "system-fonts-and-icons";
-        paths = fonts.packages ++ (with pkgs; [
+        paths = fonts.packages ++ [
           # Add your cursor themes and icon packages here
           # bibata-cursors
           # gnome.gnome-themes-extra
           # etc.
-        ]);
+        ];
         pathsToLink = [ "/share/fonts" "/share/icons" ];
     };
   in {
@@ -64,14 +64,18 @@
     ];
   };
 
+  # sound
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    #jack.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
-    # xdg-desktop-portal-gnome
-    # xdg-desktop-portal-gtk
-    # xdg-desktop-portal-hyprland
-    # pkgs.kdePackages.xdg-desktop-portal-kde
-    # xdg-desktop-portal-wlr
     nautilus
-    egl-wayland
     gnome-keyring
 
     xwayland-satellite
@@ -79,9 +83,9 @@
 
   home-manager.users.jennifer = {
     home.packages = with pkgs; [
-      gnome-software
       j4-dmenu-desktop
       bemenu
+      zed-editor-fhs
     ];
 
     programs = {
@@ -105,6 +109,28 @@
           cursor-style = "block";
           shell-integration-features = "no-cursor";
           window-decoration = "none";
+        };
+      };
+      swaylock.enable = true;
+    };
+
+    services = {
+      swww.enable = true;
+      fnott = {
+        enable = true;
+        settings = {
+          main = {
+            title-color="a5adceff";
+            summary-color="c6d0f5ff";
+            body-color="c6d0f5ff";
+            background="303446ff";
+            border-color="8caaeeff";
+            progress-bar-color="737994ff";
+          };
+
+          critical = {
+            border-color="ef9f76ff";
+          };
         };
       };
     };
