@@ -1,4 +1,4 @@
-{pkgs, niri, ...}: rec {
+{pkgs, niri, ...}: {
   imports = [
     niri.nixosModules.niri
   ];
@@ -15,29 +15,6 @@
   ];
 
   services.flatpak.enable = true;
-
-  # allow flatpaks to use system fonts
-  system.fsPackages = [ pkgs.bindfs ];
-  fileSystems = let
-    mkRoSymBind = path: {
-      device = path;
-      fsType = "fuse.bindfs";
-      options = [ "ro" "resolve-symlinks" "x-gvfs-hide" ];
-    };
-    aggregated = pkgs.buildEnv {
-        name = "system-fonts-and-icons";
-        paths = fonts.packages ++ [
-          # Add your cursor themes and icon packages here
-          # bibata-cursors
-          # gnome.gnome-themes-extra
-          # etc.
-        ];
-        pathsToLink = [ "/share/fonts" "/share/icons" ];
-    };
-  in {
-    "/usr/share/fonts" = mkRoSymBind "${aggregated}/share/fonts";
-    "/usr/share/icons" = mkRoSymBind "${aggregated}/share/icons";
-  };
 
   environment.variables.NIXOS_OZONE_WL = "1";
 
@@ -78,7 +55,7 @@
     nautilus
     gnome-keyring
 
-    xwayland-satellite
+    xwayland-satellite # niri uses this for xwayland
   ];
 
   home-manager.users.jennifer = {
@@ -98,7 +75,7 @@
           #font-family = "DM Mono";
           #font-family = "Triskweline";
           font-family = "Departure Mono";
-          font-size = 12;
+          font-size = 10;
           #background-opacity = 0.80;
           #background-blur = true;
           window-step-resize = true;
