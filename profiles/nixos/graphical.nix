@@ -120,6 +120,8 @@
       fnott = {
         enable = true;
         settings = {
+          # i think this might be configured wrong
+
           main = {
             title-color="a5adceff";
             summary-color="c6d0f5ff";
