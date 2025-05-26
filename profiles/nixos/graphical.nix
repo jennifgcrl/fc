@@ -86,7 +86,8 @@
     services = {
       swww.enable = true;
       espanso = {
-        enable = true;
+        # maybe broken? https://github.com/NixOS/nixpkgs/pull/328890
+        enable = false;
         configs = {
           default = {
             keyboard_layout = {
