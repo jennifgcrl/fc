@@ -52,7 +52,7 @@
       # clis
       awscli2
       google-cloud-sdk
-      kubectl
+      kubecolor
     ];
 
     home.file = {
@@ -112,9 +112,10 @@
           WORDCHARS = "";
         };
         shellAliases = {
-          k = "kubectl";
-          kg = "kubectl get";
-          kd = "kubectl describe";
+          k = "kubecolor";
+          kubectl = "kubecolor";
+          kg = "kubecolor get";
+          kd = "kubecolor describe";
           gp = "git push";
         };
         initContent = lib.mkMerge [
@@ -141,12 +142,12 @@
               path+=~/.npm-packages/bin
 
               r() {
-              temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
-              ranger --choosedir="$temp_file" -- "''${@:-$PWD}"
-              if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
-              cd -- "$chosen_dir"
-              fi
-              rm -f -- "$temp_file"
+                temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+                ranger --choosedir="$temp_file" -- "''${@:-$PWD}"
+                if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+                  cd -- "$chosen_dir"
+                fi
+                rm -f -- "$temp_file"
               }
             ''
           )
