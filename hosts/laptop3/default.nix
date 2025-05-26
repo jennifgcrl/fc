@@ -107,6 +107,7 @@
       "cursor"
       "discord"
       "granola"
+      "google-chrome"
       "jetbrains-toolbox"
       "ledger-live"
       "lm-studio"
