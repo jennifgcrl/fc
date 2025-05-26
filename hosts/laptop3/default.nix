@@ -53,6 +53,11 @@
     };
     home.packages = with pkgs; [
       skimpdf
+      rectangle
+      monitorcontrol
+      mountain-duck
+      utm
+      # calibre # broken. add to nixos?
     ];
   };
 
@@ -68,8 +73,8 @@
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
       "Blurred" = 1497527363;
+      "Flighty" = 1358823008;
       "Hour" = 569089415;
-      "Perplexity" = 6714467650;
       "Xcode" = 497799835;
     };
     taps = [
@@ -77,28 +82,23 @@
     ];
     brews = [
       "mas"
-      "syncthing"
-      "ec2-instance-selector"
+      "syncthing" # move to home.packages?
+      "ec2-instance-selector" # contribute to nixpkgs?
     ];
     casks = [
       # make macos usable
       "ghostty"
       "hammerspoon"
-      "rectangle"
       "secretive"
       "steermouse"
-      "tailscale"
+      "tailscale" # move to home.packages?
       "zed@preview"
 
       # tools, nice to have
       "alfred"
       "little-snitch"
       "macfuse"
-      "monitorcontrol"
-      "mountain-duck"
-      "mullvadvpn"
-      "podman-desktop"
-      "utm"
+      "mullvadvpn" # move to home.packages?
 
       # apps
       "calibre"
@@ -121,6 +121,7 @@
       "stolendata-mpv"
       "ticktick"
       "tor-browser"
+      "uhk-agent"
       "visual-studio-code"
 
       # dislike but need :(
@@ -128,5 +129,8 @@
       "loom"
       "zoom"
     ];
+
+    # manually installed
+    # - Epubor Ultimate
   };
 }
