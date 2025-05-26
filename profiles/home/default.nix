@@ -52,6 +52,7 @@
       # clis
       awscli2
       google-cloud-sdk
+      kubectl
       kubecolor
     ];
 
