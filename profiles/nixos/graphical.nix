@@ -31,7 +31,7 @@
 
   programs.niri = {
     enable = true;
-    package = pkgs.niri-unstable;
+    package = pkgs.niri;
   };
 
   home-manager.users.jennifer = {
@@ -42,12 +42,13 @@
         xdg-desktop-portal-gtk
       ];
       configPackages = [
-        pkgs.niri-unstable
+        pkgs.niri
       ];
     };
 
     home.packages = with pkgs; [
       xwayland-satellite # niri uses this for xwayland
+      xorg.xlsclients
       nautilus # gnome or gtk portal uses this for dialogs
       gnome-keyring # niri
       j4-dmenu-desktop

@@ -20,3 +20,4 @@ These are my personal nix configs.
 * sudo tailscale login; sudo tailscale up --ssh --advertise-exit-node; check if we can ssh in
 * ssh-keygen; add to github; git remote set-url origin git@github.com:jennifgcrl/fc.git; commit & push
 * check secure boot enabled & bios requires password
+* nix-shell -p xdg-user-dirs --command xdg-user-dirs-update
