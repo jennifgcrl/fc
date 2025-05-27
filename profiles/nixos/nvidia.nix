@@ -13,10 +13,27 @@
     # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
+  hardware.nvidia-container-toolkit.enable = true;
+
+  # ctk - Regular Docker
+  virtualisation.docker.daemon.settings.features.cdi = true;
+  # ctk - Rootless Docker
+  virtualisation.docker.rootless.daemon.settings.features.cdi = true;
+  # (podman doesn't need any configs)
+
+  hardware.graphics = {
+    extraPackages = with pkgs; [
+       nvidia-vaapi-driver
+    ];
+  };
+
   services.xserver.videoDrivers = ["nvidia"];
+
   services.ollama.package = pkgs.ollama-cuda;
   environment.systemPackages = with pkgs; [
     nvtopPackages.nvidia
+
+    nvidia-container-toolkit
 
     # list may not be complete
     cudaPackages.cuda_cuobjdump
