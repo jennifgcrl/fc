@@ -19,11 +19,28 @@
     pciutils
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.kernel.sysctl = {
     # for tailscale
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
+
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "524288";
+    }
+    {
+      domain = "*";
+      type = "hard";
+      item = "nofile";
+      value = "524288";
+    }
+  ];
 
   services.fwupd.enable = true;
   services.fstrim.enable = true;
