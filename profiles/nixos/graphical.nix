@@ -24,6 +24,8 @@
     #jack.enable = true;
   };
 
+  hardware.i2c.enable = true;
+
   fonts.packages = with pkgs; [
     departure-mono
     dm-mono
@@ -59,8 +61,10 @@
       bemenu
       zed-editor-fhs
       code-cursor
+      jetbrains.datagrip
       wl-clipboard-rs
       glances
+      ddcutil
     ];
 
     programs = {
