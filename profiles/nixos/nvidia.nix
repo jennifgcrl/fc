@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: {
   nixpkgs.config.cudaSupport = true;
@@ -10,7 +11,7 @@
     powerManagement.enable = true;
     open = lib.mkDefault true;
     nvidiaSettings = false;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   hardware.nvidia-container-toolkit.enable = true;
@@ -23,7 +24,7 @@
 
   hardware.graphics = {
     extraPackages = with pkgs; [
-       nvidia-vaapi-driver
+      nvidia-vaapi-driver
     ];
   };
 

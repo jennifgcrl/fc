@@ -1,4 +1,8 @@
-{pkgs, niri, ...}: {
+{
+  pkgs,
+  niri,
+  ...
+}: {
   imports = [
     niri.nixosModules.niri
   ];
@@ -54,6 +58,7 @@
       j4-dmenu-desktop
       bemenu
       zed-editor-fhs
+      code-cursor
       wl-clipboard-rs
       glances
     ];
@@ -68,7 +73,7 @@
           #font-family = "DM Mono";
           #font-family = "Triskweline";
           font-family = "Departure Mono";
-          font-size = 10;
+          font-size = 14;
           #background-opacity = 0.80;
           #background-blur = true;
           window-step-resize = true;
@@ -82,6 +87,7 @@
         };
       };
       swaylock.enable = true;
+      waybar.enable = true;
     };
 
     services = {
@@ -124,16 +130,16 @@
           # i think this might be configured wrong
 
           main = {
-            title-color="a5adceff";
-            summary-color="c6d0f5ff";
-            body-color="c6d0f5ff";
-            background="303446ff";
-            border-color="8caaeeff";
-            progress-bar-color="737994ff";
+            title-color = "a5adceff";
+            summary-color = "c6d0f5ff";
+            body-color = "c6d0f5ff";
+            background = "303446ff";
+            border-color = "8caaeeff";
+            progress-bar-color = "737994ff";
           };
 
           critical = {
-            border-color="ef9f76ff";
+            border-color = "ef9f76ff";
           };
         };
       };
