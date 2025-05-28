@@ -157,7 +157,7 @@
       tmux = {
         enable = true;
         mouse = true;
-	focusEvents = true;
+        focusEvents = true;
         keyMode = "vi";
         baseIndex = 1;
         escapeTime = 0;
