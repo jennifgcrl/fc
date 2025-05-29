@@ -1,6 +1,7 @@
 {
   pkgs,
   niri,
+  claude-desktop,
   ...
 }: {
   imports = [
@@ -65,6 +66,7 @@
       wl-clipboard-rs
       glances
       ddcutil
+      claude-desktop.packages.${system}.claude-desktop
     ];
 
     programs = {

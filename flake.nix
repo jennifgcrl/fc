@@ -14,6 +14,10 @@
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
 
     niri.url = "github:sodiboo/niri-flake";
+
+    claude-desktop.url = "github:k3d3/claude-desktop-linux-flake";
+    claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
+    # claude-desktop.inputs.flake-utils.follows = "flake-utils";
   };
 
   outputs = {
@@ -23,6 +27,7 @@
     home-manager,
     lanzaboote,
     niri,
+    claude-desktop,
     ...
   }: let
     forAllSystems = f:
@@ -50,7 +55,7 @@
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          inherit self hostName home-manager lanzaboote niri;
+          inherit self hostName home-manager lanzaboote niri claude-desktop;
         };
         modules = [
           ./hosts/${hostName}

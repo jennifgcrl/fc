@@ -47,7 +47,7 @@
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
   services.ollama.enable = true;
-
+  programs.nix-ld.enable = true;
   virtualisation.podman.enable = true;
 
   # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
