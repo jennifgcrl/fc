@@ -3,7 +3,7 @@
   pkgs,
   config,
   ...
-}: {
+}: rec {
   nixpkgs.config.cudaSupport = true;
 
   hardware.nvidia = {
@@ -20,6 +20,12 @@
   boot.kernelPackages = pkgs.linuxPackages_6_14;
 
   hardware.nvidia-container-toolkit.enable = true;
+
+  programs.nix-ld = {
+    libraries = [
+      hardware.nvidia.package
+    ];
+  };
 
   # ctk - Regular Docker
   virtualisation.docker.daemon.settings.features.cdi = true;

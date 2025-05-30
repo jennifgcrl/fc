@@ -10,6 +10,16 @@
 
   nixpkgs.overlays = [niri.overlays.niri];
 
+  programs.nix-ld = {
+    libraries = with pkgs; [
+      # for Mission Center
+      systemd
+      musl
+      libgbm
+      vulkan-loader
+    ];
+  };
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
