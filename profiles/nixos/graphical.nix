@@ -64,19 +64,22 @@
     };
 
     home.packages = with pkgs; [
+      # desktop environment
       xwayland-satellite # niri uses this for xwayland
       xorg.xlsclients
       nautilus # gnome or gtk portal uses this for dialogs
       gnome-keyring # niri
       j4-dmenu-desktop
       bemenu
+      wl-clipboard-rs
+      ddcutil
+
+      # apps
       zed-editor-fhs
       code-cursor
       jetbrains.datagrip
-      wl-clipboard-rs
-      glances
-      ddcutil
       claude-desktop.packages.${system}.claude-desktop
+      # notion-app-enhanced
     ];
 
     programs = {

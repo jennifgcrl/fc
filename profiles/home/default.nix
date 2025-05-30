@@ -18,6 +18,7 @@
       uutils-coreutils-noprefix
       hyperfine
       file
+      glances
 
       # fonts
       # TODO: maybe put this in fonts.packages?
