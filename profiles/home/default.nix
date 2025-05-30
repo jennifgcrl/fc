@@ -19,6 +19,7 @@
       hyperfine
       file
       glances
+      nix-index
 
       # fonts
       # TODO: maybe put this in fonts.packages?
