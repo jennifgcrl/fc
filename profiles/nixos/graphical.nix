@@ -70,6 +70,11 @@
     ];
 
     programs = {
+      zsh = {
+        shellAliases = {
+          zed = "zeditor";
+        };
+      };
       ghostty = {
         enable = true;
         settings = {

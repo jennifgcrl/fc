@@ -1,6 +1,7 @@
 {
   pkgs,
   home-manager,
+  lib,
   ...
 }: {
   imports = [
@@ -19,7 +20,7 @@
     pciutils
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
   boot.kernel.sysctl = {
     # for tailscale
@@ -70,15 +71,5 @@
         count = 65536;
       }
     ];
-  };
-
-  home-manager.users.jennifer = {
-    programs = {
-      zsh = {
-        shellAliases = {
-          zed = "dev.zed.Zed-Preview";
-        };
-      };
-    };
   };
 }
