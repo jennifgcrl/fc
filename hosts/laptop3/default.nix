@@ -98,7 +98,7 @@
       "alfred"
       "little-snitch"
       "macfuse"
-      "mullvadvpn" # move to home.packages?
+      "mullvad-vpn" # move to home.packages?
 
       # apps
       "calibre"
