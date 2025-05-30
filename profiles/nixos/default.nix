@@ -2,6 +2,7 @@
   pkgs,
   home-manager,
   lib,
+  nix-alien,
   ...
 }: {
   imports = [
@@ -18,6 +19,7 @@
     neovim
     ghostty.terminfo
     pciutils
+    nix-alien.packages.${system}.nix-alien
   ];
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
