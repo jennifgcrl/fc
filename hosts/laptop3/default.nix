@@ -9,6 +9,8 @@
     ../../profiles/home
   ];
 
+  environment.etc.nix-darwin.source = "/Users/jennifer/code/fc";
+
   # possibly doesn't work over tailscale ssh?
   # nix.distributedBuilds = true;
   # nix.buildMachines = [

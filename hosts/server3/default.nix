@@ -8,6 +8,8 @@
     ../../profiles/home
   ];
 
+  environment.etc.nixos.source = "/home/jennifer/code/fc";
+
   # nixos
   system.stateVersion = "25.05";
 
