@@ -125,7 +125,7 @@
       "ticktick"
       "tor-browser"
       "uhk-agent"
-      "visual-studio-code"
+      "witsy"
 
       # dislike but need :(
       "element"
