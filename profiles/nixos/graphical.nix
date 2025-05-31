@@ -78,9 +78,25 @@
       zed-editor-fhs
       code-cursor
       jetbrains.datagrip
+      jetbrains.pycharm-professional
       claude-desktop.packages.${system}.claude-desktop
-      # notion-app-enhanced
     ];
+
+    # flatpaks (install manually)
+    # com.bitwarden.desktop
+    # com.discordapp.Discord
+    # com.github.tchx84.Flatseal
+    # com.google.Chrome
+    # com.saivert.pwvucontrol
+    # com.slack.Slack
+    # com.valvesoftware.Steam
+    # im.riot.Riot
+    # io.github.flattool.Warehouse
+    # io.missioncenter.MissionCenter
+    # me.proton.Mail
+    # org.gnome.clocks
+    # org.mozilla.firefox
+    # org.signal.Signal
 
     programs = {
       zsh = {
@@ -110,6 +126,7 @@
           window-decoration = "none";
         };
       };
+      # chromium.enable = true;
       swaylock.enable = true;
       waybar.enable = true;
     };
@@ -153,7 +170,7 @@
         settings = {
           # i think this might be configured wrong
 
-          main = {
+          "" = {
             title-color = "a5adceff";
             summary-color = "c6d0f5ff";
             body-color = "c6d0f5ff";
@@ -166,6 +183,9 @@
             border-color = "ef9f76ff";
           };
         };
+      };
+      wob = {
+        enable = true;
       };
     };
   };
