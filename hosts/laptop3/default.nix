@@ -113,6 +113,7 @@
       "jetbrains-toolbox"
       "ledger-live"
       "lm-studio"
+      "marta"
       "notion"
       "notion-calendar"
       "obsidian"
