@@ -155,7 +155,7 @@
               path+=~/bin
               path+=~/go/bin
               path+=~/.bun/bin
-              path+=~/.npm-packages/bin
+              path+=''${XDG_DATA_HOME}/npm/bin
 
               r() {
                 temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
