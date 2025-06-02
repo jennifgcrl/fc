@@ -81,6 +81,7 @@
       jetbrains.datagrip
       jetbrains.pycharm-professional
       claude-desktop.packages.${system}.claude-desktop
+      imv
     ];
 
     # flatpaks (install manually)
@@ -130,6 +131,7 @@
       # chromium.enable = true;
       swaylock.enable = true;
       waybar.enable = true;
+      zathura.enable = true;
     };
 
     services = {
