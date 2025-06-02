@@ -119,6 +119,7 @@
           kubectl = "kubecolor";
           kg = "kubecolor get";
           kd = "kubecolor describe";
+          kD = "kubecolor delete";
           gp = "git push";
         };
         initContent = lib.mkMerge [
