@@ -111,9 +111,21 @@
           };
         };
         autosuggestion.enable = true;
-        sessionVariables = {
-          WORDCHARS = "";
-        };
+        sessionVariables = lib.mkMerge [
+          {
+            WORDCHARS = "";
+
+            # an unfortunate number of programs have the incorrect fallback logic
+            # of only using xdg base dirs if the env vars are explicitly set :(
+            XDG_CONFIG_HOME = "$HOME/.config";
+            XDG_CACHE_HOME = "$HOME/.cache";
+            XDG_DATA_HOME = "$HOME/.local/share";
+            XDG_STATE_HOME = "$HOME/.local/state";
+          }
+          (lib.mkIf pkgs.stdenv.isDarwin {
+            XDG_RUNTIME_DIR = "\$(getconf DARWIN_USER_TEMP_DIR)";
+          })
+        ];
         shellAliases = {
           k = "kubecolor";
           kubectl = "kubecolor";
