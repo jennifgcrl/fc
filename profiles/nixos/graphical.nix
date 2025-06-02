@@ -173,7 +173,7 @@
         settings = {
           # i think this might be configured wrong
 
-          "" = {
+          main = {
             title-color = "a5adceff";
             summary-color = "c6d0f5ff";
             body-color = "c6d0f5ff";
