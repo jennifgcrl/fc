@@ -76,6 +76,7 @@
     programs = {
       git = {
         enable = true;
+        lfs.enable = true;
         userName = "Jennifer Zhou";
         userEmail = "jennifer@jezh.me";
 
@@ -83,6 +84,7 @@
           pull.rebase = true;
           push.autoSetupRemote = true;
           submodule.recurse = true;
+          merge.conflictstyle = "zdiff3";
         };
 
         aliases = {
@@ -128,6 +130,7 @@
           kd = "kubecolor describe";
           kD = "kubecolor delete";
           gp = "git push";
+          c = "claude";
         };
         initContent = lib.mkMerge [
           (
