@@ -59,7 +59,7 @@
     ];
 
     home.file = {
-      "bin/update" = {
+      "bin/upd" = {
         source = ../../scripts/update;
         executable = true;
       };
@@ -98,6 +98,7 @@
       direnv = {
         enable = true;
         enableZshIntegration = true;
+        enableNushellIntegration = true;
         nix-direnv.enable = true;
         config = {
           warn_timeout = 0;
@@ -167,6 +168,44 @@
           )
         ];
       };
+      nushell = {
+      	enable = true;
+        settings = {
+          show_banner = false;
+          history.isolation = false;
+        };
+        environmentVariables = {
+          # an unfortunate number of programs have the incorrect fallback logic
+          # of only using xdg base dirs if the env vars are explicitly set :(
+          XDG_CONFIG_HOME = "$HOME/.config";
+          XDG_CACHE_HOME = "$HOME/.cache";
+          XDG_DATA_HOME = "$HOME/.local/share";
+          XDG_STATE_HOME = "$HOME/.local/state";
+        };
+        shellAliases = {
+          k = "kubecolor";
+          kubectl = "kubecolor";
+          kg = "kubecolor get";
+          kd = "kubecolor describe";
+          kD = "kubecolor delete";
+          gp = "git push";
+          c = "claude";
+        };
+        # no fzf yet: https://github.com/junegunn/fzf/issues/4122
+        extraConfig = ''
+          $env.PATH = ($env.PATH |
+          split row (char esep) |
+          prepend ~/bin |
+          prepend ~/go/bin |
+          prepend ~/.bun/bin |
+          prepend ''$"($env.XDG_DATA_HOME)/bin"
+          )
+
+          def --env r [] {
+            ranger --choosedir=/tmp/rangerdir; cd (cat /tmp/rangerdir); rm /tmp/rangerdir
+          }
+        '';
+      };
       tmux = {
         enable = true;
         mouse = true;
@@ -196,10 +235,12 @@
       starship = {
         enable = true;
         enableZshIntegration = true;
+        enableNushellIntegration = true;
       };
       eza = {
         enable = true;
         enableZshIntegration = true;
+        enableNushellIntegration = true;
       };
       bat.enable = true;
       fd.enable = true;
