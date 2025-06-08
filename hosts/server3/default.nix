@@ -53,8 +53,4 @@
   };
 
   services.ollama.enable = true;
-
-  users.users.jennifer = {
-    shell = pkgs.nushell;
-  };
 }

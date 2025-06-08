@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   hostName,
   ...
@@ -19,7 +18,7 @@
 
   # user
   users.users.jennifer = {
-    shell = lib.mkDefault pkgs.zsh;
+    shell = pkgs.nushell;
   };
   environment.shells = [pkgs.zsh pkgs.nushell];
   programs.zsh.enable = true; # is this necessary?
