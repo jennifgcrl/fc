@@ -69,15 +69,16 @@
         #   prefix=~/.npm-packages
         # '';
       }
-      // lib.optionalAttrs pkgs.stdenv.isDarwin {
-        # this is to get around the chicken-and-egg problem of nushell not knowing
-        # to use XDG base dirs before reading its config
-        # maybe figure out the correct incantation to get this path out of the nix store
-        "Library/Application Support/nushell" = {
-          source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nushell";
-          recursive = true;
-        };
-      };
+      # // lib.optionalAttrs pkgs.stdenv.isDarwin {
+      #   # this is to get around the chicken-and-egg problem of nushell not knowing
+      #   # to use XDG base dirs before reading its config
+      #   # maybe figure out the correct incantation to get this path out of the nix store
+      #   "Library/Application Support/nushell" = {
+      #     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nushell";
+      #     recursive = true;
+      #   };
+      # }
+      ;
 
     programs = {
       git = {
@@ -125,10 +126,10 @@
 
           # an unfortunate number of programs have the incorrect fallback logic
           # of only using xdg base dirs if the env vars are explicitly set :(
-          # XDG_CONFIG_HOME = "$HOME/.config";
-          # XDG_CACHE_HOME = "$HOME/.cache";
-          # XDG_DATA_HOME = "$HOME/.local/share";
-          # XDG_STATE_HOME = "$HOME/.local/state";
+          XDG_CONFIG_HOME = "$HOME/.config";
+          XDG_CACHE_HOME = "$HOME/.cache";
+          XDG_DATA_HOME = "$HOME/.local/share";
+          XDG_STATE_HOME = "$HOME/.local/state";
         };
         shellAliases = {
           k = "kubecolor";
