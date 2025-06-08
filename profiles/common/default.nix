@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   hostName,
   ...
@@ -18,7 +19,7 @@
 
   # user
   users.users.jennifer = {
-    shell = pkgs.zsh;
+    shell = lib.mkDefault pkgs.zsh;
   };
   environment.shells = [pkgs.zsh pkgs.nushell];
   programs.zsh.enable = true;
