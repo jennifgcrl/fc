@@ -162,6 +162,11 @@
               }
             ''
           )
+          (
+            lib.mkAfter ''
+              [ -x /etc/profiles/per-user/jennifer/bin/nu ] && SHELL=/etc/profiles/per-user/jennifer/bin/nu exec nu
+            ''
+          )
         ];
       };
       nushell = {
