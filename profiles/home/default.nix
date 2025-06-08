@@ -21,13 +21,6 @@
       glances
       nix-index
 
-      # fonts
-      # TODO: maybe put this in fonts.packages?
-      departure-mono
-      dm-mono
-      noto-fonts
-      recursive
-
       # nix
       alejandra
       nixd
@@ -169,7 +162,7 @@
         ];
       };
       nushell = {
-      	enable = true;
+        enable = true;
         settings = {
           show_banner = false;
           history.isolation = false;
@@ -246,6 +239,11 @@
         enable = true;
         enableZshIntegration = true;
         # enableNushellIntegration = true;
+      };
+      carapace = {
+        enable = true;
+        enableZshIntegration = true;
+        enableNushellIntegration = true;
       };
       bat.enable = true;
       fd.enable = true;

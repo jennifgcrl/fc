@@ -78,4 +78,12 @@
     libraries = [
     ];
   };
+
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "jennifer";
+    dataDir = "/home/jennifer/Sync";
+    configDir = "/home/jennifer/.local/state/syncthing";
+  };
 }
