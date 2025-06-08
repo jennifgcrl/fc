@@ -54,20 +54,30 @@
       kubecolor
     ];
 
-    home.file = {
-      "bin/upd" = {
-        source = ../../scripts/update;
-        executable = true;
+    home.file =
+      {
+        "bin/upd" = {
+          source = ../../scripts/update;
+          executable = true;
+        };
+        "bin/wip" = {
+          source = ../../scripts/wip;
+          executable = true;
+        };
+        # TODO: enable this after setting up secrets
+        # ".npmrc".text = ''
+        #   prefix=~/.npm-packages
+        # '';
+      }
+      // lib.optionalAttrs pkgs.stdenv.isDarwin {
+        # this is to get around the chicken-and-egg problem of nushell not knowing
+        # to use XDG base dirs before reading its config
+        # maybe figure out the correct incantation to get this path out of the nix store
+        "Library/Application Support/nushell" = {
+          source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nushell";
+          recursive = true;
+        };
       };
-      "bin/wip" = {
-        source = ../../scripts/wip;
-        executable = true;
-      };
-      # TODO: enable this after setting up secrets
-      # ".npmrc".text = ''
-      #   prefix=~/.npm-packages
-      # '';
-    };
 
     programs = {
       git = {
@@ -162,11 +172,6 @@
               }
             ''
           )
-          (
-            lib.mkAfter ''
-              [ -x /etc/profiles/per-user/jennifer/bin/nu ] && SHELL=/etc/profiles/per-user/jennifer/bin/nu exec nu
-            ''
-          )
         ];
       };
       nushell = {
@@ -190,6 +195,23 @@
           nushellPlugins.polars
         ];
         extraConfig = ''
+          if "_SOURCED_ZSH" not-in $env {
+            load-env (zsh -l -i -c "nu -c '$env | to yaml'" | from yaml | reject
+              config _ FILE_PWD PWD SHLVL CURRENT_FILE
+              STARSHIP_SHELL
+              STARSHIP_SESSION_KEY
+              PROMPT_COMMAND
+              PROMPT_COMMAND_RIGHT
+              PROMPT_INDICATOR
+              PROMPT_INDICATOR_VI_INSERT
+              PROMPT_INDICATOR_VI_NORMAL
+              PROMPT_MULTILINE_INDICATOR
+              TRANSIENT_PROMPT_COMMAND_RIGHT
+              TRANSIENT_PROMPT_MULTILINE_INDICATOR
+            )
+            $env._SOURCED_ZSH = true
+          }
+
           def --env r [] {
             ranger --choosedir=/tmp/rangerdir; cd (cat /tmp/rangerdir); rm /tmp/rangerdir
           }

@@ -55,8 +55,10 @@
         shellAliases = {
           zed = "zed-preview";
         };
-        sessionVariables = {
-          XDG_RUNTIME_DIR = "\$(getconf DARWIN_USER_TEMP_DIR)";
+      };
+      nushell = {
+        shellAliases = {
+          zed = "zed-preview";
         };
       };
     };
