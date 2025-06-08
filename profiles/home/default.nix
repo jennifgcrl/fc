@@ -177,10 +177,10 @@
         environmentVariables = {
           # an unfortunate number of programs have the incorrect fallback logic
           # of only using xdg base dirs if the env vars are explicitly set :(
-          XDG_CONFIG_HOME = "$HOME/.config";
-          XDG_CACHE_HOME = "$HOME/.cache";
-          XDG_DATA_HOME = "$HOME/.local/share";
-          XDG_STATE_HOME = "$HOME/.local/state";
+          XDG_CONFIG_HOME = "/home/jennifer/.config";
+          XDG_CACHE_HOME = "/home/jennifer/.cache";
+          XDG_DATA_HOME = "/home/jennifer/.local/share";
+          XDG_STATE_HOME = "/home/jennifer/.local/state";
         };
         shellAliases = {
           k = "kubecolor";
@@ -191,6 +191,11 @@
           gp = "git push";
           c = "claude";
         };
+        plugins = with pkgs; [
+          nushellPlugins.formats
+          nushellPlugins.query
+          nushellPlugins.polars
+        ];
         # no fzf yet: https://github.com/junegunn/fzf/issues/4122
         extraConfig = ''
           $env.PATH = ($env.PATH |
@@ -240,7 +245,7 @@
       eza = {
         enable = true;
         enableZshIntegration = true;
-        enableNushellIntegration = true;
+        # enableNushellIntegration = true;
       };
       bat.enable = true;
       fd.enable = true;
