@@ -112,10 +112,10 @@
 
           # an unfortunate number of programs have the incorrect fallback logic
           # of only using xdg base dirs if the env vars are explicitly set :(
-          XDG_CONFIG_HOME = "$HOME/.config";
-          XDG_CACHE_HOME = "$HOME/.cache";
-          XDG_DATA_HOME = "$HOME/.local/share";
-          XDG_STATE_HOME = "$HOME/.local/state";
+          # XDG_CONFIG_HOME = "$HOME/.config";
+          # XDG_CACHE_HOME = "$HOME/.cache";
+          # XDG_DATA_HOME = "$HOME/.local/share";
+          # XDG_STATE_HOME = "$HOME/.local/state";
         };
         shellAliases = {
           k = "kubecolor";
@@ -167,14 +167,6 @@
           show_banner = false;
           history.isolation = false;
         };
-        environmentVariables = {
-          # an unfortunate number of programs have the incorrect fallback logic
-          # of only using xdg base dirs if the env vars are explicitly set :(
-          XDG_CONFIG_HOME = "/home/jennifer/.config";
-          XDG_CACHE_HOME = "/home/jennifer/.cache";
-          XDG_DATA_HOME = "/home/jennifer/.local/share";
-          XDG_STATE_HOME = "/home/jennifer/.local/state";
-        };
         shellAliases = {
           k = "kubecolor";
           kubectl = "kubecolor";
@@ -196,7 +188,18 @@
           prepend ~/bin |
           prepend ~/go/bin |
           prepend ~/.bun/bin |
-          prepend ''$"($env.XDG_DATA_HOME)/npm/bin"
+          prepend ~/.local/share/npm/bin |
+          ${lib.optionalString pkgs.stdenv.isDarwin
+            # TODO: investigate why these aren't added automatically by nix-darwin+home-manager
+            # TODO: move /usr/local/bin and /opt/homebrew/bin to darwin/
+            ''
+              | append /Users/jennifer/.nix-profile/bin
+              | append /etc/profiles/per-user/jennifer/bin
+              | append /run/current-system/sw/bin
+              | append /nix/var/nix/profiles/default/bin
+              | append /usr/local/bin
+              | append /opt/homebrew/bin
+            ''}
           )
 
           def --env r [] {
