@@ -196,7 +196,7 @@
           prepend ~/bin |
           prepend ~/go/bin |
           prepend ~/.bun/bin |
-          prepend ''$"($env.XDG_DATA_HOME)/bin"
+          prepend ''$"($env.XDG_DATA_HOME)/npm/bin"
           )
 
           def --env r [] {
