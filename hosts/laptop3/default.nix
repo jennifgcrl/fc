@@ -53,9 +53,6 @@
         )
       ];
     };
-    programs.nushell = {
-      # TODO: add PATHs
-    };
     home.packages = with pkgs; [
       skimpdf
       rectangle
