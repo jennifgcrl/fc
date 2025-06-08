@@ -22,5 +22,5 @@
     shell = lib.mkDefault pkgs.zsh;
   };
   environment.shells = [pkgs.zsh pkgs.nushell];
-  programs.zsh.enable = true;
+  programs.zsh.enable = true; # is this necessary?
 }
