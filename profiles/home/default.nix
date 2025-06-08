@@ -194,7 +194,7 @@
           nushellPlugins.query
           nushellPlugins.polars
         ];
-        extraConfig = ''
+        extraLogin = ''
           if "_SOURCED_ZSH" not-in $env {
             load-env (zsh -l -i -c "nu -c '$env | to yaml'" | from yaml | reject
               config _ FILE_PWD PWD SHLVL CURRENT_FILE
@@ -211,7 +211,8 @@
             )
             $env._SOURCED_ZSH = true
           }
-
+        '';
+        extraConfig = ''
           def --env r [] {
             ranger --choosedir=/tmp/rangerdir; cd (cat /tmp/rangerdir); rm /tmp/rangerdir
           }
