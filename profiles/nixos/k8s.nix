@@ -16,4 +16,13 @@ in {
   };
 
   users.users.jennifer.extraGroups = ["kubernetes"];
+
+  # master notes:
+  # log out & log in to gain the group
+  # to read the cluster key for kubectl to work:
+  # sudo chmod g+r /var/lib/kubernetes/secrets/cluster-admin-key.pem
+
+  # node notes:
+  # scp server3:/var/lib/kubernetes/secrets/apitoken.secret (NODE):/var/lib/kubernetes/secrets/apitoken.secret
+  # ensure /var/lib/kubernetes/secrets/apitoken.secret owned by root:kubernetes, chmod 600
 }
