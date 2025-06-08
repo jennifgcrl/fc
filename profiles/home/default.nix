@@ -54,31 +54,20 @@
       kubecolor
     ];
 
-    home.file =
-      {
-        "bin/upd" = {
-          source = ../../scripts/update;
-          executable = true;
-        };
-        "bin/wip" = {
-          source = ../../scripts/wip;
-          executable = true;
-        };
-        # TODO: enable this after setting up secrets
-        # ".npmrc".text = ''
-        #   prefix=~/.npm-packages
-        # '';
-      }
-      # // lib.optionalAttrs pkgs.stdenv.isDarwin {
-      #   # this is to get around the chicken-and-egg problem of nushell not knowing
-      #   # to use XDG base dirs before reading its config
-      #   # maybe figure out the correct incantation to get this path out of the nix store
-      #   "Library/Application Support/nushell" = {
-      #     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nushell";
-      #     recursive = true;
-      #   };
-      # }
-      ;
+    home.file = {
+      "bin/upd" = {
+        source = ../../scripts/update;
+        executable = true;
+      };
+      "bin/wip" = {
+        source = ../../scripts/wip;
+        executable = true;
+      };
+      # TODO: enable this after setting up secrets
+      # ".npmrc".text = ''
+      #   prefix=~/.npm-packages
+      # '';
+    };
 
     programs = {
       git = {
@@ -196,39 +185,10 @@
           nushellPlugins.polars
         ];
         extraConfig = ''
-          use std/util "path add"
-
-          ${
-            lib.optionalString pkgs.stdenv.isDarwin
-            # TODO: investigate why these aren't added automatically by nix-darwin+home-manager
-            # TODO: move /usr/local/bin and /opt/homebrew/bin to darwin/
-            ''
-              path add "/opt/homebrew/bin"
-              path add "/usr/local/bin"
-              path add "/run/current-system/sw/bin"
-              path add "/nix/var/nix/profiles/default/bin"
-              path add "/etc/profiles/per-user/jennifer/bin"
-              path add "~/.nix-profile/bin"
-            ''
-          }
-
-          path add "~/.local/share/npm/bin"
-          path add "~/.bun/bin"
-          path add "~/go/bin"
-          path add "~/bin"
-
           def --env r [] {
             ranger --choosedir=/tmp/rangerdir; cd (cat /tmp/rangerdir); rm /tmp/rangerdir
           }
         '';
-        environmentVariables = {
-          # TODO: figure out how home-manager's xdg config works
-          # feels like it should be redundant with xdg.enable = true; but these aren't being set
-          XDG_CONFIG_HOME = "/home/jennifer/.config";
-          XDG_CACHE_HOME = "/home/jennifer/.cache";
-          XDG_DATA_HOME = "/home/jennifer/.local/share";
-          XDG_STATE_HOME = "/home/jennifer/.local/state";
-        };
       };
       tmux = {
         enable = true;
