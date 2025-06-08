@@ -80,6 +80,8 @@
       };
 
     programs = {
+      home-manager.enable = true;
+
       git = {
         enable = true;
         lfs.enable = true;
@@ -100,79 +102,17 @@
           br = "branch";
         };
       };
+      jujutsu = {
+        enable = true;
+      };
 
       direnv = {
         enable = true;
-        enableZshIntegration = true;
         enableNushellIntegration = true;
         nix-direnv.enable = true;
         config = {
           warn_timeout = 0;
         };
-      };
-      home-manager.enable = true;
-      zsh = {
-        enable = true;
-        syntaxHighlighting = {
-          enable = true;
-          styles = {
-            comment = "none";
-          };
-        };
-        autosuggestion.enable = true;
-        sessionVariables = {
-          WORDCHARS = "";
-
-          # an unfortunate number of programs have the incorrect fallback logic
-          # of only using xdg base dirs if the env vars are explicitly set :(
-          XDG_CONFIG_HOME = "$HOME/.config";
-          XDG_CACHE_HOME = "$HOME/.cache";
-          XDG_DATA_HOME = "$HOME/.local/share";
-          XDG_STATE_HOME = "$HOME/.local/state";
-        };
-        shellAliases = {
-          k = "kubecolor";
-          kubectl = "kubecolor";
-          kg = "kubecolor get";
-          kd = "kubecolor describe";
-          kD = "kubecolor delete";
-          gp = "git push";
-          c = "claude";
-        };
-        initContent = lib.mkMerge [
-          (
-            # https://github.com/NixOS/nixpkgs/pull/119052
-            lib.mkOrder 1000 ''
-              bindkey -e
-              bindkey \^U backward-kill-line
-              setopt printexitvalue
-              setopt dvorak
-              setopt interactivecomments
-              setopt completeinword
-              setopt correct
-              setopt extendedglob
-              setopt extendedhistory
-              setopt incappendhistory
-              setopt longlistjobs
-              setopt nohup
-              setopt transientrprompt
-
-              path+=~/bin
-              path+=~/go/bin
-              path+=~/.bun/bin
-              path+=''${XDG_DATA_HOME}/npm/bin
-
-              r() {
-                temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
-                ranger --choosedir="$temp_file" -- "''${@:-$PWD}"
-                if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
-                  cd -- "$chosen_dir"
-                fi
-                rm -f -- "$temp_file"
-              }
-            ''
-          )
-        ];
       };
       nushell = {
         enable = true;
@@ -195,8 +135,8 @@
           nushellPlugins.polars
         ];
         extraLogin = ''
-          if "_SOURCED_ZSH" not-in $env {
-            load-env (zsh -l -i -c "nu -c '$env | to yaml'" | from yaml | reject
+          if "_SOURCED_BASH" not-in $env {
+            load-env (bash -l -i -c "nu -c '$env | to yaml'" | from yaml | reject
               config _ FILE_PWD PWD SHLVL CURRENT_FILE
               STARSHIP_SHELL
               STARSHIP_SESSION_KEY
@@ -209,14 +149,28 @@
               TRANSIENT_PROMPT_COMMAND_RIGHT
               TRANSIENT_PROMPT_MULTILINE_INDICATOR
             )
-            $env._SOURCED_ZSH = true
+            $env._SOURCED_BASH = true
           }
         '';
-        extraConfig = ''
-          def --env r [] {
-            ranger --choosedir=/tmp/rangerdir; cd (cat /tmp/rangerdir); rm /tmp/rangerdir
-          }
-        '';
+        extraConfig = lib.mkMerge [
+          (lib.mkOrder 500 ''
+            $env.XDG_CONFIG_HOME = $"($env.HOME)/.config";
+            $env.XDG_CACHE_HOME = $"($env.HOME)/.cache";
+            $env.XDG_DATA_HOME = $"($env.HOME)/.local/share";
+            $env.XDG_STATE_HOME = $"($env.HOME)/.local/state";
+
+            use std/util "path add"
+            path add $"($env.XDG_DATA_HOME)/npm/bin"
+            path add ~/.bun/bin
+            path add ~/go/bin
+            path add ~/bin
+          '')
+          (lib.mkOrder 1000 ''
+            def --env r [] {
+              ranger --choosedir=/tmp/rangerdir; cd (cat /tmp/rangerdir); rm /tmp/rangerdir
+            }
+          '')
+        ];
       };
       tmux = {
         enable = true;
@@ -242,22 +196,14 @@
       };
       fzf = {
         enable = true;
-        enableZshIntegration = true;
         # no fzf for nu yet: https://github.com/junegunn/fzf/issues/4122
       };
       starship = {
         enable = true;
-        enableZshIntegration = true;
         enableNushellIntegration = true;
-      };
-      eza = {
-        enable = true;
-        enableZshIntegration = true;
-        # enableNushellIntegration = true;
       };
       carapace = {
         enable = true;
-        enableZshIntegration = true;
         enableNushellIntegration = true;
       };
       bat.enable = true;
