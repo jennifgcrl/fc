@@ -52,7 +52,7 @@
     package = pkgs.niri;
   };
 
-  home-manager.users.jennifer = {
+  home-manager.users.jennifer = {lib, ...}: {
     xdg.portal = {
       enable = true;
       xdgOpenUsePortal = true;
@@ -102,13 +102,13 @@
     # org.signal.Signal
 
     programs = {
-      zsh = {
+      nushell = {
         shellAliases = {
           zed = "zeditor";
         };
-        sessionVariables = {
-          XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
-        };
+        extraConfig = lib.mkOrder 501 ''
+          $env.XDG_DATA_DIRS = $"($env.XDG_DATA_DIRS):/usr/share:/var/lib/flatpak/exports/share:($env.HOME)/.local/share/flatpak/exports/share"
+        '';
       };
       ghostty = {
         enable = true;

@@ -51,11 +51,6 @@
 
   home-manager.users.jennifer = {
     programs = {
-      zsh = {
-        shellAliases = {
-          zed = "zed-preview";
-        };
-      };
       nushell = {
         shellAliases = {
           zed = "zed-preview";
