@@ -26,7 +26,7 @@
 
   boot.kernel.sysctl = {
     # for tailscale
-    "net.ipv4.ip_forward" = 1;
+    "net.ipv4.ip_forward" = lib.mkForce 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
 

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   imports = [
     ./hardware.nix
     ./data1-mount.nix
@@ -15,4 +15,6 @@
   boot.supportedFilesystems = ["bcachefs"];
 
   services.ollama.enable = true;
+
+  services.kubernetes.roles = ["master"];
 }
