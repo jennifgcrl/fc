@@ -5,6 +5,8 @@
     config,
     ...
   }: {
+    home.stateVersion = "25.05";
+
     home.username = "jennifer";
 
     xdg.enable = true;
@@ -12,6 +14,7 @@
     home.packages = with pkgs; [
       watchman
       atool
+      unzip
       curl
       eternal-terminal
       hwatch
@@ -154,12 +157,13 @@
         '';
         extraConfig = lib.mkMerge [
           (lib.mkOrder 500 ''
+            use std/util "path add"
+
             $env.XDG_CONFIG_HOME = $"($env.HOME)/.config";
             $env.XDG_CACHE_HOME = $"($env.HOME)/.cache";
             $env.XDG_DATA_HOME = $"($env.HOME)/.local/share";
             $env.XDG_STATE_HOME = $"($env.HOME)/.local/state";
 
-            use std/util "path add"
             path add $"($env.XDG_DATA_HOME)/npm/bin"
             path add ~/.bun/bin
             path add ~/go/bin
@@ -226,7 +230,5 @@
         '';
       };
     };
-
-    home.stateVersion = "25.05";
   };
 }

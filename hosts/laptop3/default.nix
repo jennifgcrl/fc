@@ -39,19 +39,15 @@
   };
 
   home-manager.users.jennifer = {
-    programs.zsh = {
-      sessionVariables = {
+    programs.nushell = {
+      environmentVariables = {
         SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
       };
-      initContent = lib.mkMerge [
-        (
-          lib.mkOrder 1001 ''
-            path+=~/Library/Application\ Support/JetBrains/Toolbox/scripts
-            path+=~/.cache/lm-studio/bin
-            path+=/opt/homebrew/bin
-          ''
-        )
-      ];
+      extraConfig = lib.mkOrder 501 ''
+        path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
+        path add ~/.cache/lm-studio/bin
+        path add /opt/homebrew/bin
+      '';
     };
     home.packages = with pkgs; [
       skimpdf
