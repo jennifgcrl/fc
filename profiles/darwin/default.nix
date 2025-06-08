@@ -4,8 +4,9 @@
   ...
 }: {
   imports = [
-    ../common
     home-manager.darwinModules.home-manager
+    ../common
+    ../common/graphical.nix
   ];
 
   home-manager.sharedModules = [

@@ -6,6 +6,7 @@
 }: {
   imports = [
     niri.nixosModules.niri
+    ../common/graphical.nix
   ];
 
   nixpkgs.overlays = [niri.overlays.niri];
