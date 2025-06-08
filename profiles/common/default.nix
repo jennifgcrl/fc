@@ -18,7 +18,7 @@
 
   # user
   users.users.jennifer = {
-    shell = pkgs.nushell;
+    shell = pkgs.zsh;
   };
   environment.shells = [pkgs.zsh pkgs.nushell];
   programs.zsh.enable = true; # is this necessary?
