@@ -1,15 +1,10 @@
-{
-  config,
-  pkgs,
-  ip,
-  ...
-}: let
+{...}: let
   kubeMasterIP = "100.112.143.31";
   kubeMasterHostname = "server3.dog-lime.ts.net";
   kubeMasterAPIServerPort = 6443;
 in {
   services.kubernetes = {
-    roles = ["master" "node"];
+    roles = ["node"];
     masterAddress = kubeMasterHostname;
     apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
     easyCerts = true;
@@ -19,4 +14,6 @@ in {
     };
     addons.dns.enable = true;
   };
+
+  users.users.jennifer.extraGroups = ["kubernetes"];
 }
