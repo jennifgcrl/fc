@@ -164,6 +164,8 @@
             $env.XDG_DATA_HOME = $"($env.HOME)/.local/share";
             $env.XDG_STATE_HOME = $"($env.HOME)/.local/state";
 
+            $env.EDITOR = "nvim";
+
             path add $"($env.XDG_DATA_HOME)/npm/bin"
             path add ~/.bun/bin
             path add ~/go/bin
