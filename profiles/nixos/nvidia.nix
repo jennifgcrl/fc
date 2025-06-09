@@ -15,10 +15,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-  # kernel 6.15 notes: nvidia beta won't compile, latest (production) also won't compile but at least there's a patch
-  # https://forums.developer.nvidia.com/t/6-15-kernel-and-closed-module-compatibility-in-570-153-02/333711
-  boot.kernelPackages = pkgs.linuxPackages_6_14;
-
   hardware.nvidia-container-toolkit.enable = true;
 
   programs.nix-ld = {
