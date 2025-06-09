@@ -27,11 +27,26 @@
     ];
   };
 
-  # ctk - Regular Docker
-  virtualisation.docker.daemon.settings.features.cdi = true;
-  # ctk - Rootless Docker
-  virtualisation.docker.rootless.daemon.settings.features.cdi = true;
-  # (podman doesn't need any configs)
+  # unfortunately broken at the moment. needs debugging.
+  # virtualisation.containerd.settings = {
+  #   plugins."io.containerd.grpc.v1.cri" = {
+  #     enable_cdi = true;
+  #     cdi_spec_dirs = ["/var/run/cdi"];
+  #     containerd = {
+  #       default_runtime_name = "nvidia";
+
+  #       runtimes.nvidia = {
+  #         privileged_without_host_devices = false;
+  #         runtime_engine = "";
+  #         runtime_root = "";
+  #         runtime_type = "io.containerd.runc.v2";
+  #         options = {
+  #           BinaryName = "${pkgs.nvidia-container-toolkit.tools}/bin/nvidia-container-runtime";
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 
   hardware.graphics = {
     extraPackages = with pkgs; [
