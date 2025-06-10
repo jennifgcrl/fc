@@ -139,7 +139,7 @@
         ];
         extraLogin = ''
           if "_SOURCED_BASH" not-in $env {
-            load-env (bash -l -i -c "nu -c '$env | to yaml'" | from yaml | reject
+            load-env (bash -l -i -c "nu -c '$env | to yaml'" | from yaml | reject -i
               config _ FILE_PWD PWD SHLVL CURRENT_FILE
               STARSHIP_SHELL
               STARSHIP_SESSION_KEY

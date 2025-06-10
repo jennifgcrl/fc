@@ -107,7 +107,7 @@
           zed = "zeditor";
         };
         extraConfig = lib.mkOrder 501 ''
-          $env.XDG_DATA_DIRS = $"($env.XDG_DATA_DIRS):/usr/share:/var/lib/flatpak/exports/share:($env.HOME)/.local/share/flatpak/exports/share"
+          $env.XDG_DATA_DIRS = ($env | get -i XDG_DATA_DIRS | default [] | split row (char esep) | append /usr/share | append /var/lib/flatpak/exports/share | append $"($env.HOME)/.local/share/flatpak/exports/share")
         '';
       };
       ghostty = {
