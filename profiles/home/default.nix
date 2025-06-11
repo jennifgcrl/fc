@@ -37,7 +37,7 @@
       basedpyright
       ty
       ruff
-      python312Packages.python-lsp-server
+      python313Packages.python-lsp-server
 
       #misc langs
       taplo
@@ -125,12 +125,28 @@
           history.isolation = false;
         };
         shellAliases = {
-          k = "kubecolor";
           kubectl = "kubecolor";
+          k = "kubecolor";
+
           kg = "kubecolor get";
+          kgp = "kubecolor get po";
+          kgs = "kubecolor get sts";
+          kgn = "kubecolor get no";
+          kgnc = "kubecolor get nodeclaim";
+
           kd = "kubecolor describe";
+          kdp = "kubecolor describe po";
+          kds = "kubecolor describe sts";
+          kdn = "kubecolor describe no";
+          kdnc = "kubecolor describe nodeclaim";
+
           kD = "kubecolor delete";
+          kDp = "kubecolor delete po";
+          kDs = "kubecolor delete sts";
+          kDn = "kubecolor delete no";
+
           gp = "git push";
+
           c = "claude";
         };
         plugins = with pkgs; [
