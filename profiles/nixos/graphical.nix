@@ -108,6 +108,7 @@
         };
         extraConfig = lib.mkOrder 501 ''
           $env.XDG_DATA_DIRS = ($env | get -i XDG_DATA_DIRS | default [] | split row (char esep) | append /usr/share | append /var/lib/flatpak/exports/share | append $"($env.HOME)/.local/share/flatpak/exports/share")
+          $env.NIXOS_XDG_OPEN_USE_PORTAL = true
         '';
       };
       ghostty = {
