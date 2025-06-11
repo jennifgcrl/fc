@@ -39,6 +39,7 @@ fi
 echo "🔨 Rebuilding system..."
 if [[ $(uname) == "Linux" ]]; then
   sudo nixos-rebuild switch --flake .
+  flatpak update --noninteractive --assumeyes
 else # Darwin
   sudo darwin-rebuild switch --flake .
 fi
