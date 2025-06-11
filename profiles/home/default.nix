@@ -9,7 +9,9 @@
 
     home.username = "jennifer";
 
-    xdg.enable = true;
+    xdg = {
+      enable = true;
+    };
 
     home.packages = with pkgs; [
       watchman
@@ -144,6 +146,7 @@
           kDp = "kubecolor delete po";
           kDs = "kubecolor delete sts";
           kDn = "kubecolor delete no";
+          kDnc = "kubecolor delete nodeclaim";
 
           gp = "git push";
 
