@@ -151,6 +151,8 @@
           gp = "git push";
 
           c = "claude";
+
+          mkdir = "^mkdir";
         };
         plugins = with pkgs; [
           nushellPlugins.formats
@@ -176,6 +178,13 @@
         '';
         extraConfig = lib.mkMerge [
           (lib.mkOrder 500 ''
+            $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge {
+                "XDG_DATA_DIRS": {
+                    from_string: {|s| $s | split row (char esep) | path expand --no-symlink }
+                    to_string: {|v| $v | path expand --no-symlink | str join (char esep) }
+                }
+            }
+
             use std/util "path add"
 
             $env.XDG_CONFIG_HOME = $"($env.HOME)/.config";

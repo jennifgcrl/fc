@@ -200,6 +200,7 @@
       wob = {
         enable = true;
       };
+      playerctld.enable = true;
     };
   };
 }
