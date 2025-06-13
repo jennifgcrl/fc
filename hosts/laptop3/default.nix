@@ -55,7 +55,6 @@
       monitorcontrol
       mountain-duck
       utm
-      # calibre # broken. add to nixos?
     ];
   };
 
@@ -70,7 +69,6 @@
     masApps = {
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
-      "Blurred" = 1497527363;
       "Flighty" = 1358823008;
       "Hour" = 569089415;
       "Xcode" = 497799835;
