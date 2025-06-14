@@ -1,6 +1,7 @@
 {
   pkgs,
   hostName,
+  lib,
   ...
 }: {
   # nix
@@ -18,7 +19,7 @@
 
   # user
   users.users.jennifer = {
-    shell = pkgs.nushell;
+    shell = lib.mkDefault pkgs.nushell;
   };
-  environment.shells = [pkgs.nushell];
+  environment.shells = [pkgs.zsh pkgs.nushell];
 }
