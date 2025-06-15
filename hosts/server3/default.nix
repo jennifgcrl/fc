@@ -27,17 +27,17 @@
   };
 
   # Use tinygrad fork for P2P support
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production.overrideAttrs (oldAttrs: {
-    postUnpack = ''
-      ${oldAttrs.postUnpack or ""}
-      rm -rf $sourceRoot/kernel-open
-      cp -r ${pkgs.fetchFromGitHub {
-        owner = "tinygrad";
-        repo = "open-gpu-kernel-modules";
-        rev = "a17dd14d8bf4a446e15d50f8894c85075881a82c";
-        hash = "sha256-Gy5TWbpYMgU2cMjCTorh2F1I7UqAUCQIJZ4NnEkRrT4=";
-      }}/kernel-open $sourceRoot/
-      chmod -R u+w $sourceRoot/kernel-open
-    '';
-  });
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production.overrideAttrs (oldAttrs: {
+  #  postUnpack = ''
+  #    ${oldAttrs.postUnpack or ""}
+  #    rm -rf $sourceRoot/kernel-open
+  #    cp -r ${pkgs.fetchFromGitHub {
+  #      owner = "tinygrad";
+  #      repo = "open-gpu-kernel-modules";
+  #      rev = "a17dd14d8bf4a446e15d50f8894c85075881a82c";
+  #      hash = "sha256-Gy5TWbpYMgU2cMjCTorh2F1I7UqAUCQIJZ4NnEkRrT4=";
+  #    }}/kernel-open $sourceRoot/
+  #    chmod -R u+w $sourceRoot/kernel-open
+  #  '';
+  #});
 }
