@@ -19,7 +19,8 @@
 
   # user
   users.users.jennifer = {
-    shell = lib.mkDefault pkgs.nushell;
+    shell = pkgs.zsh;
   };
   environment.shells = [pkgs.zsh pkgs.nushell];
+  programs.zsh.enable = true;
 }
