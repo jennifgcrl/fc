@@ -79,5 +79,6 @@
     cudaPackages.libcusolver
     cudaPackages.libcusparse
     cudaPackages.libnpp
+    cudaPackages.nccl
   ];
 }
