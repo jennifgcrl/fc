@@ -214,6 +214,7 @@
         baseIndex = 1;
         escapeTime = 0;
         terminal = "tmux-256color";
+        shell = "${pkgs.nushell}/bin/nu";
         plugins = with pkgs; [
           {
             plugin = tmuxPlugins.tokyo-night-tmux;
