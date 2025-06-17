@@ -21,11 +21,6 @@
     ];
   };
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
   # sound
   security.rtkit.enable = true;
   services.pipewire = {
@@ -36,7 +31,24 @@
     #jack.enable = true;
   };
 
+  # display
   hardware.i2c.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # display manager
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      clock = "%c %z";
+      brightness_down_key = "null";
+      brightness_up_key = "null";
+    };
+    x11Support = false;
+  };
 
   fonts.packages = with pkgs; [
     departure-mono
@@ -85,22 +97,6 @@
       imv
     ];
 
-    # flatpaks (install manually)
-    # com.bitwarden.desktop
-    # com.discordapp.Discord
-    # com.github.tchx84.Flatseal
-    # com.google.Chrome
-    # com.saivert.pwvucontrol
-    # com.slack.Slack
-    # com.valvesoftware.Steam
-    # im.riot.Riot
-    # io.github.flattool.Warehouse
-    # io.missioncenter.MissionCenter
-    # me.proton.Mail
-    # org.gnome.clocks
-    # org.mozilla.firefox
-    # org.signal.Signal
-
     programs = {
       nushell = {
         shellAliases = {
@@ -115,10 +111,6 @@
         enable = true;
         settings = {
           theme = "NvimDark";
-          # macos-option-as-alt = true;
-          # macos-titlebar-style = "tabs";
-          #font-family = "DM Mono";
-          #font-family = "Triskweline";
           font-family = "Departure Mono";
           font-size = 14;
           #background-opacity = 0.80;
@@ -135,7 +127,11 @@
       };
       # chromium.enable = true;
       swaylock.enable = true;
-      waybar.enable = true;
+      waybar = {
+        enable = true;
+        # TODO: debug this not working
+        systemd.enable = true;
+      };
       zathura = {
         enable = true;
         options = {
