@@ -133,18 +133,21 @@
           kg = "kubecolor get";
           kgp = "kubecolor get po";
           kgs = "kubecolor get sts";
+          kgd = "kubecolor get deployment";
           kgn = "kubecolor get no";
           kgnc = "kubecolor get nodeclaim";
 
           kd = "kubecolor describe";
           kdp = "kubecolor describe po";
           kds = "kubecolor describe sts";
+          kdd = "kubecolor describe deployment";
           kdn = "kubecolor describe no";
           kdnc = "kubecolor describe nodeclaim";
 
           kD = "kubecolor delete";
           kDp = "kubecolor delete po";
           kDs = "kubecolor delete sts";
+          kDd = "kubecolor delete deployment";
           kDn = "kubecolor delete no";
           kDnc = "kubecolor delete nodeclaim";
 
