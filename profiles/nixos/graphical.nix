@@ -130,7 +130,7 @@
       waybar = {
         enable = true;
         # TODO: debug this not working
-        systemd.enable = true;
+        #systemd.enable = true;
       };
       zathura = {
         enable = true;
