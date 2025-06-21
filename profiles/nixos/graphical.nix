@@ -77,6 +77,18 @@
       ];
     };
 
+    xdg.mimeApps = {
+      enable = true;
+      # check ~/.local/share/flatpak/exports/share
+      defaultApplications = {
+        "text/html" = "com.google.Chrome.desktop";
+        "x-scheme-handler/http" = "com.google.Chrome.desktop";
+        "x-scheme-handler/https" = "com.google.Chrome.desktop";
+        "x-scheme-handler/about" = "com.google.Chrome.desktop";
+        "x-scheme-handler/unknown" = "com.google.Chrome.desktop";
+      };
+    };
+
     home.packages = with pkgs; [
       # desktop environment
       xwayland-satellite # niri uses this for xwayland
