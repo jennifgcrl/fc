@@ -87,7 +87,7 @@
       "hammerspoon"
       "secretive"
       "steermouse"
-      "tailscale" # move to home.packages?
+      "tailscale-app" # move to home.packages?
       "zed@preview"
 
       # tools, nice to have
@@ -106,6 +106,7 @@
       "google-chrome"
       "jetbrains-toolbox"
       "ledger-live"
+      "linear-linear"
       "lm-studio"
       "marta"
       "notion"
