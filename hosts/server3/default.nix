@@ -26,6 +26,8 @@
     TORCH_CUDA_ARCH_LIST = "8.9";
   };
 
+  services.printing.enable = true;
+
   # Use tinygrad fork for P2P support
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production.overrideAttrs (oldAttrs: {
   #  postUnpack = ''
