@@ -59,6 +59,11 @@
 
   services.flatpak.enable = true;
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   programs.niri = {
     enable = true;
     package = pkgs.niri;
@@ -205,9 +210,7 @@
           };
         };
       };
-      wob = {
-        enable = true;
-      };
+      wob.enable = true;
       playerctld.enable = true;
     };
   };
