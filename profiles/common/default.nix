@@ -19,7 +19,7 @@
 
   # user
   users.users.jennifer = {
-    shell = pkgs.zsh;
+    shell = pkgs.nushell;
   };
   environment.shells = [pkgs.zsh pkgs.nushell];
   programs.zsh.enable = true;
