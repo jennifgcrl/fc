@@ -20,61 +20,79 @@
     claude-desktop.url = "github:k3d3/claude-desktop-linux-flake";
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
     # claude-desktop.inputs.flake-utils.follows = "flake-utils";
+
+    nix-snapd.url = "github:nix-community/nix-snapd";
+    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nix-darwin,
-    home-manager,
-    lanzaboote,
-    nix-alien,
-    niri,
-    claude-desktop,
-    ...
-  }: let
-    forAllSystems = f:
-      nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ] (system: f system);
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      lanzaboote,
+      nix-alien,
+      niri,
+      claude-desktop,
+      nix-snapd,
+      ...
+    }:
+    let
+      forAllSystems =
+        f:
+        nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ] (system: f system);
 
-    forAllSystemsPkgs = f:
-      forAllSystems (system: f nixpkgs.legacyPackages.${system});
+      forAllSystemsPkgs = f: forAllSystems (system: f nixpkgs.legacyPackages.${system});
 
-    darwinSystem = hostName:
-      nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = {
-          inherit self hostName home-manager;
+      darwinSystem =
+        hostName:
+        nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = {
+            inherit self hostName home-manager;
+          };
+          modules = [
+            ./hosts/${hostName}
+          ];
         };
-        modules = [
-          ./hosts/${hostName}
-        ];
-      };
 
-    nixosSystem = hostName:
-      nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit self hostName home-manager lanzaboote nix-alien niri claude-desktop;
+      nixosSystem =
+        hostName:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit
+              self
+              hostName
+              home-manager
+              lanzaboote
+              nix-alien
+              niri
+              claude-desktop
+              nix-snapd
+              ;
+          };
+          modules = [
+            ./hosts/${hostName}
+          ];
         };
-        modules = [
-          ./hosts/${hostName}
-        ];
-      };
-  in {
-    darwinConfigurations."laptop3" = darwinSystem "laptop3";
-    nixosConfigurations."server1" = nixosSystem "server1";
-    nixosConfigurations."server3" = nixosSystem "server3";
+    in
+    {
+      darwinConfigurations."laptop3" = darwinSystem "laptop3";
+      nixosConfigurations."server1" = nixosSystem "server1";
+      nixosConfigurations."server3" = nixosSystem "server3";
 
-    devShells = forAllSystemsPkgs (pkgs: {
-      default = pkgs.mkShell {
-        packages = with pkgs; [
-          pre-commit
-        ];
-      };
-    });
-  };
+      devShells = forAllSystemsPkgs (pkgs: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            pre-commit
+          ];
+        };
+      });
+    };
 }

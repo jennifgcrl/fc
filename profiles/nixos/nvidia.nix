@@ -52,6 +52,8 @@
 
   services.xserver.videoDrivers = ["nvidia"];
 
+  services.lact.enable = true;
+
   services.ollama.package = pkgs.ollama-cuda;
   environment.systemPackages = with pkgs; [
     nvtopPackages.nvidia
