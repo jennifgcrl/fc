@@ -73,6 +73,12 @@
     ];
   };
 
+  # virt
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = ["jennifer"];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
   programs.nix-ld = {
     enable = true;
     libraries = [
