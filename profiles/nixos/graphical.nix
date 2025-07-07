@@ -85,12 +85,14 @@
     xdg.mimeApps = {
       enable = true;
       # check ~/.local/share/flatpak/exports/share
-      defaultApplications = {
-        "text/html" = "com.google.Chrome.desktop";
-        "x-scheme-handler/http" = "com.google.Chrome.desktop";
-        "x-scheme-handler/https" = "com.google.Chrome.desktop";
-        "x-scheme-handler/about" = "com.google.Chrome.desktop";
-        "x-scheme-handler/unknown" = "com.google.Chrome.desktop";
+      defaultApplications = let
+        webBrowser = ["firefox.desktop" "com.google.Chrome.desktop"];
+      in {
+        "text/html" = webBrowser;
+        "x-scheme-handler/http" = webBrowser;
+        "x-scheme-handler/https" = webBrowser;
+        "x-scheme-handler/about" = webBrowser;
+        "x-scheme-handler/unknown" = webBrowser;
       };
     };
 
