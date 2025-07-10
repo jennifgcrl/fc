@@ -50,6 +50,12 @@
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
   virtualisation.podman.enable = true;
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
+  users.extraGroups.docker.members = ["jennifer"];
 
   # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
   # see: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
