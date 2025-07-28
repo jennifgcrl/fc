@@ -44,9 +44,10 @@
         SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
       };
       extraConfig = lib.mkOrder 501 ''
-        path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
-        path add ~/.cache/lm-studio/bin
-        path add /opt/homebrew/bin
+               path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
+               path add ~/.cache/lm-studio/bin
+               path add /opt/homebrew/bin
+        path add /Library/TeX/texbin
       '';
     };
     home.packages = with pkgs; [
