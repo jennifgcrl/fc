@@ -44,9 +44,9 @@
         SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
       };
       extraConfig = lib.mkOrder 501 ''
-               path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
-               path add ~/.cache/lm-studio/bin
-               path add /opt/homebrew/bin
+        path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
+        path add ~/.cache/lm-studio/bin
+        path add /opt/homebrew/bin
         path add /Library/TeX/texbin
       '';
     };
@@ -88,14 +88,14 @@
       "hammerspoon"
       "secretive"
       "steermouse"
-      "tailscale-app" # move to home.packages?
+      "tailscale-app"
       "zed@preview"
 
       # tools, nice to have
       "alfred"
       "little-snitch"
       "macfuse"
-      "mullvad-vpn" # move to home.packages?
+      "mullvad-vpn"
 
       # apps
       "calibre"
@@ -128,7 +128,7 @@
 
       # dislike but need :(
       "element"
-      "loom"
+      # "loom"
       "zoom"
     ];
 
