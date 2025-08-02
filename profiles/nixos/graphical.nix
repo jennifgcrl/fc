@@ -21,6 +21,17 @@
     ];
   };
 
+  # wifi
+  networking.wireless.iwd.enable = true;
+  networking.wireless.iwd.settings = {
+    IPv6 = {
+      Enabled = true;
+    };
+    Settings = {
+      AutoConnect = true;
+    };
+  };
+
   # sound
   security.rtkit.enable = true;
   services.pipewire = {
@@ -122,7 +133,7 @@
           zed = "zeditor";
         };
         extraConfig = lib.mkOrder 501 ''
-          $env.XDG_DATA_DIRS = ($env | get -i XDG_DATA_DIRS | default [] | split row (char esep) | append /usr/share | append /var/lib/flatpak/exports/share | append $"($env.HOME)/.local/share/flatpak/exports/share")
+          $env.XDG_DATA_DIRS = ($env | get --optional XDG_DATA_DIRS | default [] | split row (char esep) | append /usr/share | append /var/lib/flatpak/exports/share | append $"($env.HOME)/.local/share/flatpak/exports/share")
           $env.NIXOS_XDG_OPEN_USE_PORTAL = true
         '';
       };
