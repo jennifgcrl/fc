@@ -28,18 +28,19 @@
 
   services.printing.enable = true;
 
-  # Use tinygrad fork for P2P support
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production.overrideAttrs (oldAttrs: {
-  #  postUnpack = ''
-  #    ${oldAttrs.postUnpack or ""}
-  #    rm -rf $sourceRoot/kernel-open
-  #    cp -r ${pkgs.fetchFromGitHub {
-  #      owner = "tinygrad";
-  #      repo = "open-gpu-kernel-modules";
-  #      rev = "a17dd14d8bf4a446e15d50f8894c85075881a82c";
-  #      hash = "sha256-Gy5TWbpYMgU2cMjCTorh2F1I7UqAUCQIJZ4NnEkRrT4=";
-  #    }}/kernel-open $sourceRoot/
-  #    chmod -R u+w $sourceRoot/kernel-open
-  #  '';
-  #});
+  # Bridge configuration for ethernet devices
+  networking.bridges = {
+    br0 = {
+      interfaces = ["eno1" "enp70s0"];
+    };
+  };
+
+  networking.interfaces.br0.useDHCP = true;
+  networking.interfaces.eno1.useDHCP = false;
+  networking.interfaces.enp70s0.useDHCP = false;
+
+  # Force DHCP only on bridge interface
+  networking.dhcpcd.enable = true;
+  networking.dhcpcd.allowInterfaces = ["br0"];
+  networking.dhcpcd.denyInterfaces = ["eno1" "enp70s0"];
 }
