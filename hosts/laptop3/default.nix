@@ -54,7 +54,6 @@
       skimpdf
       rectangle
       monitorcontrol
-      mountain-duck
       utm
       mtr
     ];
@@ -89,6 +88,7 @@
       # make macos usable
       "ghostty"
       "hammerspoon"
+      "mountain-duck"
       "secretive"
       "steermouse"
       "tailscale-app"
