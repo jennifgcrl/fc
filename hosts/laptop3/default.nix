@@ -56,6 +56,7 @@
       monitorcontrol
       mountain-duck
       utm
+      mtr
     ];
   };
 
@@ -72,6 +73,9 @@
       "Bitwarden" = 1352778147;
       "Flighty" = 1358823008;
       "Hour" = 569089415;
+      "Microsoft Excel" = 462058435;
+      "Microsoft Word" = 462054704;
+      "Synctrain" = 6553985316;
       "Xcode" = 497799835;
     };
     taps = [
@@ -79,7 +83,6 @@
     ];
     brews = [
       "mas"
-      "syncthing" # move to home.packages?
       "ec2-instance-selector" # contribute to nixpkgs?
     ];
     casks = [
@@ -130,6 +133,7 @@
       "element"
       # "loom"
       "zoom"
+      "google-drive"
     ];
 
     # manually installed
