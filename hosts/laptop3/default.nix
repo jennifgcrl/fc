@@ -113,7 +113,6 @@
       "linear-linear"
       "lm-studio"
       "mactex"
-      "marta"
       "notion"
       "notion-calendar"
       "obsidian"
