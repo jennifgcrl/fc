@@ -11,8 +11,8 @@
     powerManagement.enable = true;
     open = lib.mkDefault true;
     nvidiaSettings = false;
-    # package = config.boot.kernelPackages.nvidiaPackages.latest;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   hardware.nvidia-container-toolkit.enable = true;

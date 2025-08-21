@@ -19,6 +19,7 @@
     neovim
     ghostty.terminfo
     pciutils
+    sshfs
     nix-alien.packages.${system}.nix-alien
   ];
 
