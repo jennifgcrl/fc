@@ -101,13 +101,14 @@
       "mullvad-vpn"
 
       # apps
+      "bing-wallpaper"
       "calibre"
       "chatgpt"
       "claude"
       "cursor"
       "discord"
-      "granola"
       "google-chrome"
+      "granola"
       "jetbrains-toolbox"
       "ledger-live"
       "linear-linear"
