@@ -15,7 +15,8 @@
 
     home.packages = with pkgs; [
       watchman
-      atool
+      atool # replace with ouch?
+      ouch
       unzip
       curl
       eternal-terminal
