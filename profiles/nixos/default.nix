@@ -31,6 +31,7 @@
     "net.ipv6.conf.all.forwarding" = 1;
   };
 
+  # TODO: review these
   security.pam.loginLimits = [
     {
       domain = "*";
@@ -57,6 +58,9 @@
     setSocketVariable = true;
   };
   users.extraGroups.docker.members = ["jennifer"];
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+  ];
 
   # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
   # see: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
