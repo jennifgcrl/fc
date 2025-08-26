@@ -29,6 +29,7 @@
       file
       glances
       nix-index
+      mtr
 
       # nix
       alejandra

@@ -50,13 +50,6 @@
         path add /Library/TeX/texbin
       '';
     };
-    home.packages = with pkgs; [
-      skimpdf
-      rectangle
-      monitorcontrol
-      utm
-      mtr
-    ];
   };
 
   # macos
@@ -93,12 +86,15 @@
       "steermouse"
       "tailscale-app"
       "zed@preview"
+      "rectangle"
+      "monitorcontrol"
 
       # tools, nice to have
       "alfred"
       "little-snitch"
       "macfuse"
       "mullvad-vpn"
+      "utm"
 
       # apps
       "bing-wallpaper"
@@ -119,6 +115,7 @@
       "obsidian"
       "proton-mail"
       "signal"
+      "skim"
       "slack"
       "standard-notes"
       "steam"
