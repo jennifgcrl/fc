@@ -85,7 +85,8 @@
       "secretive"
       "steermouse"
       "tailscale-app"
-      "zed@preview"
+      #"zed@preview"
+      "zed"
       "rectangle"
       "monitorcontrol"
 
