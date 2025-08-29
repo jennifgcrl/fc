@@ -23,6 +23,9 @@
     nix-alien.packages.${system}.nix-alien
   ];
 
+  # default is \infty??? insanity
+  boot.loader.systemd-boot.configurationLimit = 8;
+
   boot.kernelPackages = lib.mkOverride 1001 pkgs.linuxPackages_latest;
 
   boot.kernel.sysctl = {
