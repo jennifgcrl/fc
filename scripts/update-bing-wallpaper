@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+
+set -euo pipefail
+
+WALLPAPER_DIR="$HOME/wallpapers/bing"
+DEFAULT_LINK="$HOME/wallpapers/default"
+
+mkdir -p "$WALLPAPER_DIR"
+mkdir -p "$HOME/wallpapers"
+
+echo "Fetching Bing daily image metadata..."
+response=$(curl -s "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US")
+
+url=$(echo "$response" | jq -r '.images[0].url')
+date=$(echo "$response" | jq -r '.images[0].startdate')
+
+# Extract extension from URL
+extension=$(echo "$url" | sed -n 's/.*\.\([^.&]*\).*$/\1/p')
+if [ -z "$extension" ]; then
+    extension="jpg"
+fi
+
+full_url="https://www.bing.com$url"
+filename="${date}.${extension}"
+filepath="${WALLPAPER_DIR}/${filename}"
+
+echo "Date: $date"
+echo "Image URL: $full_url"
+echo "Target file: $filepath"
+
+if [ -f "$filepath" ]; then
+    echo "Image already exists, skipping download"
+else
+    echo "Downloading image..."
+    curl -L -o "$filepath" "$full_url"
+    echo "Downloaded: $filepath"
+fi
+
+# Update symlink
+if [ -L "$DEFAULT_LINK" ]; then
+    rm "$DEFAULT_LINK"
+elif [ -e "$DEFAULT_LINK" ]; then
+    echo "Warning: $DEFAULT_LINK exists but is not a symlink"
+    exit 1
+fi
+
+ln -s "$filepath" "$DEFAULT_LINK"
+echo "Updated symlink: $DEFAULT_LINK -> $filepath"
+
+# Set wallpaper with swww
+echo "Setting wallpaper with swww..."
+swww img "$filepath"
+echo "Wallpaper set successfully!"
