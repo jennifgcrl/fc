@@ -98,7 +98,6 @@
       "utm"
 
       # apps
-      "bing-wallpaper"
       "calibre"
       "chatgpt"
       "claude"
