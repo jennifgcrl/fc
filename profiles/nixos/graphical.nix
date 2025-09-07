@@ -103,7 +103,7 @@
       enable = true;
       # check ~/.local/share/flatpak/exports/share
       defaultApplications = let
-        webBrowser = ["firefox.desktop" "com.google.Chrome.desktop"];
+        webBrowser = ["com.google.Chrome.desktop"];
       in {
         "text/html" = webBrowser;
         "x-scheme-handler/http" = webBrowser;
@@ -123,6 +123,7 @@
       bemenu
       wl-clipboard-rs
       ddcutil
+      zed-editor-fhs
 
       # apps
       code-cursor
