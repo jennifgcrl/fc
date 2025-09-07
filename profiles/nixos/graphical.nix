@@ -123,7 +123,6 @@
       ddcutil
 
       # apps
-      zed-editor-fhs
       code-cursor
       jetbrains.datagrip
       jetbrains.pycharm-professional
