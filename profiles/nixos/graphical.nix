@@ -18,6 +18,8 @@
       musl
       libgbm
       vulkan-loader
+
+      alsa-lib
     ];
   };
 
