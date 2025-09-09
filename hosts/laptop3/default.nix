@@ -81,6 +81,7 @@
       # make macos usable
       "ghostty"
       "hammerspoon"
+      "karabiner-elements"
       "mountain-duck"
       "secretive"
       "steermouse"
