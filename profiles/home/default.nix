@@ -231,6 +231,7 @@
           tmuxPlugins.fzf-tmux-url
         ];
         extraConfig = ''
+          set -s set-clipboard on
           bind-key -n M-Tab select-pane -t :.+
         '';
       };
