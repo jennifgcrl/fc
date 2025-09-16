@@ -10,6 +10,8 @@
     script = ''
       #!${pkgs.runtimeShell} -e
 
+      set -x
+
       ${pkgs.keyutils}/bin/keyctl link @u @s
 
       # Check if the device path exists
