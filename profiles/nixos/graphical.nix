@@ -146,7 +146,7 @@
       ghostty = {
         enable = true;
         settings = {
-          theme = "NvimDark";
+          theme = "Nvim Dark";
           font-family = "Departure Mono";
           font-size = 14;
           #background-opacity = 0.80;
@@ -157,7 +157,7 @@
           window-padding-balance = true;
           #minimum-contrast = 1.3;
           cursor-style = "block";
-          shell-integration-features = "no-cursor";
+          shell-integration = "none";
           window-decoration = "none";
         };
       };
