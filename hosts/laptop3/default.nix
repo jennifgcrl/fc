@@ -124,6 +124,7 @@
       "superhuman"
       "ticktick"
       "tor-browser"
+      "tuple"
       "uhk-agent"
       "witsy"
 
