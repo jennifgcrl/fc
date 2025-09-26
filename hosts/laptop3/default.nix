@@ -104,6 +104,7 @@
       "claude"
       "cursor"
       "discord"
+      "docker-desktop"
       "google-chrome"
       "granola"
       "jetbrains-toolbox"
