@@ -39,6 +39,10 @@
   };
 
   home-manager.users.jennifer = {
+    home.packages = with pkgs; [
+      yt-dlp
+    ];
+
     programs.nushell = {
       environmentVariables = {
         SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
