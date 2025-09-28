@@ -45,7 +45,7 @@ else # Darwin
 fi
 
 if [[ -n "$(git status --porcelain)" ]]; then
-  pre-commit install
+  nix-develop --command pre-commit install
   echo "💾 Committing changes..."
   git add .
   git commit -m "wip"
