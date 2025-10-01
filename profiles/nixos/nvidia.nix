@@ -11,16 +11,16 @@
     powerManagement.enable = true;
     open = lib.mkDefault true;
     nvidiaSettings = false;
-    # package = config.boot.kernelPackages.nvidiaPackages.latest;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
     # package = config.boot.kernelPackages.nvidiaPackages.beta;
-    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "580.82.07";
-      sha256_64bit = "sha256-Bh5I4R/lUiMglYEdCxzqm3GLolQNYFB0/yJ/zgYoeYw==";
-      sha256_aarch64 = lib.fakeSha256;
-      openSha256 = "sha256-8/7ZrcwBMgrBtxebYtCcH5A51u3lAxXTCY00LElZz08=";
-      settingsSha256 = "sha256-lx1WZHsW7eKFXvi03dAML6BoC5glEn63Tuiz3T867nY=";
-      persistencedSha256 = lib.fakeSha256;
-    };
+    # package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+    #   version = "580.82.07";
+    #   sha256_64bit = "sha256-Bh5I4R/lUiMglYEdCxzqm3GLolQNYFB0/yJ/zgYoeYw==";
+    #   sha256_aarch64 = lib.fakeSha256;
+    #   openSha256 = "sha256-8/7ZrcwBMgrBtxebYtCcH5A51u3lAxXTCY00LElZz08=";
+    #   settingsSha256 = "sha256-lx1WZHsW7eKFXvi03dAML6BoC5glEn63Tuiz3T867nY=";
+    #   persistencedSha256 = lib.fakeSha256;
+    # };
   };
 
   hardware.nvidia-container-toolkit.enable = true;
