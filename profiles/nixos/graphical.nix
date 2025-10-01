@@ -1,15 +1,7 @@
-{
-  pkgs,
-  niri,
-  claude-desktop,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
-    niri.nixosModules.niri
     ../common/graphical.nix
   ];
-
-  nixpkgs.overlays = [niri.overlays.niri];
 
   programs.nix-ld = {
     libraries = with pkgs; [
@@ -79,7 +71,6 @@
 
   programs.niri = {
     enable = true;
-    package = pkgs.niri;
   };
 
   home-manager.users.jennifer = {lib, ...}: {
@@ -129,7 +120,6 @@
       code-cursor
       jetbrains.datagrip
       jetbrains.pycharm-professional
-      claude-desktop.packages.${system}.claude-desktop
       imv
     ];
 

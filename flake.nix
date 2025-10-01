@@ -12,17 +12,6 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-
-    nix-alien.url = "github:thiagokokada/nix-alien";
-
-    niri.url = "github:sodiboo/niri-flake";
-
-    claude-desktop.url = "github:k3d3/claude-desktop-linux-flake";
-    claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
-    # claude-desktop.inputs.flake-utils.follows = "flake-utils";
-
-    nix-snapd.url = "github:nix-community/nix-snapd";
-    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -31,10 +20,6 @@
     nix-darwin,
     home-manager,
     lanzaboote,
-    nix-alien,
-    niri,
-    claude-desktop,
-    nix-snapd,
     ...
   }: let
     forAllSystems = f:
@@ -66,10 +51,6 @@
             hostName
             home-manager
             lanzaboote
-            nix-alien
-            niri
-            claude-desktop
-            nix-snapd
             ;
         };
         modules = [

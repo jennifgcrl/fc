@@ -2,7 +2,6 @@
   pkgs,
   home-manager,
   lib,
-  nix-alien,
   ...
 }: {
   imports = [
@@ -20,7 +19,6 @@
     ghostty.terminfo
     pciutils
     sshfs
-    nix-alien.packages.${system}.nix-alien
   ];
 
   # default is \infty??? insanity
