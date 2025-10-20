@@ -41,6 +41,7 @@
   home-manager.users.jennifer = {
     home.packages = with pkgs; [
       yt-dlp
+      rustup
     ];
 
     programs.nushell = {
