@@ -42,6 +42,7 @@
     home.packages = with pkgs; [
       yt-dlp
       rustup
+      uv
     ];
 
     programs.nushell = {
@@ -127,7 +128,6 @@
       "steam"
       "stolendata-mpv"
       "superhuman"
-      "ticktick"
       "tor-browser"
       "tuple"
       "uhk-agent"
