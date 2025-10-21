@@ -93,21 +93,20 @@
       git = {
         enable = true;
         lfs.enable = true;
-        userName = "Jennifer Zhou";
-        userEmail = "jennifer@jezh.me";
 
-        extraConfig = {
+        settings = {
+          user.name = "Jennifer Zhou";
+          user.email = "jennifer@jezh.me";
           pull.rebase = true;
           push.autoSetupRemote = true;
           submodule.recurse = true;
           merge.conflictstyle = "zdiff3";
-        };
-
-        aliases = {
-          co = "checkout";
-          ci = "commit";
-          st = "status";
-          br = "branch";
+          alias = {
+            co = "checkout";
+            ci = "commit";
+            st = "status";
+            br = "branch";
+          };
         };
       };
       jujutsu = {
