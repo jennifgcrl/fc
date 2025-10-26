@@ -104,6 +104,7 @@
       "utm"
 
       # apps
+      "helium-browser"
       "calibre"
       "chatgpt"
       "claude"
