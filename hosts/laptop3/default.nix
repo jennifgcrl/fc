@@ -78,10 +78,13 @@
     };
     taps = [
       "aws/tap"
+      "mongodb/brew"
     ];
     brews = [
       "mas"
       "ec2-instance-selector" # contribute to nixpkgs?
+
+      "mongodb-community"
     ];
     casks = [
       # make macos usable
