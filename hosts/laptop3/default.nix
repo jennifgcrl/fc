@@ -85,6 +85,7 @@
       "ec2-instance-selector" # contribute to nixpkgs?
 
       "mongodb-community"
+      "coder"
     ];
     casks = [
       # make macos usable
