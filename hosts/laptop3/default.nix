@@ -118,7 +118,7 @@
       "google-chrome"
       "granola"
       "jetbrains-toolbox"
-      "ledger-live"
+      "ledger-wallet"
       "linear-linear"
       "lm-studio"
       "mactex"
