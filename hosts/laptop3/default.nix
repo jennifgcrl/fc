@@ -144,6 +144,8 @@
       # "loom"
       "zoom"
       "google-drive"
+
+      "gcloud-cli"
     ];
 
     # manually installed
