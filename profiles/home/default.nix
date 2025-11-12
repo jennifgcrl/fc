@@ -13,54 +13,57 @@
       enable = true;
     };
 
-    home.packages = with pkgs; [
-      watchman
-      atool # replace with ouch?
-      ouch
-      unzip
-      curl
-      eternal-terminal
-      hwatch
-      gdu
-      podman
-      doggo
-      uutils-coreutils-noprefix
-      hyperfine
-      file
-      glances
-      nix-index
-      mtr
+    home.packages = with pkgs;
+      [
+        watchman
+        atool # replace with ouch?
+        ouch
+        unzip
+        curl
+        eternal-terminal
+        hwatch
+        gdu
+        podman
+        doggo
+        uutils-coreutils-noprefix
+        hyperfine
+        file
+        glances
+        nix-index
+        mtr
 
-      # nix
-      alejandra
-      nixd
-      nil
+        # nix
+        alejandra
+        nixd
+        nil
 
-      # python
-      uv
-      basedpyright
-      ty
-      ruff
-      python313Packages.python-lsp-server
+        # python
+        uv
+        basedpyright
+        ty
+        ruff
+        python313Packages.python-lsp-server
 
-      #misc langs
-      taplo
-      buf
-      go
-      terraform-ls
-      terraform
+        #misc langs
+        taplo
+        buf
+        go
+        terraform-ls
+        terraform
 
-      # node
-      nodejs
-      bun
+        # node
+        nodejs
+        bun
 
-      # clis
-      awscli2
-      google-cloud-sdk
-      kubectl
-      kubecolor
-      stern
-    ];
+        # clis
+        awscli2
+        kubectl
+        kubecolor
+        stern
+      ]
+      ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+        google-cloud-sdk
+      ];
 
     home.file =
       {
