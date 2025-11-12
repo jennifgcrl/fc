@@ -54,6 +54,7 @@
         path add ~/.cache/lm-studio/bin
         path add /opt/homebrew/bin
         path add /Library/TeX/texbin
+        path add /opt/homebrew/share/google-cloud-sdk/bin
       '';
     };
   };
