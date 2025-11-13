@@ -13,7 +13,7 @@
     programs = {
       nushell = {
         shellAliases = {
-          zed = "zed-preview";
+          # zed = "zed-preview";
         };
       };
     };
