@@ -146,6 +146,7 @@
       "google-drive"
 
       "gcloud-cli"
+      "figma"
     ];
 
     # manually installed
