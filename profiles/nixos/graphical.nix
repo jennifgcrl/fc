@@ -59,6 +59,8 @@
     departure-mono
     dm-mono
     noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
     recursive
   ];
 

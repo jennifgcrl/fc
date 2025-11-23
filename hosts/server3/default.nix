@@ -43,4 +43,7 @@
   networking.dhcpcd.enable = true;
   networking.dhcpcd.allowInterfaces = ["br0"];
   networking.dhcpcd.denyInterfaces = ["eno1" "enp70s0"];
+
+  services.hardware.openrgb.enable = true;
+  environment.systemPackages = with pkgs; [openrgb-with-all-plugins];
 }
