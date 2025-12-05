@@ -36,6 +36,7 @@
   # unfortunately still need to run chsh manually
   users.users.jennifer = {
     home = "/Users/jennifer";
+    uid = 501;
   };
 
   home-manager.users.jennifer = {
@@ -144,6 +145,7 @@
       # "loom"
       "zoom"
       "google-drive"
+      "adobe-acrobat-reader"
 
       "gcloud-cli"
       "figma"
