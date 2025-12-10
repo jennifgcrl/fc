@@ -44,6 +44,7 @@
       yt-dlp
       rustup
       uv
+      amp-cli
     ];
 
     programs.nushell = {
@@ -146,6 +147,7 @@
       "zoom"
       "google-drive"
       "adobe-acrobat-reader"
+      "microsoft-teams"
 
       "gcloud-cli"
       "figma"
