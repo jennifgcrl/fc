@@ -11,8 +11,8 @@
     powerManagement.enable = true;
     open = lib.mkDefault true;
     nvidiaSettings = false;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
+    # package = config.boot.kernelPackages.nvidiaPackages.latest;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     # package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
     #   version = "580.82.07";
     #   sha256_64bit = "sha256-Bh5I4R/lUiMglYEdCxzqm3GLolQNYFB0/yJ/zgYoeYw==";
