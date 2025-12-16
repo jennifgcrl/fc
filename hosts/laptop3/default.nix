@@ -44,7 +44,6 @@
       yt-dlp
       rustup
       uv
-      amp-cli
     ];
 
     programs.nushell = {
