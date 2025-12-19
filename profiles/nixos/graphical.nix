@@ -121,7 +121,7 @@
       # apps
       code-cursor
       jetbrains.datagrip
-      jetbrains.pycharm-professional
+      jetbrains.pycharm
       imv
     ];
 
