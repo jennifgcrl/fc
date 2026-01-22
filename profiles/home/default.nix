@@ -203,6 +203,7 @@
 
             path add $"($env.XDG_DATA_HOME)/npm/bin"
             path add ~/.bun/bin
+            path add ~/.local/bin
             path add ~/go/bin
             path add ~/bin
           '')
