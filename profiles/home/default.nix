@@ -263,7 +263,7 @@
         vimAlias = true;
         vimdiffAlias = true;
         defaultEditor = true;
-        extraLuaConfig = ''
+        initLua = ''
           vim.opt.clipboard = 'unnamedplus'
           vim.opt.number = true
           vim.opt.relativenumber = true

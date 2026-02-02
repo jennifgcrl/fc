@@ -140,7 +140,7 @@
         settings = {
           theme = "Nvim Dark";
           font-family = "Departure Mono";
-          font-size = 14;
+          font-size = 11;
           #background-opacity = 0.80;
           #background-blur = true;
           window-step-resize = true;
