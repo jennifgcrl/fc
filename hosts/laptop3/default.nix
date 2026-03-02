@@ -87,6 +87,7 @@
 
       "mongodb-community"
       "coder"
+      "pkgconf"
     ];
     casks = [
       # make macos usable
