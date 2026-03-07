@@ -45,6 +45,7 @@
         python313Packages.python-lsp-server
 
         #misc langs
+        rustup
         taplo
         buf
         go
