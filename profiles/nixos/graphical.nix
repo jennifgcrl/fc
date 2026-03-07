@@ -109,7 +109,7 @@
     home.packages = with pkgs; [
       # desktop environment
       xwayland-satellite # niri uses this for xwayland
-      xorg.xlsclients
+      xlsclients
       nautilus # gnome or gtk portal uses this for dialogs
       gnome-keyring # niri
       j4-dmenu-desktop
