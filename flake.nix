@@ -59,6 +59,7 @@
       };
   in {
     darwinConfigurations."laptop3" = darwinSystem "laptop3";
+    darwinConfigurations."laptop4" = darwinSystem "laptop4";
     nixosConfigurations."server1" = nixosSystem "server1";
     nixosConfigurations."server3" = nixosSystem "server3";
     nixosConfigurations."router0" = nixosSystem "router0";
