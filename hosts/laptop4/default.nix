@@ -81,6 +81,9 @@
       "WhatsApp" = 310633997;
       "Xcode" = 497799835;
     };
+    taps = [
+      "angristan/tap"
+    ];
     brews = [
       "mas"
     ];
@@ -88,6 +91,7 @@
       # make macos usable
       "ghostty"
       "hammerspoon"
+      "macthrottle"
       "secretive"
       "steermouse"
       "tailscale-app"
