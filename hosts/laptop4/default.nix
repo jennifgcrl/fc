@@ -54,7 +54,6 @@
         SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
       };
       extraConfig = lib.mkOrder 501 ''
-        path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
         path add ~/.cache/lm-studio/bin
         path add /opt/homebrew/bin
         path add /Library/TeX/texbin
@@ -80,17 +79,8 @@
       "Synctrain" = 6553985316;
       "Xcode" = 497799835;
     };
-    taps = [
-      #"aws/tap"
-      #"mongodb/brew"
-    ];
     brews = [
       "mas"
-      # "ec2-instance-selector" # contribute to nixpkgs?
-
-      #"mongodb-community"
-      #"coder"
-      "pkgconf"
     ];
     casks = [
       # make macos usable
@@ -136,8 +126,5 @@
       "gcloud-cli"
       "figma"
     ];
-
-    # manually installed
-    # - Epubor Ultimate
   };
 }
