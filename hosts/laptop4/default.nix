@@ -78,6 +78,7 @@
       "Microsoft Excel" = 462058435;
       "Microsoft Word" = 462054704;
       "Synctrain" = 6553985316;
+      "WhatsApp" = 310633997;
       "Xcode" = 497799835;
     };
     brews = [
@@ -118,7 +119,6 @@
       "stolendata-mpv"
       "superhuman"
       "tor-browser"
-      "tuple"
 
       # dislike but need :(
       "zoom"
