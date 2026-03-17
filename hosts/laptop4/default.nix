@@ -54,7 +54,7 @@
         SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
       };
       extraConfig = lib.mkOrder 501 ''
-        path add ~/.cache/lm-studio/bin
+        path add ~/.lm-studio/bin
         path add /opt/homebrew/bin
         path add /Library/TeX/texbin
         path add /opt/homebrew/share/google-cloud-sdk/bin
