@@ -51,7 +51,8 @@
 
     programs.nushell = {
       environmentVariables = {
-        SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
+        # SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
+        SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
       };
       extraConfig = lib.mkOrder 501 ''
         path add ~/.cache/lm-studio/bin
@@ -86,6 +87,7 @@
       # make macos usable
       "ghostty"
       "hammerspoon"
+      "secretive"
       "steermouse"
       "tailscale-app"
       "zed"
