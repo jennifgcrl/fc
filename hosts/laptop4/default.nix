@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     ../../profiles/darwin
     ../../profiles/home
@@ -65,6 +64,7 @@
 
   # macos
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
+  system.defaults.NSGlobalDomain.NSScrollAnimationEnabled = false;
   homebrew = {
     enable = true;
     user = "jennifer";
@@ -116,7 +116,7 @@
       "slack"
       "standard-notes"
       "steam"
-      "stolendata-mpv"
+      # "stolendata-mpv"
       "superhuman"
       "tor-browser"
 
