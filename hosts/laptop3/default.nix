@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ../../profiles/darwin
     ../../profiles/home
@@ -68,6 +69,7 @@
     onActivation.upgrade = true;
     onActivation.cleanup = "zap";
     masApps = {
+      # mas list
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
       "Flighty" = 1358823008;
@@ -75,6 +77,7 @@
       "Microsoft Excel" = 462058435;
       "Microsoft Word" = 462054704;
       "Synctrain" = 6553985316;
+      "WhatsApp" = 310633997;
       "Xcode" = 497799835;
     };
     taps = [
