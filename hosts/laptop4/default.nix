@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ../../profiles/darwin
     ../../profiles/home
@@ -50,7 +51,7 @@
 
     programs.nushell = {
       environmentVariables = {
-        SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+        SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
       };
       extraConfig = lib.mkOrder 501 ''
         path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
@@ -74,7 +75,6 @@
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
       "Flighty" = 1358823008;
-      "The Clock" = 488764545;
       "Microsoft Excel" = 462058435;
       "Microsoft Word" = 462054704;
       "Synctrain" = 6553985316;
@@ -106,15 +106,10 @@
       "mullvad-vpn"
 
       # apps
-      "calibre"
-      "chatgpt"
       "claude"
-      "cursor"
       "discord"
-      "docker-desktop"
       "google-chrome"
       "granola"
-      "jetbrains-toolbox"
       "ledger-wallet"
       "linear-linear"
       "lm-studio"
@@ -134,11 +129,8 @@
       "tuple"
 
       # dislike but need :(
-      "element"
-      # "loom"
       "zoom"
       "google-drive"
-      "adobe-acrobat-reader"
       "microsoft-teams"
 
       "gcloud-cli"
