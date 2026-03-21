@@ -55,6 +55,7 @@
       };
       extraConfig = lib.mkOrder 501 ''
         path add ~/.lmstudio/bin
+        path add ~/.cache/.bun/bin
         path add /opt/homebrew/bin
         path add /Library/TeX/texbin
         path add /opt/homebrew/share/google-cloud-sdk/bin
