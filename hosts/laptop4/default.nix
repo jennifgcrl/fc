@@ -87,6 +87,7 @@
     ];
     brews = [
       "mas"
+      "coder"
     ];
     casks = [
       # make macos usable
