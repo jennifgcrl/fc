@@ -119,9 +119,6 @@
       zed-editor-fhs
 
       # apps
-      code-cursor
-      jetbrains.datagrip
-      jetbrains.pycharm
       imv
     ];
 
