@@ -29,7 +29,29 @@ jobs:
           git config user.email 'noreply@github.com'
 
       - name: Update lock file
-        run: nix flake update --commit-lock-file
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          until="$(date -u -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ)"
+          overrides=()
+
+          for name in $(jq -r '.nodes.root.inputs | values[]' flake.lock); do
+            type="$(jq -r ".nodes[\"$name\"].original.type" flake.lock)"
+            [[ "$type" == "github" ]] || continue
+
+            owner="$(jq -r ".nodes[\"$name\"].original.owner" flake.lock)"
+            repo="$(jq -r ".nodes[\"$name\"].original.repo" flake.lock)"
+            ref="$(jq -r ".nodes[\"$name\"].original.ref // empty" flake.lock)"
+
+            rev="$(gh api "repos/${owner}/${repo}/commits?sha=${ref:-HEAD}&until=${until}&per_page=1" --jq '.[0].sha')"
+            if [[ -z "$rev" ]]; then
+              echo "::warning::No commits found for ${name} (${owner}/${repo}) before ${until}, skipping"
+              continue
+            fi
+            overrides+=(--override-input "$name" "github:${owner}/${repo}/${rev}")
+          done
+
+          nix flake update "${overrides[@]}" --commit-lock-file
 
       - name: Get commit message
         id: commit
