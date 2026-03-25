@@ -134,6 +134,7 @@
       "gcloud-cli"
       "figma"
       "parallels"
+      "blender"
     ];
   };
 }
