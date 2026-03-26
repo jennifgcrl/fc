@@ -75,7 +75,6 @@
     masApps = {
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
-      "Flighty" = 1358823008;
       "Microsoft Excel" = 462058435;
       "Microsoft Word" = 462054704;
       "Synctrain" = 6553985316;
@@ -122,7 +121,6 @@
       "slack"
       "standard-notes"
       "steam"
-      # "stolendata-mpv"
       "superhuman"
       "tor-browser"
 
@@ -135,6 +133,7 @@
       "figma"
       "parallels"
       "blender"
+      "godot"
     ];
   };
 }
