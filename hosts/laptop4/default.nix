@@ -134,6 +134,7 @@
       "parallels"
       "blender"
       "godot"
+      "typewhisper/tap/typewhisper"
     ];
   };
 }
