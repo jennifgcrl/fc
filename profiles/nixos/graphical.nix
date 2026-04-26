@@ -166,7 +166,7 @@
     };
 
     services = {
-      swww.enable = true;
+      awww.enable = true;
       espanso = {
         # maybe broken? https://github.com/NixOS/nixpkgs/pull/328890
         enable = false;
