@@ -18,8 +18,6 @@
   system.stateVersion = "25.05";
   boot.supportedFilesystems = ["bcachefs"];
 
-  services.ollama.enable = true;
-
   services.kubernetes.roles = ["master"];
 
   environment.sessionVariables = {
