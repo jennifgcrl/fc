@@ -82,7 +82,7 @@
       "Xcode" = 497799835;
     };
     taps = [
-      "angristan/tap"
+      # "angristan/tap"
     ];
     brews = [
       "mas"
@@ -92,7 +92,7 @@
       # make macos usable
       "ghostty"
       "hammerspoon"
-      "macthrottle"
+      # "macthrottle"
       "secretive"
       "steermouse"
       "tailscale-app"
@@ -109,7 +109,7 @@
       "google-chrome"
       "granola"
       "ledger-wallet"
-      "linear-linear"
+      "linear"
       "lm-studio"
       "mactex"
       "notion"
@@ -135,6 +135,7 @@
       "blender"
       "godot"
       "typewhisper/tap/typewhisper"
+      "istat-menus"
     ];
   };
 }
