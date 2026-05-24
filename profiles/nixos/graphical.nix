@@ -113,6 +113,7 @@
       wl-clipboard-rs
       ddcutil
       zed-editor-fhs
+      wayle
 
       # apps
       imv
