@@ -76,10 +76,6 @@
   };
 
   home-manager.users.jennifer = {lib, ...}: {
-    home.file."bin/update-bing-wallpaper" = {
-      source = ../../scripts/update-bing-wallpaper;
-      executable = true;
-    };
     xdg.portal = {
       enable = true;
       xdgOpenUsePortal = true;
@@ -220,31 +216,6 @@
       };
       wob.enable = true;
       playerctld.enable = true;
-    };
-
-    systemd.user = {
-      services.update-bing-wallpaper = {
-        Unit = {
-          Description = "Update Bing daily wallpaper";
-        };
-        Service = {
-          Type = "oneshot";
-          ExecStart = "%h/bin/update-bing-wallpaper";
-        };
-      };
-      timers.update-bing-wallpaper = {
-        Unit = {
-          Description = "Run update-bing-wallpaper periodically";
-        };
-        Timer = {
-          OnCalendar = "daily";
-          RandomizedDelaySec = "1h";
-          Persistent = true;
-        };
-        Install = {
-          WantedBy = ["timers.target"];
-        };
-      };
     };
   };
 }
