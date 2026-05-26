@@ -150,7 +150,7 @@
       # chromium.enable = true;
       swaylock.enable = true;
       waybar = {
-        enable = true;
+        #enable = true;
         # TODO: debug this not working
         #systemd.enable = true;
       };
@@ -195,25 +195,6 @@
         # san francisco https://www.latlong.net/
         longitude = -122.431297;
         latitude = 37.773972;
-      };
-      fnott = {
-        enable = true;
-        settings = {
-          # i think this might be configured wrong
-
-          main = {
-            title-color = "a5adceff";
-            summary-color = "c6d0f5ff";
-            body-color = "c6d0f5ff";
-            background = "303446ff";
-            border-color = "8caaeeff";
-            progress-bar-color = "737994ff";
-          };
-
-          critical = {
-            border-color = "ef9f76ff";
-          };
-        };
       };
       wob.enable = true;
       playerctld.enable = true;

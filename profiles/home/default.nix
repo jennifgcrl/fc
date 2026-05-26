@@ -39,10 +39,7 @@
 
         # python
         uv
-        basedpyright
         ty
-        ruff
-        python313Packages.python-lsp-server
 
         #misc langs
         rustup
@@ -112,9 +109,6 @@
             br = "branch";
           };
         };
-      };
-      jujutsu = {
-        enable = true;
       };
 
       direnv = {
