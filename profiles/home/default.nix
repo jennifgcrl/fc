@@ -15,7 +15,6 @@
 
     home.packages = with pkgs;
       [
-        watchman
         atool # replace with ouch?
         ouch
         unzip

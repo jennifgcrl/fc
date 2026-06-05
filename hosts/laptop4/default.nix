@@ -72,6 +72,9 @@
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
     onActivation.cleanup = "zap";
+    # Homebrew 5.1+ requires --force for `brew bundle --cleanup`; this pin of
+    # nix-darwin doesn't add it yet. Drop once the input is bumped past the fix.
+    onActivation.extraFlags = ["--force"];
     masApps = {
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
@@ -89,53 +92,46 @@
       "coder"
     ];
     casks = [
-      # make macos usable
-      "ghostty"
-      "hammerspoon"
-      # "macthrottle"
-      "secretive"
-      "steermouse"
-      "tailscale-app"
-      "zed"
-      "rectangle"
-
-      # tools, nice to have
       "alfred"
-      "mullvad-vpn"
-
-      # apps
+      "blender"
       "claude"
       "discord"
+      "figma"
+      "gcloud-cli"
+      "ghostty"
+      "godot"
       "google-chrome"
+      "google-drive"
       "granola"
+      "hammerspoon"
+      "istat-menus"
       "ledger-wallet"
       "linear"
       "lm-studio"
       "mactex"
+      "microsoft-teams"
+      "mullvad-vpn"
       "notion"
       "notion-calendar"
       "obsidian"
+      "parallels"
       "proton-mail"
+      "rectangle"
+      "secretive"
       "signal"
       "skim"
       "slack"
       "standard-notes"
       "steam"
+      "steermouse"
       "superhuman"
+      "tailscale-app"
       "tor-browser"
-
-      # dislike but need :(
-      "zoom"
-      "google-drive"
-      "microsoft-teams"
-
-      "gcloud-cli"
-      "figma"
-      "parallels"
-      "blender"
-      "godot"
       "typewhisper/tap/typewhisper"
-      "istat-menus"
+      "zed"
+      "zoom"
+
+      "raycast"
     ];
   };
 }
