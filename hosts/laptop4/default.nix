@@ -132,6 +132,7 @@
       "zoom"
 
       "raycast"
+      "antigravity"
     ];
   };
 }
