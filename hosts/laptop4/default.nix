@@ -14,16 +14,6 @@
 
   environment.etc.nix-darwin.source = "/Users/jennifer/code/fc";
 
-  # possibly doesn't work over tailscale ssh?
-  # nix.distributedBuilds = true;
-  # nix.buildMachines = [
-  #   {
-  #     hostName = "server3";
-  #     sshUser = "jennifer";
-  #     system = "x86_64-linux";
-  #   }
-  # ];
-
   # nix-darwin
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -93,13 +83,12 @@
     ];
     casks = [
       "alfred"
-      "blender"
+      "chatgpt"
       "claude"
       "discord"
       "figma"
       "gcloud-cli"
       "ghostty"
-      "godot"
       "google-chrome"
       "google-drive"
       "granola"
@@ -119,7 +108,6 @@
       "rectangle"
       "secretive"
       "signal"
-      "skim"
       "slack"
       "standard-notes"
       "steam"
@@ -127,11 +115,9 @@
       "superhuman"
       "tailscale-app"
       "tor-browser"
-      "typewhisper/tap/typewhisper"
       "zed"
       "zoom"
 
-      "raycast"
       "antigravity"
     ];
   };
