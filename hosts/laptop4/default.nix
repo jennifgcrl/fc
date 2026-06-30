@@ -9,6 +9,7 @@
     ../../profiles/home
   ];
 
+  # determinate
   nix.enable = false;
   nix.gc.automatic = lib.mkForce false;
 
