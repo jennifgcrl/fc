@@ -160,9 +160,10 @@
           nushellPlugins.query
           nushellPlugins.polars
         ];
+        # remove the MANPATH thing when https://github.com/nushell/nushell/pull/18487 is merged
         extraLogin = ''
           if "_SOURCED_BASH" not-in $env {
-            load-env (bash -l -i -c "nu -c '$env | to yaml'" | from yaml | reject --optional
+            load-env (bash -l -i -c "nu -c '$env | reject --optional MANPATH | to yaml'" | from yaml | reject --optional
               config _ FILE_PWD PWD SHLVL CURRENT_FILE
               STARSHIP_SESSION_KEY
               PROMPT_COMMAND
