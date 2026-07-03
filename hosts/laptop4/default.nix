@@ -74,6 +74,7 @@
       "Synctrain" = 6553985316;
       "WhatsApp" = 310633997;
       "Xcode" = 497799835;
+      "Trace" = 6768724888;
     };
     taps = [
       # "angristan/tap"
