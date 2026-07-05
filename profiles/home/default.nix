@@ -3,6 +3,7 @@
     pkgs,
     lib,
     config,
+    osConfig,
     ...
   }: {
     home.stateVersion = "25.05";
@@ -11,6 +12,16 @@
 
     xdg = {
       enable = true;
+      # On Linux, inject the system environment into nushell via a vendor
+      # autoload file in ~/.local/share/nushell/vendor/autoload (nushell's
+      # always-scanned data dir). macOS is handled system-wide by
+      # profiles/darwin/nushell.nix. See profiles/nushell-vendor.nix.
+      dataFile = lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
+        "nushell/vendor/autoload/nix-env.nu".source = import ../nushell-vendor.nix {inherit lib pkgs;} {
+          platform = "nixos";
+          inherit (osConfig) environment;
+        };
+      };
     };
 
     home.packages = with pkgs;
@@ -160,24 +171,10 @@
           nushellPlugins.query
           nushellPlugins.polars
         ];
-        # remove the MANPATH thing when https://github.com/nushell/nushell/pull/18487 is merged
-        extraLogin = ''
-          if "_SOURCED_BASH" not-in $env {
-            load-env (bash -l -i -c "nu -c '$env | reject --optional MANPATH | to yaml'" | from yaml | reject --optional
-              config _ FILE_PWD PWD SHLVL CURRENT_FILE
-              STARSHIP_SESSION_KEY
-              PROMPT_COMMAND
-              PROMPT_COMMAND_RIGHT
-              PROMPT_INDICATOR
-              PROMPT_INDICATOR_VI_INSERT
-              PROMPT_INDICATOR_VI_NORMAL
-              PROMPT_MULTILINE_INDICATOR
-              TRANSIENT_PROMPT_COMMAND_RIGHT
-              TRANSIENT_PROMPT_MULTILINE_INDICATOR
-            )
-            $env._SOURCED_BASH = true
-          }
-        '';
+        # PATH and the system environment are injected via nushell's vendor
+        # autoload: on macOS by profiles/darwin/nushell.nix, on Linux by the
+        # nix-env.nu written to xdg.dataFile above. This replaces the old hack
+        # of sourcing a bash login shell to carry the environment over.
         extraConfig = lib.mkMerge [
           (lib.mkOrder 500 ''
             $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge {
