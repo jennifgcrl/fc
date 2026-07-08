@@ -82,6 +82,7 @@
     brews = [
       "mas"
       "coder"
+      "container"
     ];
     casks = [
       "alfred"
