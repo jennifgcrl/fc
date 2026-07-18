@@ -44,7 +44,7 @@
     cudaPackages.cuda_nvcc
     cudaPackages.cuda_nvdisasm
     cudaPackages.cuda_nvprune
-    cudaPackages.cuda_cccl
+    cudaPackages.cccl
     cudaPackages.cuda_cudart
     cudaPackages.cuda_cupti
     cudaPackages.cuda_cuxxfilt
