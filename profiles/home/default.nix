@@ -170,36 +170,28 @@
         # PATH and the system environment are injected via nushell's vendor
         # autoload: on macOS by profiles/darwin/nushell.nix, on Linux by the
         # nix-env.nu written to xdg.dataFile above.
-        extraConfig = lib.mkMerge [
-          (lib.mkOrder 500 ''
-            $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge {
-                "XDG_DATA_DIRS": {
-                    from_string: {|s| $s | split row (char esep) | path expand --no-symlink }
-                    to_string: {|v| $v | path expand --no-symlink | str join (char esep) }
-                }
-            }
+        extraConfig = lib.mkOrder 500 ''
+          $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge {
+              "XDG_DATA_DIRS": {
+                  from_string: {|s| $s | split row (char esep) | path expand --no-symlink }
+                  to_string: {|v| $v | path expand --no-symlink | str join (char esep) }
+              }
+          }
 
-            use std/util "path add"
+          use std/util "path add"
 
-            $env.XDG_CONFIG_HOME = $"($env.HOME)/.config";
-            $env.XDG_CACHE_HOME = $"($env.HOME)/.cache";
-            $env.XDG_DATA_HOME = $"($env.HOME)/.local/share";
-            $env.XDG_STATE_HOME = $"($env.HOME)/.local/state";
+          $env.XDG_CONFIG_HOME = $"($env.HOME)/.config";
+          $env.XDG_CACHE_HOME = $"($env.HOME)/.cache";
+          $env.XDG_DATA_HOME = $"($env.HOME)/.local/share";
+          $env.XDG_STATE_HOME = $"($env.HOME)/.local/state";
 
-            $env.EDITOR = "nvim";
+          $env.EDITOR = "nvim";
 
-            path add $"($env.XDG_DATA_HOME)/npm/bin"
-            path add ~/.bun/bin
-            path add ~/.local/bin
-            path add ~/go/bin
-            path add ~/bin
-          '')
-          (lib.mkOrder 1000 ''
-            def --env r [] {
-              ranger --choosedir=/tmp/rangerdir; cd (cat /tmp/rangerdir); rm /tmp/rangerdir
-            }
-          '')
-        ];
+          path add $"($env.XDG_DATA_HOME)/npm/bin"
+          path add ~/.local/bin
+          path add ~/go/bin
+          path add ~/bin
+        '';
       };
       tmux = {
         enable = true;
@@ -242,18 +234,52 @@
       ripgrep.enable = true;
       jq.enable = true;
       htop.enable = true;
-      ranger = {
-        enable = true;
-        # rifle = [
-        #   {
-        #     condition = "ext 7z|bz2?|gz|lz4|lzma|rar|tar|tgz|xz|zip, has ouch, flag t";
-        #     command = "ouch decompress -- \"$@\"";
-        #   }
-        # ];
-      };
       yazi = {
         enable = true;
         enableNushellIntegration = true;
+        plugins = with pkgs.yaziPlugins; {
+          smart-enter.package = smart-enter;
+          chmod.package = chmod;
+          bookmarks = {
+            package = bookmarks;
+            setup = true;
+            settings = {
+              persist = "all";
+            };
+          };
+        };
+        keymap.mgr.prepend_keymap = [
+          {
+            on = "<Enter>";
+            run = "plugin smart-enter";
+            desc = "Enter the child directory, or open the file";
+          }
+          {
+            on = ["c" "m"];
+            run = "plugin chmod";
+            desc = "Chmod on selected files";
+          }
+          {
+            on = ["m"];
+            run = "plugin bookmarks save";
+            desc = "Save current position as a bookmark";
+          }
+          {
+            on = ["'"];
+            run = "plugin bookmarks jump";
+            desc = "Jump to a bookmark";
+          }
+          {
+            on = ["b" "d"];
+            run = "plugin bookmarks delete";
+            desc = "Delete a bookmark";
+          }
+          {
+            on = ["b" "D"];
+            run = "plugin bookmarks delete_all";
+            desc = "Delete all bookmarks";
+          }
+        ];
       };
       gh.enable = true;
       neovim = {
@@ -262,8 +288,6 @@
         vimAlias = true;
         vimdiffAlias = true;
         defaultEditor = true;
-        withRuby = false;
-        withPython3 = false;
         initLua = ''
           vim.opt.clipboard = 'unnamedplus'
           vim.opt.number = true
