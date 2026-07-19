@@ -1,4 +1,5 @@
 {
+  self,
   home-manager,
   pkgs,
   lib,
@@ -10,6 +11,19 @@
     ../common
     ../common/graphical.nix
   ];
+
+  # determinate
+  nix.enable = false;
+  nix.gc.automatic = lib.mkForce false;
+
+  environment.etc.nix-darwin.source = "/Users/jennifer/code/fc";
+
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = self.rev or self.dirtyRev or null;
+  # will be deprecated; currently needed for system.defaults.*
+  system.primaryUser = "jennifer";
+  # The platform the configuration will be used on.
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
   # Give nushell the same PATH/environment nix-darwin sets up for zsh (see
   # ./nushell.nix).
@@ -45,9 +59,6 @@
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
     onActivation.cleanup = "zap";
-    # Homebrew 5.1+ requires --force for `brew bundle --cleanup`; this pin of
-    # nix-darwin doesn't add it yet. Drop once the input is bumped past the fix.
-    onActivation.extraFlags = ["--force"];
     masApps = {
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
