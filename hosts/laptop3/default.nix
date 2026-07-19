@@ -3,24 +3,17 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     ../../profiles/darwin
     ../../profiles/home
   ];
 
-  environment.etc.nix-darwin.source = "/Users/jennifer/code/fc";
+  # determinate
+  nix.enable = false;
+  nix.gc.automatic = lib.mkForce false;
 
-  # possibly doesn't work over tailscale ssh?
-  # nix.distributedBuilds = true;
-  # nix.buildMachines = [
-  #   {
-  #     hostName = "server3";
-  #     sshUser = "jennifer";
-  #     system = "x86_64-linux";
-  #   }
-  # ];
+  environment.etc.nix-darwin.source = "/Users/jennifer/code/fc";
 
   # nix-darwin
   # Used for backwards compatibility, please read the changelog before changing.
@@ -48,11 +41,12 @@
 
     programs.nushell = {
       environmentVariables = {
+        # SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
         SSH_AUTH_SOCK = "/Users/jennifer/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
       };
       extraConfig = lib.mkOrder 501 ''
-        path add ~/Library/Application\ Support/JetBrains/Toolbox/scripts
-        path add ~/.cache/lm-studio/bin
+        path add ~/.lmstudio/bin
+        path add ~/.cache/.bun/bin
         path add /opt/homebrew/bin
         path add /Library/TeX/texbin
         path add /opt/homebrew/share/google-cloud-sdk/bin
@@ -62,100 +56,67 @@
 
   # macos
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
+  system.defaults.NSGlobalDomain.NSScrollAnimationEnabled = false;
   homebrew = {
     enable = true;
     user = "jennifer";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
     onActivation.cleanup = "zap";
+    # Homebrew 5.1+ requires --force for `brew bundle --cleanup`; this pin of
+    # nix-darwin doesn't add it yet. Drop once the input is bumped past the fix.
+    onActivation.extraFlags = ["--force"];
     masApps = {
-      # mas list
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
-      "Flighty" = 1358823008;
-      "The Clock" = 488764545;
       "Microsoft Excel" = 462058435;
       "Microsoft Word" = 462054704;
       "Synctrain" = 6553985316;
       "WhatsApp" = 310633997;
       "Xcode" = 497799835;
+      "Trace" = 6768724888;
     };
-    taps = [
-      "aws/tap"
-      "mongodb/brew"
-    ];
     brews = [
       "mas"
-      "ec2-instance-selector" # contribute to nixpkgs?
-
-      "mongodb-community"
       "coder"
-      "pkgconf"
+      "container"
     ];
     casks = [
-      # make macos usable
-      "ghostty"
-      "hammerspoon"
-      "mountain-duck"
-      "secretive"
-      "steermouse"
-      "tailscale-app"
-      #"zed@preview"
-      "zed"
-      "rectangle"
-      "monitorcontrol"
-
-      # tools, nice to have
       "alfred"
-      "little-snitch"
-      "macfuse"
-      "mullvad-vpn"
-      "utm"
-
-      # apps
-      "helium-browser"
-      "calibre"
       "chatgpt"
       "claude"
-      "cursor"
       "discord"
-      "docker-desktop"
+      "figma"
+      "gcloud-cli"
+      "ghostty"
       "google-chrome"
+      "google-drive"
       "granola"
-      "jetbrains-toolbox"
+      "hammerspoon"
+      "istat-menus"
       "ledger-wallet"
-      "linear-linear"
+      "linear"
       "lm-studio"
       "mactex"
+      "microsoft-teams"
+      "mullvad-vpn"
       "notion"
       "notion-calendar"
       "obsidian"
+      "parallels"
       "proton-mail"
+      "rectangle"
+      "secretive"
       "signal"
-      "skim"
       "slack"
       "standard-notes"
       "steam"
-      "stolendata-mpv"
+      "steermouse"
       "superhuman"
+      "tailscale-app"
       "tor-browser"
-      "tuple"
-      "uhk-agent"
-      "witsy"
-
-      # dislike but need :(
-      "element"
-      # "loom"
+      "zed"
       "zoom"
-      "google-drive"
-      "adobe-acrobat-reader"
-      "microsoft-teams"
-
-      "gcloud-cli"
-      "figma"
     ];
-
-    # manually installed
-    # - Epubor Ultimate
   };
 }

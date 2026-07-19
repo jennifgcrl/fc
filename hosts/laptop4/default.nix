@@ -76,9 +76,6 @@
       "Xcode" = 497799835;
       "Trace" = 6768724888;
     };
-    taps = [
-      # "angristan/tap"
-    ];
     brews = [
       "mas"
       "coder"
@@ -120,8 +117,6 @@
       "tor-browser"
       "zed"
       "zoom"
-
-      "antigravity"
     ];
   };
 }
