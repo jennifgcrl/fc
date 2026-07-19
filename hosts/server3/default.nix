@@ -15,7 +15,7 @@
   ];
 
   environment.etc.nixos.source = "/home/jennifer/code/fc";
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.05";
   boot.supportedFilesystems = ["bcachefs"];
 
   services.kubernetes.roles = ["master"];

@@ -6,7 +6,7 @@
     osConfig,
     ...
   }: {
-    home.stateVersion = "25.05";
+    home.stateVersion = "26.05";
 
     home.username = "jennifer";
 
@@ -83,10 +83,6 @@
           source = ../../scripts/wip;
           executable = true;
         };
-        # TODO: enable this after setting up secrets
-        # ".npmrc".text = ''
-        #   prefix=~/.npm-packages
-        # '';
       }
       // lib.optionalAttrs pkgs.stdenv.isDarwin {
         # this is to get around the chicken-and-egg problem of nushell not knowing
@@ -173,8 +169,7 @@
         ];
         # PATH and the system environment are injected via nushell's vendor
         # autoload: on macOS by profiles/darwin/nushell.nix, on Linux by the
-        # nix-env.nu written to xdg.dataFile above. This replaces the old hack
-        # of sourcing a bash login shell to carry the environment over.
+        # nix-env.nu written to xdg.dataFile above.
         extraConfig = lib.mkMerge [
           (lib.mkOrder 500 ''
             $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge {
@@ -247,7 +242,19 @@
       ripgrep.enable = true;
       jq.enable = true;
       htop.enable = true;
-      ranger.enable = true;
+      ranger = {
+        enable = true;
+        # rifle = [
+        #   {
+        #     condition = "ext 7z|bz2?|gz|lz4|lzma|rar|tar|tgz|xz|zip, has ouch, flag t";
+        #     command = "ouch decompress -- \"$@\"";
+        #   }
+        # ];
+      };
+      yazi = {
+        enable = true;
+        enableNushellIntegration = true;
+      };
       gh.enable = true;
       neovim = {
         enable = true;

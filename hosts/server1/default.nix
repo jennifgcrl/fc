@@ -9,6 +9,6 @@
   ];
 
   environment.etc.nixos.source = "/home/jennifer/code/fc";
-  system.stateVersion = "24.11";
+  system.stateVersion = "26.05";
   hardware.nvidia.open = false; # :( card too old
 }
