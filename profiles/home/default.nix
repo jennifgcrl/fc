@@ -232,7 +232,7 @@
       };
       fzf = {
         enable = true;
-        # no fzf for nu yet: https://github.com/junegunn/fzf/issues/4122
+        enableNushellIntegration = true;
       };
       starship = {
         enable = true;
