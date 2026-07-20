@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ../common/graphical.nix
   ];
@@ -61,10 +65,34 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
+    babelstone-han
     recursive
   ];
 
   services.flatpak.enable = true;
+
+  # Flatpak apps only look for host fonts in standard paths (/usr/share/fonts,
+  # ~/.local/share/fonts, ...) which NixOS doesn't populate.
+  # Bind-mount our configured fonts into /usr/share/fonts where the
+  # sandbox can see them. resolve-symlinks is required so the /nix/store symlinks
+  # are dereferenced (the sandbox can't read /nix/store).
+  # https://wiki.nixos.org/wiki/Fonts#Flatpak_applications_can't_find_system_fonts
+  system.fsPackages = [pkgs.bindfs];
+  fileSystems."/usr/share/fonts" = let
+    aggregatedFonts = pkgs.buildEnv {
+      name = "system-fonts";
+      paths = config.fonts.packages;
+      pathsToLink = ["/share/fonts"];
+    };
+  in {
+    device = "${aggregatedFonts}/share/fonts";
+    fsType = "fuse.bindfs";
+    options = [
+      "ro"
+      "resolve-symlinks"
+      "x-gvfs-hide"
+    ];
+  };
 
   programs.appimage = {
     enable = true;
