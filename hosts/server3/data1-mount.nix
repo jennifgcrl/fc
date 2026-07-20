@@ -33,7 +33,7 @@
       done
 
       # Mount the device
-      ${pkgs.bcachefs-tools}/bin/bcachefs mount -f /data1-key "$DEVICE_PATH" "$MOUNT_POINT"
+      ${pkgs.bcachefs-tools}/bin/bcachefs mount --passphrase-file /data1-key "$DEVICE_PATH" "$MOUNT_POINT"
     '';
     serviceConfig = {
       Type = "oneshot";
