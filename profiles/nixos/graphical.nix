@@ -142,6 +142,7 @@
       ddcutil
       zed-editor-fhs
       wayle
+      apple-cursor
 
       # apps
       imv
