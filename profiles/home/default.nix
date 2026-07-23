@@ -26,9 +26,7 @@
 
     home.packages = with pkgs;
       [
-        atool # replace with ouch?
         ouch
-        unzip
         curl
         eternal-terminal
         hwatch
@@ -36,16 +34,15 @@
         podman
         doggo
         uutils-coreutils-noprefix
-        hyperfine
         file
         glances
         nix-index
         mtr
+        exiftool
 
         # nix
         alejandra
         nixd
-        nil
 
         # python
         uv
