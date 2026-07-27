@@ -39,6 +39,7 @@
         nix-index
         mtr
         exiftool
+        git-xet
 
         # nix
         alejandra
