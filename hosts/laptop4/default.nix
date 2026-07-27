@@ -33,6 +33,7 @@
       "microsoft-teams"
       "parallels"
       "steam"
+      "docker-desktop"
     ];
   };
 }
