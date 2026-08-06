@@ -40,6 +40,7 @@
         mtr
         exiftool
         git-xet
+        multitail
 
         # nix
         alejandra
