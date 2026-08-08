@@ -228,7 +228,6 @@
         enable = true;
         enableNushellIntegration = true;
       };
-      bat.enable = true;
       fd.enable = true;
       ripgrep.enable = true;
       jq.enable = true;
