@@ -43,11 +43,27 @@ jobs:
             repo="$(jq -r ".nodes[\"$name\"].original.repo" flake.lock)"
             ref="$(jq -r ".nodes[\"$name\"].original.ref // empty" flake.lock)"
 
-            rev="$(gh api "repos/${owner}/${repo}/commits?sha=${ref:-HEAD}&until=${until}&per_page=1" --jq '.[0].sha')"
-            if [[ -z "$rev" ]]; then
-              echo "::warning::No commits found for ${name} (${owner}/${repo}) before ${until}, skipping"
+            locked_rev="$(jq -r ".nodes[\"$name\"].locked.rev // empty" flake.lock)"
+            locked_date="$(jq -r ".nodes[\"$name\"].locked.lastModified // empty" flake.lock)"
+
+            commit="$(gh api "repos/${owner}/${repo}/commits?sha=${ref:-HEAD}&until=${until}&per_page=1" --jq '.[0] | "\(.sha) \(.commit.committer.date)"' 2>/dev/null || true)"
+            rev="${commit%% *}"
+            rev_date="${commit#* }"
+
+            if [[ -z "$rev" || "$rev" == "null" ]]; then
+              echo "::warning::No commits found for ${name} (${owner}/${repo}) before ${until}, holding at ${locked_rev:-current}"
+              if [[ -n "$locked_rev" ]]; then
+                overrides+=(--override-input "$name" "github:${owner}/${repo}/${locked_rev}")
+              fi
               continue
             fi
+
+            if [[ -n "$locked_rev" && -n "$locked_date" ]] \
+              && [[ "$(date -u -d "$rev_date" +%s)" -le "$locked_date" ]]; then
+              echo "::notice::${name} is at or ahead of ${rev}, holding at ${locked_rev}"
+              rev="$locked_rev"
+            fi
+
             overrides+=(--override-input "$name" "github:${owner}/${repo}/${rev}")
           done
 
