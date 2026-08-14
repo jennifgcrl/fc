@@ -54,12 +54,6 @@
   services.tailscale.enable = true;
   services.eternal-terminal.enable = true;
   virtualisation.podman.enable = true;
-  virtualisation.docker.enable = true;
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
-  };
-  users.extraGroups.docker.members = ["jennifer"];
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
