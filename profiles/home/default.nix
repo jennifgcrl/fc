@@ -16,7 +16,7 @@
       # autoload file in ~/.local/share/nushell/vendor/autoload (nushell's
       # always-scanned data dir). macOS is handled system-wide by
       # profiles/darwin/nushell.nix. See profiles/nushell-vendor.nix.
-      dataFile = lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
+      dataFile = lib.optionalAttrs (!pkgs.stdenv.hostPlatform.isDarwin) {
         "nushell/vendor/autoload/nix-env.nu".source = import ../nushell-vendor.nix {inherit lib pkgs;} {
           platform = "nixos";
           inherit (osConfig) environment;
@@ -68,7 +68,7 @@
         kubecolor
         stern
       ]
-      ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+      ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
         google-cloud-sdk
       ];
 
@@ -83,7 +83,7 @@
           executable = true;
         };
       }
-      // lib.optionalAttrs pkgs.stdenv.isDarwin {
+      // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
         # this is to get around the chicken-and-egg problem of nushell not knowing
         # to use XDG base dirs before reading its config
         # maybe figure out the correct incantation to get this path out of the nix store
