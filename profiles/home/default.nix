@@ -238,11 +238,13 @@
         plugins = with pkgs.yaziPlugins; {
           smart-enter.package = smart-enter;
           chmod.package = chmod;
-          bookmarks = {
-            package = bookmarks;
+          yamb = {
+            package = yamb;
             setup = true;
             settings = {
-              persist = "all";
+              jump_notify = true;
+              cli = "fzf";
+              path = "${config.xdg.stateHome}/yazi/bookmark";
             };
           };
         };
@@ -259,23 +261,33 @@
           }
           {
             on = ["m"];
-            run = "plugin bookmarks save";
+            run = "plugin yamb -- save";
             desc = "Save current position as a bookmark";
           }
           {
             on = ["'"];
-            run = "plugin bookmarks jump";
+            run = "plugin yamb -- jump_by_key";
             desc = "Jump to a bookmark";
           }
           {
+            on = ["\""];
+            run = "plugin yamb -- jump_by_fzf";
+            desc = "Jump to a bookmark via fzf";
+          }
+          {
             on = ["b" "d"];
-            run = "plugin bookmarks delete";
+            run = "plugin yamb -- delete_by_key";
             desc = "Delete a bookmark";
           }
           {
             on = ["b" "D"];
-            run = "plugin bookmarks delete_all";
+            run = "plugin yamb -- delete_all";
             desc = "Delete all bookmarks";
+          }
+          {
+            on = ["b" "r"];
+            run = "plugin yamb -- rename_by_key";
+            desc = "Rename a bookmark";
           }
         ];
       };
