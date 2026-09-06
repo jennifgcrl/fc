@@ -19,6 +19,13 @@
 
   networking.firewall.checkReversePath = "loose";
 
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.arp_ignore" = 1;
+    "net.ipv4.conf.all.arp_announce" = 2;
+    "net.ipv4.conf.default.arp_ignore" = 1;
+    "net.ipv4.conf.default.arp_announce" = 2;
+  };
+
   environment.sessionVariables = {
     TORCH_CUDA_ARCH_LIST = "8.9";
   };
