@@ -67,8 +67,6 @@
         kubectl
         kubecolor
         stern
-
-        codex
       ]
       ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
         google-cloud-sdk
