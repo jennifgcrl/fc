@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }: {
@@ -18,7 +17,7 @@
   system.stateVersion = "26.05";
   boot.supportedFilesystems = ["bcachefs"];
 
-  networking.wireless.iwd.enable = lib.mkForce false;
+  networking.firewall.checkReversePath = "loose";
 
   environment.sessionVariables = {
     TORCH_CUDA_ARCH_LIST = "8.9";
