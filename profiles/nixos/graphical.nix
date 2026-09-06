@@ -143,6 +143,7 @@
       zed-editor-fhs
       wayle
       apple-cursor
+      adwaita-icon-theme
 
       # apps
       imv

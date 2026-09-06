@@ -3,7 +3,7 @@
   pkgs,
   config,
   ...
-}: rec {
+}: {
   nixpkgs.config.cudaSupport = true;
 
   hardware.nvidia = {
@@ -19,7 +19,7 @@
 
   programs.nix-ld = {
     libraries = [
-      hardware.nvidia.package
+      config.hardware.nvidia.package
     ];
   };
 
