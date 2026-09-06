@@ -41,6 +41,7 @@
         exiftool
         git-xet
         multitail
+        bubblewrap
 
         # nix
         alejandra
