@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -16,6 +17,8 @@
   environment.etc.nixos.source = "/home/jennifer/code/fc";
   system.stateVersion = "26.05";
   boot.supportedFilesystems = ["bcachefs"];
+
+  networking.wireless.iwd.enable = lib.mkForce false;
 
   environment.sessionVariables = {
     TORCH_CUDA_ARCH_LIST = "8.9";
