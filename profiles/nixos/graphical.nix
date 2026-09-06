@@ -191,8 +191,18 @@
       };
     };
 
+    xsession.preferStatusNotifierItems = true;
+
     services = {
       awww.enable = true;
+
+      udiskie = {
+        enable = true;
+        automount = true;
+        notify = true;
+        tray = "auto";
+        settings.program_options.password_cache = 30;
+      };
       espanso = {
         # maybe broken? https://github.com/NixOS/nixpkgs/pull/328890
         enable = false;
