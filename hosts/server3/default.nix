@@ -17,6 +17,17 @@
   system.stateVersion = "26.05";
   boot.supportedFilesystems = ["bcachefs"];
 
+  services.smartd = {
+    enable = true;
+    autodetect = true;
+    notifications = {
+      systembus-notify.enable = true;
+      wall.enable = true;
+      x11.enable = false;
+      mail.enable = false;
+    };
+  };
+
   networking.firewall.checkReversePath = "loose";
 
   boot.kernel.sysctl = {
