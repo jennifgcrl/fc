@@ -41,7 +41,6 @@
         exiftool
         git-xet
         multitail
-        bubblewrap
 
         # nix
         alejandra
@@ -71,6 +70,8 @@
       ]
       ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
         google-cloud-sdk
+        # useful for chatgpt codex
+        bubblewrap
       ];
 
     home.file =
