@@ -44,6 +44,7 @@ in {
         "granola"
         "linear"
         "lm-studio"
+        "lm-studio-bionic"
         "mactex"
         "microsoft-teams"
         "steam"
