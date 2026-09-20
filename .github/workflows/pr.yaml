@@ -1,7 +1,10 @@
-name: Nix Flake Check
+name: CI
 on:
   pull_request:
     branches: ["main"]
+  push:
+    branches: ["main"]
+  workflow_dispatch:
 jobs:
   flake-check:
     name: Nix Flake Check
@@ -15,3 +18,68 @@ jobs:
 
       - name: Run nix flake check
         run: nix flake check
+
+  hosts:
+    name: Enumerate hosts
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.hosts.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Build host matrix from the flake
+        id: hosts
+        run: |
+          systems() {
+            nix eval --json ".#$1" --apply 'cfgs: builtins.mapAttrs (_: c: c.pkgs.stdenv.hostPlatform.system) cfgs'
+          }
+          matrix="$(jq -c -n \
+            --argjson nixos "$(systems nixosConfigurations)" \
+            --argjson darwin "$(systems darwinConfigurations)" '
+            def runner: {
+              "x86_64-linux": "ubuntu-latest",
+              "aarch64-linux": "ubuntu-24.04-arm",
+              "aarch64-darwin": "macos-latest"
+            }[.] // error("no runner for system \(.)");
+            {include: (
+              ($nixos  | to_entries | map({host: .key, system: .value, runner: (.value | runner),
+                attr: "nixosConfigurations.\(.key).config.system.build.toplevel"})) +
+              ($darwin | to_entries | map({host: .key, system: .value, runner: (.value | runner),
+                attr: "darwinConfigurations.\(.key).system"}))
+            )}')"
+          echo "$matrix" | jq .
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.host }} (${{ matrix.system }})
+    needs: hosts
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.hosts.outputs.matrix) }}
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Build ${{ matrix.attr }}
+        run: nix build --print-build-logs --no-link ".#${{ matrix.attr }}"
+
+  all-systems:
+    name: All systems
+    needs: [flake-check, hosts, build]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every job to have succeeded
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          echo "$NEEDS" | jq .
+          echo "$NEEDS" | jq -e 'all(.[]; .result == "success")' > /dev/null
