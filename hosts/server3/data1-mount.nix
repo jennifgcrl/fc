@@ -1,4 +1,30 @@
-{pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  deviceOnline = pkgs.writeShellScript "bcachefs-device-online" ''
+    shopt -s nullglob
+    for dev in /sys/fs/bcachefs/"$ID_FS_UUID"/dev-*/block/dev; do
+      read -r majmin < "$dev"
+      if [ "$majmin" = "$MAJOR:$MINOR" ]; then
+        exit 0
+      fi
+    done
+    exec ${config.boot.bcachefs.package}/sbin/bcachefs device online "$1"
+  '';
+in {
+  services.udev.packages = lib.mkAfter [
+    (pkgs.runCommand "bcachefs-udev-rules" {} ''
+      mkdir -p $out/lib/udev/rules.d
+      sed 's|RUN+="[^"]*/sbin/bcachefs device online |RUN+="${deviceOnline} |' \
+        ${config.boot.bcachefs.package}/lib/udev/rules.d/64-bcachefs.rules \
+        > $out/lib/udev/rules.d/64-bcachefs.rules
+      grep -q ${deviceOnline} $out/lib/udev/rules.d/64-bcachefs.rules
+    '')
+  ];
+
   # https://wiki.nixos.org/wiki/Bcachefs
   #
   # /data1 is a multi-device bcachefs (5x HDD + 1x NVMe). bcachefs assembles the
