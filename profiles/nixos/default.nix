@@ -14,6 +14,9 @@
   console.keyMap = "dvorak";
   hardware.enableAllFirmware = true;
 
+  nix.gc.options = "--delete-older-than 14d";
+  nix.optimise.automatic = true;
+
   environment.systemPackages = with pkgs; [
     neovim
     ghostty.terminfo

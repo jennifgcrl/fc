@@ -36,7 +36,6 @@
         uutils-coreutils-noprefix
         file
         glances
-        nix-index
         mtr
         exiftool
         git-xet
