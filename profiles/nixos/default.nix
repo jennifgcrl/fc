@@ -16,6 +16,7 @@
 
   nix.gc.options = "--delete-older-than 14d";
   nix.optimise.automatic = true;
+  nix.channel.enable = false;
 
   environment.systemPackages = with pkgs; [
     neovim
