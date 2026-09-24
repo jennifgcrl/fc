@@ -31,7 +31,6 @@
         eternal-terminal
         hwatch
         gdu
-        podman
         doggo
         uutils-coreutils-noprefix
         file
