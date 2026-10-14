@@ -48,6 +48,8 @@ in {
         "mactex"
         "microsoft-teams"
         "steam"
+        "t3-code"
+        "grok-bot"
       ]
       ++ selfUpdatingCasks;
   };
