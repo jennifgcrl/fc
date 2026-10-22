@@ -81,6 +81,7 @@
       "google-chrome"
       "google-drive"
       "hammerspoon"
+      "iina"
       "istat-menus"
       "ledger-wallet"
       "notion"
