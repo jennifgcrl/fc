@@ -62,7 +62,6 @@
     onActivation.cleanup = "uninstall";
     masApps = {
       "Amphetamine" = 937984704;
-      "Bitwarden" = 1352778147;
       "Microsoft Excel" = 462058435;
       "Microsoft Word" = 462054704;
       "Synctrain" = 6553985316;
@@ -75,6 +74,7 @@
     ];
     casks = [
       "alfred"
+      "bitwarden"
       "chatgpt"
       "claude"
       "discord"

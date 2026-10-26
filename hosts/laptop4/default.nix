@@ -8,7 +8,6 @@
   # fresh machine install them once by hand with `brew install --cask <name>`.
   selfUpdatingCasks = [
     "parallels"
-    "docker-desktop"
   ];
 in {
   imports = [
@@ -39,13 +38,10 @@ in {
       lib.concatStringsSep " " selfUpdatingCasks;
     casks =
       [
-        "figma"
         "gcloud-cli"
         "granola"
-        "linear"
         "lm-studio"
         "lm-studio-bionic"
-        "mactex"
         "microsoft-teams"
         "steam"
         "t3-code"
