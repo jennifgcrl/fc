@@ -56,9 +56,10 @@
   homebrew = {
     enable = true;
     user = "jennifer";
-    onActivation.autoUpdate = true;
-    onActivation.upgrade = true;
-    onActivation.cleanup = "zap";
+    # Upgrade Homebrew separately; activation should not delete app preferences.
+    onActivation.autoUpdate = false;
+    onActivation.upgrade = false;
+    onActivation.cleanup = "uninstall";
     masApps = {
       "Amphetamine" = 937984704;
       "Bitwarden" = 1352778147;
