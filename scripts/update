@@ -1,18 +1,74 @@
 #!/usr/bin/env bash
 
-set -eu
+set -euo pipefail
 
 # cd "$(dirname "$0")/.."
 cd ~/code/fc
 
 echo "🔍 Checking repository state..."
 
+STASH=""
+report_saved_work() {
+  if [[ -n "$STASH" ]]; then
+    echo "Saved work is still in stash $STASH. Restore it with: git stash apply --index $STASH" >&2
+  fi
+}
+trap report_saved_work EXIT
+
+# Keep the review baseline across failed or declined runs, and protect it from GC.
+REVIEW_REF=refs/upd/ai-review
+REVIEW_BASE=$(git rev-parse --verify "$REVIEW_REF" 2>/dev/null || true)
+resolve_conflicts() {
+  local conflicts=()
+  local path
+  while IFS= read -r -d '' path; do
+    conflicts+=("$path")
+  done < <(git diff --name-only --diff-filter=U -z)
+
+  if [[ ${#conflicts[@]} -eq 0 ]] || ! command -v claude >/dev/null 2>&1; then
+    echo "Cannot auto-resolve: no unmerged files, or Claude Code is unavailable. Resolve manually." >&2
+    exit 1
+  fi
+
+  if [[ -z "$REVIEW_BASE" ]]; then
+    git update-ref "$REVIEW_REF" "$LOCAL"
+    REVIEW_BASE=$LOCAL
+  fi
+  echo "🤖 Asking Claude Code to resolve conflicts..."
+  {
+    printf '%s\n' \
+      "Resolve only the Git conflicts listed below in the current repository." \
+      "Preserve the intent of both changes. Do not modify unrelated files or Git metadata." \
+      "Do not continue/abort the rebase, commit, deploy, or push. The calling script handles Git." \
+      "If the intent is ambiguous, leave the conflict unresolved and explain why." \
+      "Summarize your resolutions for the human who must approve deployment." \
+      "Conflicted files:"
+    printf '%s\n' "${conflicts[@]}"
+    git diff --cc
+  } | claude --print --safe-mode --restricted --strict-mcp-config \
+    --permission-mode dontAsk --tools "Read,Edit,Write,Glob,Grep" \
+    --allowedTools "Read,Edit,Write,Glob,Grep" --max-budget-usd 2
+
+  # Fail closed if Claude left conflict markers or could not finish.
+  git diff --check
+  git add -- "${conflicts[@]}"
+  if [[ -n "$(git ls-files --unmerged)" ]]; then
+    echo "Unresolved conflicts remain; stopping before deployment." >&2
+    exit 1
+  fi
+  git diff --cached --check
+}
+
 if [[ -n "$(git status --porcelain)" ]]; then
-  echo "📦 Stashing unstaged changes..."
-  git stash push -m "Auto-stashed by update script"
-  STASHED=1
-else
-  STASHED=0
+  echo "📦 Stashing tracked and untracked changes..."
+  PREVIOUS_STASH=$(git rev-parse --verify refs/stash 2>/dev/null || true)
+  git stash push --include-untracked -m "Auto-stashed by update script"
+  CURRENT_STASH=$(git rev-parse --verify refs/stash 2>/dev/null || true)
+  if [[ -z "$CURRENT_STASH" || "$CURRENT_STASH" == "$PREVIOUS_STASH" ]]; then
+    echo "No new stash was created; stopping without touching existing stashes." >&2
+    exit 1
+  fi
+  STASH=$CURRENT_STASH
 fi
 
 echo "⬇️ Fetching updates..."
@@ -23,23 +79,62 @@ REMOTE=$(git rev-parse origin/main)
 
 if [[ "$LOCAL" != "$REMOTE" ]]; then
   echo "🔄 Rebasing onto origin/main..."
-  git rebase origin/main -Xours
-  REBASED=1
+  if ! git rebase origin/main; then
+    ATTEMPTS=0
+    while true; do
+      ATTEMPTS=$((ATTEMPTS + 1))
+      if [[ "$ATTEMPTS" -gt 10 ]]; then
+        echo "Too many conflict-resolution attempts. Finish or abort the rebase manually." >&2
+        exit 1
+      fi
+      resolve_conflicts
+      if GIT_EDITOR=true git rebase --continue; then
+        break
+      fi
+    done
+  fi
 else
   echo "✅ Already up to date with origin/main."
-  REBASED=0
 fi
 
-if [[ "$STASHED" -eq 1 ]]; then
+if [[ -n "$STASH" ]]; then
   echo "📂 Applying stashed changes..."
-  git stash pop
+  if ! git stash apply --index "$STASH"; then
+    resolve_conflicts
+  fi
+  # Drop only the stash we created, and only after a successful apply.
+  while read -r ref oid; do
+    if [[ "$oid" == "$STASH" ]]; then
+      git stash drop "$ref"
+      break
+    fi
+  done < <(git stash list --format='%gd %H')
+  STASH=""
+  # The updater commits all changes; stage new files so the flake can see them.
   git add -A
+fi
+
+if [[ -n "$REVIEW_BASE" ]]; then
+  echo "🔍 Validating Claude's resolutions..."
+  nix flake check --all-systems --no-build --no-write-lock-file
+  echo "Review the resulting changes relative to your original HEAD:"
+  git --no-pager diff "$REVIEW_BASE"
+  if ! read -r -p "Approve these changes, rebuild, and push local commits? [y/N] " APPROVAL </dev/tty; then
+    echo "Interactive approval is required; stopping before deployment." >&2
+    exit 1
+  fi
+  if [[ "$APPROVAL" != "y" && "$APPROVAL" != "Y" ]]; then
+    echo "Deployment declined. Resolved changes remain locally for review."
+    exit 1
+  fi
 fi
 
 echo "🔨 Rebuilding system..."
 if [[ $(uname) == "Linux" ]]; then
   sudo nixos-rebuild switch --flake .
-  flatpak update --noninteractive --assumeyes
+  if command -v flatpak >/dev/null 2>&1; then
+    flatpak update --noninteractive --assumeyes
+  fi
 else # Darwin
   sudo darwin-rebuild switch --flake .
 fi
@@ -49,13 +144,21 @@ if [[ -n "$(git status --porcelain)" ]]; then
   echo "💾 Committing changes..."
   git add .
   git commit -m "wip"
-
-  echo "🚀 Pushing changes..."
-  git push
 else
   echo "📭 No changes to commit."
 fi
 
+if [[ $(git rev-list --count origin/main..HEAD) -gt 0 ]]; then
+  echo "🚀 Pushing changes..."
+  git push
+else
+  echo "📭 No local commits to push."
+fi
+
 nix flake archive
+
+if [[ -n "$REVIEW_BASE" ]]; then
+  git update-ref -d "$REVIEW_REF" "$REVIEW_BASE"
+fi
 
 echo "✨ Update complete!"
