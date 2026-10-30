@@ -50,7 +50,7 @@
     cudaPackages.cuda_cuxxfilt
     cudaPackages.cuda_nvml_dev
     cudaPackages.cuda_nvrtc
-    cudaPackages.cuda_nvtx
+    cudaPackages.nvtx
     cudaPackages.cuda_profiler_api
     cudaPackages.cuda_sanitizer_api
     cudaPackages.libcublas

@@ -14,7 +14,7 @@
   ];
 
   environment.etc.nixos.source = "/home/jennifer/code/fc";
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
   boot.supportedFilesystems = ["bcachefs"];
 
   services.smartd = {
