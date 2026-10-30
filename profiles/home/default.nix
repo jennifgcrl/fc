@@ -3,26 +3,13 @@
     pkgs,
     lib,
     config,
-    osConfig,
     ...
   }: {
     home.stateVersion = "26.05";
 
     home.username = "jennifer";
 
-    xdg = {
-      enable = true;
-      # On Linux, inject the system environment into nushell via a vendor
-      # autoload file in ~/.local/share/nushell/vendor/autoload (nushell's
-      # always-scanned data dir). macOS is handled system-wide by
-      # profiles/darwin/nushell.nix. See profiles/nushell-vendor.nix.
-      dataFile = lib.optionalAttrs (!pkgs.stdenv.hostPlatform.isDarwin) {
-        "nushell/vendor/autoload/nix-env.nu".source = import ../nushell-vendor.nix {inherit lib pkgs;} {
-          platform = "nixos";
-          inherit (osConfig) environment;
-        };
-      };
-    };
+    xdg.enable = true;
 
     home.packages = with pkgs;
       [
@@ -166,9 +153,9 @@
           nushellPlugins.query
           nushellPlugins.polars
         ];
-        # PATH and the system environment are injected via nushell's vendor
-        # autoload: on macOS by profiles/darwin/nushell.nix, on Linux by the
-        # nix-env.nu written to xdg.dataFile above.
+        # Load the NixOS/nix-darwin system environment and home.sessionVariables
+        # in env.nu (default from stateVersion 26.11).
+        loadSessionVariables = true;
         extraConfig = lib.mkOrder 500 ''
           $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge {
               "XDG_DATA_DIRS": {
