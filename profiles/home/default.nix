@@ -5,7 +5,7 @@
     config,
     ...
   }: {
-    home.stateVersion = "26.05";
+    home.stateVersion = "26.11";
 
     home.username = "jennifer";
 
@@ -153,9 +153,6 @@
           nushellPlugins.query
           nushellPlugins.polars
         ];
-        # Load the NixOS/nix-darwin system environment and home.sessionVariables
-        # in env.nu (default from stateVersion 26.11).
-        loadSessionVariables = true;
         extraConfig = lib.mkOrder 500 ''
           $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge {
               "XDG_DATA_DIRS": {

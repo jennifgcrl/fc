@@ -12,7 +12,7 @@
   ];
 
   environment.etc.nixos.source = "/home/jennifer/code/fc";
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
   # Volta needs proprietary modules; 580 is its final supported driver branch.
   hardware.nvidia.open = false;
   hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.legacy_580;
