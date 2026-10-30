@@ -56,6 +56,7 @@
   services.fwupd.enable = true;
   services.fstrim.enable = true;
   services.tailscale.enable = true;
+  services.tailscale.extraSetFlags = ["--ssh" "--advertise-exit-node"];
   services.eternal-terminal.enable = true;
   virtualisation.podman.enable = true;
   boot.binfmt.emulatedSystems = [
