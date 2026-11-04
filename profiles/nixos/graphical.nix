@@ -177,13 +177,7 @@
           window-decoration = "none";
         };
       };
-      # chromium.enable = true;
       swaylock.enable = true;
-      waybar = {
-        #enable = true;
-        # TODO: debug this not working
-        #systemd.enable = true;
-      };
       zathura = {
         enable = true;
         options = {
