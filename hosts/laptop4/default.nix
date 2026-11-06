@@ -63,6 +63,22 @@ in {
     };
   };
 
+  # echo 'profile <id>' | sudo tee /etc/nextdns.conf && sudo chmod 600 /etc/nextdns.conf
+  services.nextdns = {
+    enable = true;
+    arguments = [
+      "-config-file /etc/nextdns.conf"
+      "-listen 127.0.0.1:53"
+      "-auto-activate"
+      "-detect-captive-portals"
+      "-report-client-info"
+      "-forwarder ts.net=100.100.100.100"
+    ];
+  };
+  # -auto-activate shells out to networksetup/ipconfig, which the module's
+  # nextdns-only PATH can't find
+  launchd.daemons.nextdns.path = ["/usr/bin" "/usr/sbin" "/bin" "/sbin"];
+
   home-manager.users.jennifer = {
     home.packages = [tailscalePersonal];
     # ~/.ssh/config itself stays unmanaged (coder rewrites it); it needs
