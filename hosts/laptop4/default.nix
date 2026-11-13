@@ -17,6 +17,15 @@
     exec ${pkgs.tailscale}/bin/tailscale --socket=${tailscalePersonalSocket} "$@"
   '';
 
+  # Unload/reload the launchd daemon; -auto-activate restores system DNS when
+  # the daemon exits and points it back at 127.0.0.1 when it starts.
+  nextdnsOff = pkgs.writeShellScriptBin "nextdns-off" ''
+    exec sudo launchctl bootout system/org.nixos.nextdns
+  '';
+  nextdnsOn = pkgs.writeShellScriptBin "nextdns-on" ''
+    exec sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.nextdns.plist
+  '';
+
   # Casks that break when Homebrew replaces the app bundle underneath them:
   # both self-update, and a `brew upgrade` swap leaves their privileged
   # helpers/kexts mismatched against the new app. They stay declared below so
@@ -80,7 +89,7 @@ in {
   launchd.daemons.nextdns.path = ["/usr/bin" "/usr/sbin" "/bin" "/sbin"];
 
   home-manager.users.jennifer = {
-    home.packages = [tailscalePersonal];
+    home.packages = [tailscalePersonal nextdnsOff nextdnsOn];
     # ~/.ssh/config itself stays unmanaged (coder rewrites it); it needs
     # `Include config.d/*` at the top to pick this up.
     home.file.".ssh/config.d/tailscale-personal".text = ''
