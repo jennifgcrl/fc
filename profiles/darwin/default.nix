@@ -93,7 +93,6 @@
       "superhuman"
       "tailscale-app"
       "zed"
-      "zoom"
     ];
   };
 }
