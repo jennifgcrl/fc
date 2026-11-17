@@ -117,6 +117,7 @@ in {
         "steam"
         "t3-code"
         "grok-bot"
+        "getoutline"
       ]
       ++ selfUpdatingCasks;
   };
