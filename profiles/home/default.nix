@@ -15,17 +15,12 @@
       [
         ouch
         curl
-        eternal-terminal
-        hwatch
         gdu
         doggo
-        uutils-coreutils-noprefix
         file
-        glances
         mtr
         exiftool
         git-xet
-        multitail
 
         # nix
         alejandra
@@ -38,10 +33,6 @@
         #misc langs
         rustup
         taplo
-        buf
-        go
-        terraform-ls
-        terraform
 
         # node
         nodejs
