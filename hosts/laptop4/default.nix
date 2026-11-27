@@ -110,13 +110,10 @@ in {
     casks =
       [
         "gcloud-cli"
-        "granola"
         "lm-studio"
         "lm-studio-bionic"
         "microsoft-teams"
         "steam"
-        "t3-code"
-        "grok-bot"
         "getoutline"
       ]
       ++ selfUpdatingCasks;
