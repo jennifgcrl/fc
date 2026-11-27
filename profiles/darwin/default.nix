@@ -78,7 +78,6 @@
       "google-drive"
       "hammerspoon"
       "iina"
-      "istat-menus"
       "ledger-wallet"
       "notion"
       "notion-calendar"
