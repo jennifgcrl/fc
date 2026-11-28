@@ -9,7 +9,6 @@
     "nix-command"
     "flakes"
   ];
-  nix.settings.trusted-users = [ "jennifer" ];
   nix.settings.sandbox = true;
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = true;
