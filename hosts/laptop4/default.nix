@@ -28,7 +28,7 @@ let
   '';
 
   # Casks that break when Homebrew replaces the app bundle underneath them:
-  # both self-update, and a `brew upgrade` swap leaves their privileged
+  # they self-update, and a `brew upgrade` swap leaves their privileged
   # helpers/kexts mismatched against the new app. They stay declared below so
   # `onActivation.cleanup = "uninstall"` keeps them, but HOMEBREW_BUNDLE_CASK_SKIP
   # makes `brew bundle` leave them alone -- each app updates itself instead.

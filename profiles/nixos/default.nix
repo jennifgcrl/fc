@@ -32,12 +32,6 @@
   #boot.kernelPackages = lib.mkOverride 1001 pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages;
 
-  boot.kernel.sysctl = {
-    # for tailscale
-    "net.ipv4.ip_forward" = lib.mkForce 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-  };
-
   # TODO: review these
   security.pam.loginLimits = [
     {
@@ -61,14 +55,33 @@
     "--ssh"
     "--advertise-exit-node"
   ];
+  services.tailscale.useRoutingFeatures = "both";
+  systemd.services.tailscale-udp-gro = {
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    path = with pkgs; [
+      ethtool
+      iproute2
+      gawk
+      coreutils
+    ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      devs=$({
+        ip -4 -o route get 8.8.8.8 || true
+        ip -6 -o route get 2001:4860:4860::8888 || true
+      } 2>/dev/null | awk '{for (i = 1; i < NF; i++) if ($i == "dev") print $(i + 1)}' | sort -u)
+      for dev in $devs; do
+        ethtool -K "$dev" rx-udp-gro-forwarding on rx-gro-list off || echo "could not set UDP GRO forwarding on $dev"
+      done
+    '';
+  };
   services.eternal-terminal.enable = true;
   virtualisation.podman.enable = true;
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
-
-  # TODO: set up rx-udp-gro-forwarding on rx-gro-list off
-  # see: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
 
   users.users.jennifer = {
     isNormalUser = true;

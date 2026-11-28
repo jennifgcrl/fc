@@ -29,8 +29,6 @@
     };
   };
 
-  networking.firewall.checkReversePath = "loose";
-
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.arp_ignore" = 1;
     "net.ipv4.conf.all.arp_announce" = 2;
