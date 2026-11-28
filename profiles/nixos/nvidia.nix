@@ -3,7 +3,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   nixpkgs.config.cudaSupport = true;
 
   hardware.nvidia = {
@@ -29,7 +30,7 @@
     ];
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   services.lact.enable = true;
 

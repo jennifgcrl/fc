@@ -14,62 +14,77 @@
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nix-darwin,
-    home-manager,
-    lanzaboote,
-    ...
-  }: let
-    forAllSystems = f:
-      nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ] (system: f system);
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      lanzaboote,
+      ...
+    }:
+    let
+      forAllSystems =
+        f:
+        nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ] (system: f system);
 
-    forAllSystemsPkgs = f: forAllSystems (system: f nixpkgs.legacyPackages.${system});
+      forAllSystemsPkgs = f: forAllSystems (system: f nixpkgs.legacyPackages.${system});
 
-    darwinSystem = hostName:
-      nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = {
-          inherit self hostName home-manager;
+      darwinSystem =
+        hostName:
+        nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = {
+            inherit self hostName home-manager;
+          };
+          modules = [
+            ./hosts/${hostName}
+          ];
         };
-        modules = [
-          ./hosts/${hostName}
-        ];
-      };
 
-    nixosSystem = hostName:
-      nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit
-            self
-            hostName
-            home-manager
-            lanzaboote
-            ;
+      nixosSystem =
+        hostName:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit
+              self
+              hostName
+              home-manager
+              lanzaboote
+              ;
+          };
+          modules = [
+            ./hosts/${hostName}
+          ];
         };
-        modules = [
-          ./hosts/${hostName}
-        ];
-      };
-  in {
-    darwinConfigurations."laptop3" = darwinSystem "laptop3";
-    darwinConfigurations."laptop4" = darwinSystem "laptop4";
-    nixosConfigurations."server1" = nixosSystem "server1";
-    nixosConfigurations."server3" = nixosSystem "server3";
-    nixosConfigurations."router0" = nixosSystem "router0";
+    in
+    {
+      darwinConfigurations."laptop3" = darwinSystem "laptop3";
+      darwinConfigurations."laptop4" = darwinSystem "laptop4";
+      nixosConfigurations."server1" = nixosSystem "server1";
+      nixosConfigurations."server3" = nixosSystem "server3";
+      nixosConfigurations."router0" = nixosSystem "router0";
 
-    devShells = forAllSystemsPkgs (pkgs: {
-      default = pkgs.mkShell {
-        packages = with pkgs; [
-          pre-commit
-        ];
-      };
-    });
-  };
+      formatter = forAllSystemsPkgs (pkgs: pkgs.nixfmt-tree);
+
+      checks = forAllSystemsPkgs (pkgs: {
+        formatting = pkgs.runCommand "formatting" { nativeBuildInputs = [ pkgs.nixfmt ]; } ''
+          find ${self} -name '*.nix' -exec nixfmt --check {} +
+          touch $out
+        '';
+      });
+
+      devShells = forAllSystemsPkgs (pkgs: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            pre-commit
+          ];
+        };
+      });
+    };
 }

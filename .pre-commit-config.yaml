@@ -1,5 +1,8 @@
 repos:
-  - repo: https://github.com/kamadorueda/alejandra
-    rev: 4.0.0
+  - repo: local
     hooks:
-      - id: alejandra-system
+      - id: nix-fmt
+        name: nix fmt
+        entry: nix fmt --
+        language: system
+        types: [nix]

@@ -3,7 +3,8 @@
   home-manager,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ../common
     home-manager.nixosModules.home-manager
@@ -56,7 +57,10 @@
   services.fwupd.enable = true;
   services.fstrim.enable = true;
   services.tailscale.enable = true;
-  services.tailscale.extraSetFlags = ["--ssh" "--advertise-exit-node"];
+  services.tailscale.extraSetFlags = [
+    "--ssh"
+    "--advertise-exit-node"
+  ];
   services.eternal-terminal.enable = true;
   virtualisation.podman.enable = true;
   boot.binfmt.emulatedSystems = [
@@ -68,7 +72,7 @@
 
   users.users.jennifer = {
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
 
     # for podman
     subUidRanges = [
@@ -87,7 +91,7 @@
 
   # virt
   programs.virt-manager.enable = true;
-  users.groups.libvirtd.members = ["jennifer"];
+  users.groups.libvirtd.members = [ "jennifer" ];
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 

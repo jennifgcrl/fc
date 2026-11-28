@@ -3,7 +3,8 @@
   pkgs,
   lanzaboote,
   ...
-}: {
+}:
+{
   imports = [
     lanzaboote.nixosModules.lanzaboote
   ];

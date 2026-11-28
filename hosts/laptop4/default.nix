@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   # Personal tailnet, alongside the work tailnet that tailscale-app runs. Both
   # tailnets hand out addresses from 100.64.0.0/10, so a second TUN would fight
   # tailscale-app over routes; instead this is an unprivileged userspace
@@ -36,7 +37,8 @@
   selfUpdatingCasks = [
     "parallels"
   ];
-in {
+in
+{
   imports = [
     ../../profiles/darwin
     ../../profiles/home
@@ -86,10 +88,19 @@ in {
   };
   # -auto-activate shells out to networksetup/ipconfig, which the module's
   # nextdns-only PATH can't find
-  launchd.daemons.nextdns.path = ["/usr/bin" "/usr/sbin" "/bin" "/sbin"];
+  launchd.daemons.nextdns.path = [
+    "/usr/bin"
+    "/usr/sbin"
+    "/bin"
+    "/sbin"
+  ];
 
   home-manager.users.jennifer = {
-    home.packages = [tailscalePersonal nextdnsOff nextdnsOn];
+    home.packages = [
+      tailscalePersonal
+      nextdnsOff
+      nextdnsOn
+    ];
     # ~/.ssh/config itself stays unmanaged (coder rewrites it); it needs
     # `Include config.d/*` at the top to pick this up.
     home.file.".ssh/config.d/tailscale-personal".text = ''
@@ -105,17 +116,15 @@ in {
       "coder"
       "container"
     ];
-    onActivation.extraEnv.HOMEBREW_BUNDLE_CASK_SKIP =
-      lib.concatStringsSep " " selfUpdatingCasks;
-    casks =
-      [
-        "gcloud-cli"
-        "lm-studio"
-        "lm-studio-bionic"
-        "microsoft-teams"
-        "steam"
-        "getoutline"
-      ]
-      ++ selfUpdatingCasks;
+    onActivation.extraEnv.HOMEBREW_BUNDLE_CASK_SKIP = lib.concatStringsSep " " selfUpdatingCasks;
+    casks = [
+      "gcloud-cli"
+      "lm-studio"
+      "lm-studio-bionic"
+      "microsoft-teams"
+      "steam"
+      "getoutline"
+    ]
+    ++ selfUpdatingCasks;
   };
 }

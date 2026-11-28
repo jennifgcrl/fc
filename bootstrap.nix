@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -12,7 +12,7 @@
 
   users.users.jennifer = {
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
     packages = with pkgs; [
       git
     ];

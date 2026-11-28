@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ../common/graphical.nix
   ];
@@ -77,22 +78,24 @@
   # sandbox can see them. resolve-symlinks is required so the /nix/store symlinks
   # are dereferenced (the sandbox can't read /nix/store).
   # https://wiki.nixos.org/wiki/Fonts#Flatpak_applications_can't_find_system_fonts
-  system.fsPackages = [pkgs.bindfs];
-  fileSystems."/usr/share/fonts" = let
-    aggregatedFonts = pkgs.buildEnv {
-      name = "system-fonts";
-      paths = config.fonts.packages;
-      pathsToLink = ["/share/fonts"];
+  system.fsPackages = [ pkgs.bindfs ];
+  fileSystems."/usr/share/fonts" =
+    let
+      aggregatedFonts = pkgs.buildEnv {
+        name = "system-fonts";
+        paths = config.fonts.packages;
+        pathsToLink = [ "/share/fonts" ];
+      };
+    in
+    {
+      device = "${aggregatedFonts}/share/fonts";
+      fsType = "fuse.bindfs";
+      options = [
+        "ro"
+        "resolve-symlinks"
+        "x-gvfs-hide"
+      ];
     };
-  in {
-    device = "${aggregatedFonts}/share/fonts";
-    fsType = "fuse.bindfs";
-    options = [
-      "ro"
-      "resolve-symlinks"
-      "x-gvfs-hide"
-    ];
-  };
 
   programs.appimage = {
     enable = true;
@@ -103,7 +106,7 @@
     enable = true;
   };
 
-  home-manager.users.jennifer = {lib, ...}: {
+  home-manager.users.jennifer = { lib, ... }: {
     xdg.portal = {
       enable = true;
       xdgOpenUsePortal = true;
@@ -119,15 +122,17 @@
     xdg.mimeApps = {
       enable = true;
       # check ~/.local/share/flatpak/exports/share
-      defaultApplications = let
-        webBrowser = ["com.google.Chrome.desktop"];
-      in {
-        "text/html" = webBrowser;
-        "x-scheme-handler/http" = webBrowser;
-        "x-scheme-handler/https" = webBrowser;
-        "x-scheme-handler/about" = webBrowser;
-        "x-scheme-handler/unknown" = webBrowser;
-      };
+      defaultApplications =
+        let
+          webBrowser = [ "com.google.Chrome.desktop" ];
+        in
+        {
+          "text/html" = webBrowser;
+          "x-scheme-handler/http" = webBrowser;
+          "x-scheme-handler/https" = webBrowser;
+          "x-scheme-handler/about" = webBrowser;
+          "x-scheme-handler/unknown" = webBrowser;
+        };
     };
 
     home.packages = with pkgs; [
