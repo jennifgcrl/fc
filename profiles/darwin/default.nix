@@ -50,7 +50,6 @@
     onActivation.upgrade = false;
     onActivation.cleanup = "uninstall";
     masApps = {
-      "Amphetamine" = 937984704;
       "Microsoft Excel" = 462058435;
       "Microsoft Word" = 462054704;
       "Synctrain" = 6553985316;
