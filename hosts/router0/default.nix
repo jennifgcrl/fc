@@ -16,7 +16,6 @@
 
   services.printing.enable = true;
 
-  # Bridge configuration for ethernet devices
   networking.bridges = {
     br0 = {
       interfaces = [

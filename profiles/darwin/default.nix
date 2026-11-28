@@ -18,19 +18,12 @@
 
   environment.etc.nix-darwin.source = "/Users/jennifer/code/fc";
 
-  # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
   # will be deprecated; currently needed for system.defaults.*
   system.primaryUser = "jennifer";
-  # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   home-manager.users.jennifer = {
-    home.packages = with pkgs; [
-      rustup
-      uv
-    ];
-
     programs.nushell = {
       environmentVariables = {
         # SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";

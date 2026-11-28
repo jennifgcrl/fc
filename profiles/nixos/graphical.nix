@@ -61,13 +61,9 @@
   };
 
   fonts.packages = with pkgs; [
-    departure-mono
-    dm-mono
-    noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
     babelstone-han
-    recursive
   ];
 
   services.flatpak.enable = true;
