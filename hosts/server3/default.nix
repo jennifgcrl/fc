@@ -10,6 +10,7 @@
     ../../profiles/nixos
     ../../profiles/nixos/secureboot.nix
     ../../profiles/nixos/nvidia.nix
+    ../../profiles/nixos/gpu-unlock.nix
     ../../profiles/nixos/graphical.nix
     ../../profiles/home
   ];
@@ -17,7 +18,6 @@
   environment.etc.nixos.source = "/home/jennifer/code/fc";
   system.stateVersion = "26.11";
   boot.supportedFilesystems = [ "bcachefs" ];
-
   services.smartd = {
     enable = true;
     autodetect = true;
