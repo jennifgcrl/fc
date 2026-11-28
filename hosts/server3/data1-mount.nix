@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   deviceOnline = pkgs.writeShellScript "bcachefs-device-online" ''
     shopt -s nullglob
     for dev in /sys/fs/bcachefs/"$ID_FS_UUID"/dev-*/block/dev; do
@@ -14,9 +15,10 @@
     done
     exec ${config.boot.bcachefs.package}/sbin/bcachefs device online "$1"
   '';
-in {
+in
+{
   services.udev.packages = lib.mkAfter [
-    (pkgs.runCommand "bcachefs-udev-rules" {} ''
+    (pkgs.runCommand "bcachefs-udev-rules" { } ''
       mkdir -p $out/lib/udev/rules.d
       sed 's|RUN+="[^"]*/sbin/bcachefs device online |RUN+="${deviceOnline} |' \
         ${config.boot.bcachefs.package}/lib/udev/rules.d/64-bcachefs.rules \
@@ -33,8 +35,8 @@ in {
   # been enumerated before mounting, otherwise the mount races udev at boot and
   # comes up degraded (or fails).
   systemd.services."data1-mount" = {
-    after = ["local-fs.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "local-fs.target" ];
+    wantedBy = [ "multi-user.target" ];
     environment = {
       FS_UUID = "a48fd47d-9af6-45b4-a3c6-a5d101bbd9b9";
       EXPECTED_MEMBERS = "6";

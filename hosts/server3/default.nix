@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware.nix
     ./data1-mount.nix
@@ -15,7 +16,7 @@
 
   environment.etc.nixos.source = "/home/jennifer/code/fc";
   system.stateVersion = "26.11";
-  boot.supportedFilesystems = ["bcachefs"];
+  boot.supportedFilesystems = [ "bcachefs" ];
 
   services.smartd = {
     enable = true;

@@ -4,7 +4,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     home-manager.darwinModules.home-manager
     ../common

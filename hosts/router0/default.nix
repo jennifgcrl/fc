@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware.nix
     ../../profiles/nixos
@@ -18,7 +19,14 @@
   # Bridge configuration for ethernet devices
   networking.bridges = {
     br0 = {
-      interfaces = ["enp1s0" "enp2s0" "enp4s0" "enp5s0" "enp6s0" "enp7s0"];
+      interfaces = [
+        "enp1s0"
+        "enp2s0"
+        "enp4s0"
+        "enp5s0"
+        "enp6s0"
+        "enp7s0"
+      ];
     };
   };
 
@@ -31,6 +39,13 @@
   networking.interfaces.enp7s0.useDHCP = false;
 
   networking.dhcpcd.enable = true;
-  networking.dhcpcd.allowInterfaces = ["br0"];
-  networking.dhcpcd.denyInterfaces = ["enp1s0" "enp2s0" "enp4s0" "enp5s0" "enp6s0" "enp7s0"];
+  networking.dhcpcd.allowInterfaces = [ "br0" ];
+  networking.dhcpcd.denyInterfaces = [
+    "enp1s0"
+    "enp2s0"
+    "enp4s0"
+    "enp5s0"
+    "enp6s0"
+    "enp7s0"
+  ];
 }
